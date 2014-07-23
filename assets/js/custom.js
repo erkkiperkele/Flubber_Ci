@@ -80,19 +80,19 @@ $(window).scroll(function() {
 
 //jQuery Drag'n drop feature for uploading images
 //1. Handling the drag'n drop
-var obj = $("#profile-pic");
-obj.on('dragenter', function (e) 
+var obj = $('#profile-pic');
+$('#profile-pic').on('dragenter', function (e) 
 {
     e.stopPropagation();
     e.preventDefault();
     $(this).css('border', '2px solid #0B85A1');
 });
-obj.on('dragover', function (e) 
+$('#profile-pic').on('dragover', function (e) 
 {
      e.stopPropagation();
      e.preventDefault();
 });
-obj.on('drop', function (e) 
+$('#profile-pic').on('drop', function (e) 
 {
  
      $(this).css('border', '2px dotted #0B85A1');
@@ -138,7 +138,7 @@ function handleFileUpload(files,obj)
 //4. jQuery AJAX API for actual uploading to the database (currently going to the server as a file):
 function sendFileToServer(formData/*,status*/)
 {
-    var uploadURL ="userimgs/"; //Upload URL
+    var uploadURL ="upload/"; //Upload URL
     var extraData ={}; //Extra Data.
     var jqXHR=$.ajax({
             xhr: function() {

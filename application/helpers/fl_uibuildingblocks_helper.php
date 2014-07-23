@@ -39,7 +39,7 @@ if ( ! function_exists('CreateURL'))
 {
 	function CreateURL($uri)
 	{
-		return "/flubber_CI/" .$uri; //MUST BE EDITED BASED ON APPLICATION LOCATION
+		return "/Flubber_Ci/" .$uri; //MUST BE EDITED BASED ON APPLICATION LOCATION
 	}
 }
 
@@ -226,6 +226,7 @@ if ( ! function_exists('MenuBar'))
 	function MenuBar()
 	{
 		echo "
+		<header>
 		<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 			<div class='container-fluid'>
     			<!-- Brand and toggle get grouped for better mobile display -->
@@ -265,6 +266,7 @@ if ( ! function_exists('MenuBar'))
     			</div><!-- /.navbar-collapse -->
   			</div><!-- /.container-fluid -->
 		</nav>
+		</header>
 		";
 	}
 }

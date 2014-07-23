@@ -1,3 +1,6 @@
-<strong>&copy; 2042</strong>
-</body>
+<strong style='	position:fixed;
+    			top:97%;
+    			right:10px;'>Flubber &copy; 2014</strong>
+
+<?php LoadJSBundle(); ?>
 </html>

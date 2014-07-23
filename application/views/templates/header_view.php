@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<?php LoadCSSBundle(); ?>
 		<title><?php echo $title ?> (Flubber)</title>
 		
 		<div style="margin-top: 5%">

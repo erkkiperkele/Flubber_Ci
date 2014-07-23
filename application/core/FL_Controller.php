@@ -55,12 +55,11 @@ class FL_Controller extends CI_Controller {
 	public function render($viewFile, $viewData)
 	{
 		$this->load->helper('FL_UIBuildingBlocks');
-		LoadCSSBundle();
 		MenuBar();
 		$this->load->view('templates/header_view', $viewData);
 		$this->load->view($viewFile . '_view', $viewData);
-        #$this->load->view('templates/footer_view');
-        LoadJSBundle();
+        $this->load->view('templates/footer_view');
+        
 	}
 }
 // END FL_Controller class

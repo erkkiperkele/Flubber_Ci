@@ -5,7 +5,7 @@ include "DatabaseAccessObject.php";
 class profile_model extends CI_Model {
 	
 	private $db2;
-	#private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
+	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
 
 	public function __construct()
 	{
