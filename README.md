@@ -1,5 +1,5 @@
 Flubber_Ci
 ==========
 
-- Please, don't check-in your config files since each machine has its own config! (config.php and database.php)
-- Just put them in your gitIgnore config
+- Basic files not to check-in have been added to the gitignore file (config.php and database.php)
+- Feel free to add some more if I forgot some (some other machine specific configuration files)
