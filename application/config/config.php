@@ -15,7 +15,7 @@
 |
 */
 #$config['base_url']	= 'http://flubber.com/';
-$config['base_url']	= 'http://127.0.0.1/';
+$config['base_url']	= 'http://127.0.0.1/~Aymeric/Flubber_Ci/';
 
 /*
 |--------------------------------------------------------------------------
