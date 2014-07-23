@@ -1,9 +1,3 @@
-# php source #
-###################
-*/config.php;
-*/database.php
-
-
 # Compiled source #
 ###################
 *.com
@@ -40,4 +34,9 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# php source #
+###################
+
 application/config/config.php
+application/config/database.php
