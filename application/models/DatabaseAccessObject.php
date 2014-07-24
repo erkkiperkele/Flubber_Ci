@@ -388,7 +388,7 @@
 			
 			public function setThumbnailURLOfMember($memberId, $newThumbnailURL){
 				try{
-					if ($this->checkEmailNotDuplicate($newEmail)){
+					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
 						$statement = $this->db->prepare('UPDATE Member SET thumbnailURL = :newThumbnailURL WHERE memberId = :memberId;');
 						$statement->bindValue(':newThumbnailURL', $newThumbnailURL, PDO::PARAM_STR);
 						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);

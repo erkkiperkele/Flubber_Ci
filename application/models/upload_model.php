@@ -36,13 +36,26 @@ class upload_model extends CI_Model {
     {
         if($fileContentType === 'photograph')
         {
-        	$this->db2->setPhotographURLOfMember($memberId, $fileURL);
-        	return true;
+        	$photoUpdate = $this->db2->setPhotographURLOfMember($memberId, $fileURL);
+	    	$this->load->library('image_lib');
+			$config['image_library'] = 'gd2';
+			$config['source_image']	= $fileURL;
+			$config['create_thumb'] = TRUE;
+			$config['maintain_ratio'] = TRUE;
+			$config['width']	= 100;
+			$config['height']	= 100;
+
+			$this->load->library('image_lib', $config); 
+
+			$thumbUpdate = false;
+			if($this->image_lib->resize())
+				$thumbUpdate = $this->db2->setThumbnailURLOfMember($memberId, $fileURL);
+			return ($photoUpdate && $thumbUpdate);
+        	
         }
         if($fileContentType === 'coverPicture')
         {
-        	$this->db2->setCoverPictureURLOfMember($memberId, $fileURL);
-        	return true;
+        	return $this->db2->setCoverPictureURLOfMember($memberId, $fileURL);
         }
         return false;
     }

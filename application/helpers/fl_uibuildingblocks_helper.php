@@ -162,16 +162,16 @@ if ( ! function_exists('ContentBox'))
 	{
 		echo "
 		<div class='content panel panel-default'>
-  			<div class='panel-heading' style='margin: 0 0 0 0; padding: 0 0 0 0'>
+  			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
   				<div class='panel-title row'>
     				<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='20px' height='20px' style='margin:10px 10px'/>
-    				<h4 class='col-md-6 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-    				<h4 class='col-md-4 text-right' style='margin-top:15px'><small>" .$PostInfo['timeStamp'] ."</small></h4>
+    				<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+    				<h4 class='col-md-6 text-right privacy' style='margin-top:15px'><small>" .$PostInfo['timeStamp'] ."</small></h4>
     			</div>
   			</div>
- 	 		<div class='panel-body'>"
+ 	 		<div class='panel-body'> <div class='editText'>"
     		.$PostInfo['content']
-    		."<div><button type='button' class='heart btn btn-default'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+    		."</div><div><button type='button' class='heart btn btn-default'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
   			</div>
 		</div>
 		";
@@ -201,9 +201,8 @@ if ( ! function_exists('AddContentBox'))
 	        		<button class='btn btn-default' type='submit'>Post</button>
 	    		</span>
 		    </div>
-		    <div class='panel-heading'>
+		    <div class='panel-heading privacy'>
 	    		<h3 class='panel-title pull-left'>Status</h3>
-	    		<span id='privacy' class='pull-right fa fa-user'><small> Private</small></span>
 	    		</p>
 		  	</div>
 
