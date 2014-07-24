@@ -28,16 +28,17 @@ class upload_model extends CI_Model {
 				move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName);
 				$fileURL = "http://127.0.0.1:81/Flubber_Ci/assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
 			}
+			chmod ($output_dir, 777);
 			return $fileURL;
 		}
 	}
 
     public function updateURLinDB($memberId, $fileURL, $fileContentType)
     {
+    	chmod ($fileURL, 777);
         if($fileContentType === 'photograph')
         {
         	$photoUpdate = $this->db2->setPhotographURLOfMember($memberId, $fileURL);
-	    	$this->load->library('image_lib');
 			$config['image_library'] = 'gd2';
 			$config['source_image']	= $fileURL;
 			$config['create_thumb'] = TRUE;
@@ -45,11 +46,19 @@ class upload_model extends CI_Model {
 			$config['width']	= 100;
 			$config['height']	= 100;
 
-			$this->load->library('image_lib', $config); 
+			$thumb = explode('.', $fileURL);
+			$i = 0;
+			while($i + 1 < count($thumb)){
+				$thumbURL .= $thumb[$i];
+				$i++;
+			}
+			$thumbURL .= '_thumb.' .$thumb[$i];
 
-			$thumbUpdate = false;
+			$config['new_image']	= $thumbURL;
+			$this->load->library('image_lib', $config); 
 			if($this->image_lib->resize())
-				$thumbUpdate = $this->db2->setThumbnailURLOfMember($memberId, $fileURL);
+				$thumbUpdate = $this->db2->setThumbnailURLOfMember($memberId, $thumbURL);
+
 			return ($photoUpdate && $thumbUpdate);
         	
         }
