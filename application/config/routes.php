@@ -45,6 +45,7 @@ $route['404_override'] = '';
 #$route['posts/(:any)'] = 'wall/view/$1';
 #$route['wall'] = 'wall';
 $route['profile'] = 'profile';
+$route['upload/file/(:any)'] = 'upload/file/$1';
 $route['profile/addStatus'] = 'profile/addStatus';
 $route['(:any)'] = 'pages/view/$1';
 

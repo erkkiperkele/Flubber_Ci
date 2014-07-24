@@ -33,13 +33,11 @@ $('.heart').click(function()
 {
 	if($(this).children().hasClass('glyphicon-heart'))
 	{
-		$(this).children().removeClass('glyphicon-heart');
-		$(this).children().addClass('glyphicon-heart-empty');
+		$(this).children().removeClass('glyphicon-heart').addClass('glyphicon-heart-empty');
 	}
-	else if($(this).children().hasClass('glyphicon-heart-empty'))
+	else
 	{
-		$(this).children().removeClass('glyphicon-heart-empty');
-		$(this).children().addClass('glyphicon-heart');
+		$(this).children().removeClass('glyphicon-heart-empty').addClass('glyphicon-heart');
 	}
 });
 
@@ -51,22 +49,25 @@ $(document).ready(function(){
 });
 
 //jQuery based functionality to add jumbotron's children to the menubar
-$(document).ready(function(){
-            var name = $("#profile-name").children().clone().addClass("nav navbar-nav");
+function addProfileHeaderToMenuBar(){
+            $("#profile-pic-top").remove();
+            $("#profile-name-top").remove();
+            $("#group-name-top").remove();
+            $("#group-pic-top").remove();
+            var name = $("#profile-name").children().clone().addClass("nav navbar-nav").attr('id', 'profile-name-top');
             var pic =  $("#profile-pic").clone().removeClass("pull-right img-responsive").addClass("nav navbar-nav img-circle")
-                        .css("width", 50).css("height", 50).css("margin-right", 10);
+                        .css("width", 50).css("height", 50).css("margin-right", 10).attr('id', 'profile-pic-top');
             if(name.length == 0){
-                name = $("#group-name").children().clone().addClass("nav navbar-nav").css("margin-top", 5);
+                name = $("#group-name").children().clone().addClass("nav navbar-nav").css("margin-top", 5).attr('id', 'group-name-top');
                 pic = $("#group-pic").clone().removeClass("pull-right img-responsive").addClass("nav navbar-nav img-circle")
-                        .css("width", 50).css("height", 50).css("margin-right", 10);
+                        .css("width", 50).css("height", 50).css("margin-right", 10).attr('id', 'group-pic-top');
             }
             var moreName = name.children().clone();
             name.children().remove();
             name.attr("data-toggle", "tooltip").attr("data-placement","bottom").attr("title", moreName.text())
-            $("#menu-profile").append(pic);
-            $("#menu-profile").append(name);
-            $("#menu-profile").hide();
-});
+            $("#menu-profile").append(pic).append(name).hide();
+}
+$(document).ready(addProfileHeaderToMenuBar());
 
 $(window).scroll(function() {
     if ($(".navbar").offset().top >= 100){
@@ -80,19 +81,20 @@ $(window).scroll(function() {
 
 //jQuery Drag'n drop feature for uploading images
 //1. Handling the drag'n drop
-var obj = $('#profile-pic');
-$('#profile-pic').on('dragenter', function (e) 
+var obj = $('#profile-pic, #profile-name');
+obj.on('dragenter', function (e) 
 {
     e.stopPropagation();
     e.preventDefault();
-    $(this).css('border', '2px solid #0B85A1');
+    $(this).css('border', '2px dotted #0B85A1');
 });
-$('#profile-pic').on('dragover', function (e) 
+obj.on('dragover', function (e) 
 {
      e.stopPropagation();
      e.preventDefault();
+     $(this).css('border', '2px dotted #0B85A1');
 });
-$('#profile-pic').on('drop', function (e) 
+obj.on('drop', function (e) 
 {
  
      $(this).css('border', '2px dotted #0B85A1');
@@ -100,7 +102,8 @@ $('#profile-pic').on('drop', function (e)
      var files = e.originalEvent.dataTransfer.files;
  
      //Sending the image to the Database
-     handleFileUpload(files,obj);
+     handleFileUpload(files,obj, $(this).attr('id'));
+     $(this).css('border', 'none');
 }); 
 
 //2. Block dropping outside the image area:
@@ -113,7 +116,6 @@ $(document).on('dragover', function (e)
 {
   e.stopPropagation();
   e.preventDefault();
-  obj.css('border', '2px dotted #0B85A1');
 });
 $(document).on('drop', function (e) 
 {
@@ -122,52 +124,44 @@ $(document).on('drop', function (e)
 });
 
 //3. Read the image dropped on the profile section
-function handleFileUpload(files,obj)
+function handleFileUpload(file,obj, elem)
 {
-   for (var i = 0; i < files.length; i++) 
-   {
-        var fd = new FormData();
-        fd.append('file', files[i]);
- 
-        //var status = new createStatusbar(obj); //Using this we can set progress.
-        //status.setFileNameSize(files[i].name,files[i].size);
-        sendFileToServer(fd/*,status*/);
- 		$('#profile-pic').attr('src', "userimgs/" + files.item(0).name);
-   }
+    var fd = new FormData();
+    fd.append('file', file[0]);
+
+    //var status = new createStatusbar(obj); //Using this we can set progress.
+    //status.setFileNameSize(files[i].name,files[i].size);
+    sendFileToServer(fd, elem/*,status*/);
+	$('#self').attr('src', "http://127.0.0.1:81/Flubber_Ci/assets/imgs/" + file.item(0).name);
 }
 //4. jQuery AJAX API for actual uploading to the database (currently going to the server as a file):
-function sendFileToServer(formData/*,status*/)
+function sendFileToServer(formData, elem/*,status*/)
 {
-    var uploadURL ="upload/"; //Upload URL
+    var uploadURL ="http://127.0.0.1:81/Flubber_Ci/upload/file/" + elem; //Upload URL
     var extraData ={}; //Extra Data.
     var jqXHR=$.ajax({
-            xhr: function() {
-            var xhrobj = $.ajaxSettings.xhr();
-            /*if (xhrobj.upload) {
-                    xhrobj.upload.addEventListener('progress', function(event) {
-                        var percent = 0;
-                        var position = event.loaded || event.position;
-                        var total = event.total;
-                        if (event.lengthComputable) {
-                            percent = Math.ceil(position / total * 100);
-                        }
-                        //Set progress
-                        status.setProgress(percent);
-                    }, false);
-                }*/
-            return xhrobj;
-        },
-        url: uploadURL,
-        type: "POST",
-        contentType:false,
-        processData: false,
-        cache: false,
-        data: formData/*,
-        success: function(data){
-            status.setProgress(100);
- 
-            //$("#status1").append("File upload Done<br>");           
-        }*/
+            url: uploadURL,
+            type: "POST",
+            contentType:false,
+            processData: false,
+            cache: false,
+            data: formData,
+            success: function(data){
+                if(elem === 'profile-pic')
+                {
+                    $('#'+elem).attr('src', data)
+                    addProfileHeaderToMenuBar();
+                }
+                else
+                {
+                    $('#'+elem).css('background', 'url("' + data + '") no-repeat center');
+                }
+
+            }
+                /*status.setProgress(100);
+     
+                //$("#status1").append("File upload Done<br>");           
+            }*/
     }); 
  
     //status.setAbort(jqXHR);
@@ -214,3 +208,13 @@ $(document).ready(function(){
             delaytime += 50;
     }
 });
+
+
+ //Stop public private buttons from submitting data:
+ $("#privacy").click(function ()
+ {
+    if($(this).hasClass('fa-user'))
+        $(this).removeClass('fa-user').addClass('fa-users').children().first().text(" Public");
+    else
+        $(this).removeClass('fa-users').addClass('fa-user').children().first().text(" Private");
+ });

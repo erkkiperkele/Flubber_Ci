@@ -3,4 +3,5 @@
     			right:10px;'>Flubber &copy; 2014</strong>
 
 <?php LoadJSBundle(); ?>
+</body>
 </html>

@@ -340,7 +340,7 @@
 			
 			public function setPhotographURLOfMember($memberId, $newPhotographURL){
 				try{
-					if ($this->checkEmailNotDuplicate($newEmail)){
+					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
 						$statement = $this->db->prepare('UPDATE Member SET photographURL = :newPhotographURL WHERE memberId = :memberId;');
 						$statement->bindValue(':newPhotographURL', $newPhotographURL, PDO::PARAM_STR);
 						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
@@ -364,7 +364,7 @@
 			
 			public function setCoverPictureURLOfMember($memberId, $newCoverPictureURL){
 				try{
-					if ($this->checkEmailNotDuplicate($newEmail)){
+					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
 						$statement = $this->db->prepare('UPDATE Member SET coverPictureURL = :newCoverPictureURL WHERE memberId = :memberId;');
 						$statement->bindValue(':newCoverPictureURL', $newCoverPictureURL, PDO::PARAM_STR);
 						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);

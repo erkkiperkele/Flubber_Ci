@@ -87,7 +87,7 @@ if ( ! function_exists('LoadCSSBundle'))
     	<!-- jQuery UI CSS -->
     	<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css' />
 		<!-- Fonts -->
-    	<link href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    	<link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 		<!-- Custom Styling -->
 		<link href='" .CreateURL("assets/css/custom.css'") ."rel='stylesheet' type='text/css'>
 		";
@@ -117,7 +117,7 @@ if ( ! function_exists('ProfileHeader'))
 		<h1>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 		</div>
 		<div class='col-md-3'>
-		<img id='profile-pic' class='img-responsive pull-right' src='" .$member['photographURL'] ."' width='190px' height='190px'/>
+		<img id='profile-pic' class='img-responsive pull-right' src='" .$member['photographURL'] ."' style='width:190px; height:190px'/>
 		</div>
 		";
 	}
@@ -202,8 +202,9 @@ if ( ! function_exists('AddContentBox'))
 	    		</span>
 		    </div>
 		    <div class='panel-heading'>
-		    	<h3 class='panel-title pull-left'>Status</h3>
-		    	</p>
+	    		<h3 class='panel-title pull-left'>Status</h3>
+	    		<span id='privacy' class='pull-right fa fa-user'><small> Private</small></span>
+	    		</p>
 		  	</div>
 
 	    </div>
@@ -226,7 +227,6 @@ if ( ! function_exists('MenuBar'))
 	function MenuBar()
 	{
 		echo "
-		<header>
 		<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 			<div class='container-fluid'>
     			<!-- Brand and toggle get grouped for better mobile display -->
@@ -266,7 +266,6 @@ if ( ! function_exists('MenuBar'))
     			</div><!-- /.navbar-collapse -->
   			</div><!-- /.container-fluid -->
 		</nav>
-		</header>
 		";
 	}
 }
