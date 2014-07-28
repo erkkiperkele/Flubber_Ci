@@ -26,16 +26,14 @@ class upload_model extends CI_Model {
 			{
 				$fileName = $_FILES["file"]["name"];
 				move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName);
-				$fileURL = "http://127.0.0.1:81/Flubber_Ci/assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
+				$fileURL = "http://127.0.0.1/Flubber_Ci/assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
 			}
-			chmod ($output_dir, 777);
 			return $fileURL;
 		}
 	}
 
     public function updateURLinDB($memberId, $fileURL, $fileContentType)
     {
-    	chmod ($fileURL, 777);
         if($fileContentType === 'photograph')
         {
         	$photoUpdate = $this->db2->setPhotographURLOfMember($memberId, $fileURL);
