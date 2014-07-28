@@ -1,5 +1,20 @@
 <section class="container content-section col-md-4 col-xs-4 col-md-offset-1 col-xs-offset-1">
 	<?php
+			echo
+				"<div class='interests panel panel-default'>
+		  		<div class='panel-heading'>Profile Info
+		  		
+		  		</div>
+		  		 <ul class='list-group'>"
+			;
+
+			memberInfoBox($member);
+
+			echo"
+					</ul>
+				</div>
+				</div>
+			";
 	if(count($interestTypes) > 0)
 	foreach ($interestTypes as $key => $interests): 
 	?>

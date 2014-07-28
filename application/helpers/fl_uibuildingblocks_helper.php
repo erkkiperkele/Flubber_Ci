@@ -152,6 +152,46 @@ if ( ! function_exists('InterestsBox'))
  * Random Element - Takes an array as input and returns a random element
  *
  * @access	public
+ * @param	array
+ * @return	mixed	depends on what the array contains
+ */
+if ( ! function_exists('memberInfoBox'))
+{
+	function memberInfoBox($member = "")
+	{
+		echo "
+		<li class='list-group-item'>"
+		."Email: "
+    	.$member['email']
+    	."</p>"
+    	."Profession: "
+    	.$member['profession']
+    	."</p>"
+    	."Address: "
+    	.$member['address']
+    	."</p>"
+    	."City: "
+    	.$member['city']
+    	."</p>"
+    	."Country: "
+    	.$member['country']
+    	."</p>"
+    	."Date of birth: "
+    	.$member['dateOfBirth']
+    	."</p>"
+    	."Status: "
+    	.$member['status']
+  		."</li>
+		";
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
  * @param	User 			contains	firstName, lastName and photographURL
  * @param   PostContent		contains	content, TimeStamp
  * @return	nothing
