@@ -340,17 +340,12 @@
 			
 			public function setPhotographURLOfMember($memberId, $newPhotographURL){
 				try{
-					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
-						$statement = $this->db->prepare('UPDATE Member SET photographURL = :newPhotographURL WHERE memberId = :memberId;');
-						$statement->bindValue(':newPhotographURL', $newPhotographURL, PDO::PARAM_STR);
-						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
-						$statement->execute();
-						if ($statement->rowCount() > 0){
-							return true;
-						}
-						else{
-							return false;
-						}
+					$statement = $this->db->prepare('UPDATE Member SET photographURL = :newPhotographURL WHERE memberId = :memberId;');
+					$statement->bindValue(':newPhotographURL', $newPhotographURL, PDO::PARAM_STR);
+					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
 					}
 					else{
 						return false;
@@ -364,17 +359,12 @@
 			
 			public function setCoverPictureURLOfMember($memberId, $newCoverPictureURL){
 				try{
-					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
-						$statement = $this->db->prepare('UPDATE Member SET coverPictureURL = :newCoverPictureURL WHERE memberId = :memberId;');
-						$statement->bindValue(':newCoverPictureURL', $newCoverPictureURL, PDO::PARAM_STR);
-						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
-						$statement->execute();
-						if ($statement->rowCount() > 0){
-							return true;
-						}
-						else{
-							return false;
-						}
+					$statement = $this->db->prepare('UPDATE Member SET coverPictureURL = :newCoverPictureURL WHERE memberId = :memberId;');
+					$statement->bindValue(':newCoverPictureURL', $newCoverPictureURL, PDO::PARAM_STR);
+					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
 					}
 					else{
 						return false;
@@ -388,17 +378,12 @@
 			
 			public function setThumbnailURLOfMember($memberId, $newThumbnailURL){
 				try{
-					if (true/*$this->checkEmailNotDuplicate($newEmail)*/){
-						$statement = $this->db->prepare('UPDATE Member SET thumbnailURL = :newThumbnailURL WHERE memberId = :memberId;');
-						$statement->bindValue(':newThumbnailURL', $newThumbnailURL, PDO::PARAM_STR);
-						$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
-						$statement->execute();
-						if ($statement->rowCount() > 0){
-							return true;
-						}
-						else{
-							return false;
-						}
+					$statement = $this->db->prepare('UPDATE Member SET thumbnailURL = :newThumbnailURL WHERE memberId = :memberId;');
+					$statement->bindValue(':newThumbnailURL', $newThumbnailURL, PDO::PARAM_STR);
+					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
 					}
 					else{
 						return false;
@@ -1263,24 +1248,20 @@
 		
 			public function postWallContent($memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content){
 				$newValue = 1;
-
-
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(wallContentNumber) as myMaxValue
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(wallContentNumber) as maxValue
 					FROM WallContent WHERE memberId = :memberId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['myMaxValue'] + 1;
+						$newValue = $row['maxValue'] + 1;
 					}
 				}
 				catch (PDOException $ex){
 					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
-
-					return 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
 				}
-				
 				try{
 					$statement = $this->db->prepare('INSERT INTO WallContent(memberId, wallContentNumber, permissionId, currentPosterId, previousPosterId, originalPosterId, contentType, content)
 					VALUES(:memberId, :wallContentNumber, :permissionId, :currentPosterId, :previousPosterId, :originalPosterId, :contentType, :content);');
@@ -1293,7 +1274,6 @@
 					$statement->bindValue(':contentType', $contentType, PDO::PARAM_STR);
 					$statement->bindValue(':content', $content, PDO::PARAM_STR);
 					$statement->execute();
-					
 					if ($statement->rowCount() > 0){
 						return true;
 					}
@@ -1303,6 +1283,7 @@
 				}
 				catch (PDOException $ex){
 					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
 				}
 			}
 			
