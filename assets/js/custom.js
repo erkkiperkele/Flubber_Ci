@@ -217,10 +217,10 @@ var privacyElement = $('.privacyElem');
 $('.privacy').each(function(){
     $(this).prepend(privacyElement.clone().removeClass('hide').click(function (){
         if($(this).hasClass('fa-user')){
-            $(this).removeClass('fa-user').addClass('fa-users').children().first().text("Public");
+            $(this).removeClass('fa-user').addClass('fa-users').children().first().text(" Public");
             //.click(function(){//ADD AJAX FOR PRIVACY UPDATING OF CONTENT})
         }else{
-            $(this).removeClass('fa-users').addClass('fa-user').children().first().text("Private");
+            $(this).removeClass('fa-users').addClass('fa-user').children().first().text(" Private");
         }
      }))
 });

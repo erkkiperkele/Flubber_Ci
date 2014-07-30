@@ -54,6 +54,7 @@ class FL_Controller extends CI_Controller {
 	 */
 	public function render($viewFile, $viewData)
 	{
+		$this->load->helper('url');
 		$this->load->helper('FL_UIBuildingBlocks');
 		$this->load->view('templates/header_view', $viewData);		
 		$this->load->view($viewFile . '_view', $viewData);

@@ -39,7 +39,7 @@ if ( ! function_exists('CreateURL'))
 {
 	function CreateURL($uri)
 	{
-		return "/Flubber_Ci/" .$uri; //MUST BE EDITED BASED ON APPLICATION LOCATION
+		return base_url() .$uri; //MUST BE EDITED BASED ON APPLICATION LOCATION
 	}
 }
 

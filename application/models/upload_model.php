@@ -37,27 +37,9 @@ class upload_model extends CI_Model {
         if($fileContentType === 'photograph')
         {
         	$photoUpdate = $this->db2->setPhotographURLOfMember($memberId, $fileURL);
-			$config['image_library'] = 'gd2';
-			$config['source_image']	= $fileURL;
-			$config['create_thumb'] = TRUE;
-			$config['maintain_ratio'] = TRUE;
-			$config['width']	= 100;
-			$config['height']	= 100;
+			//$thumbCreated = createThumbnail($fileURL);
 
-			$thumb = explode('.', $fileURL);
-			$i = 0;
-			while($i + 1 < count($thumb)){
-				$thumbURL .= $thumb[$i];
-				$i++;
-			}
-			$thumbURL .= '_thumb.' .$thumb[$i];
-
-			$config['new_image']	= $thumbURL;
-			$this->load->library('image_lib', $config); 
-			if($this->image_lib->resize())
-				$thumbUpdate = $this->db2->setThumbnailURLOfMember($memberId, $thumbURL);
-
-			return ($photoUpdate && $thumbUpdate);
+			return ($photoUpdate /*&& $thumbCreated*/);
         	
         }
         if($fileContentType === 'coverPicture')
@@ -67,5 +49,30 @@ class upload_model extends CI_Model {
         return false;
     }
 	
-	
+	public function createThumbnail($fileURL)
+	{
+		$config['image_library'] = 'gd2';
+		$config['source_image']	= $fileURL;
+		$config['create_thumb'] = TRUE;
+		$config['maintain_ratio'] = TRUE;
+		$config['width']	= 100;
+		$config['height']	= 100;
+
+		$thumb = explode('.', $fileURL);
+		$i = 0;
+		while($i + 1 < count($thumb)){
+			$thumbURL .= $thumb[$i];
+			$i++;
+		}
+		$thumbURL .= '_thumb.' .$thumb[$i];
+
+		$config['new_image']	= $thumbURL;
+		$this->load->library('image_lib', $config); 
+		if($this->image_lib->resize())
+			$thumbUpdate = $this->db2->setThumbnailURLOfMember($memberId, $thumbURL);
+		if($thumbUpdate == false)
+			return $this->image_lib->display_errors();
+
+		return $thumbUpdate;
+	}
 }
