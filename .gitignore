@@ -40,3 +40,9 @@ Thumbs.db
 
 application/config/config.php
 application/config/database.php
+*.JPG
+*.png
+*.ini
+application/logs/log-2014-07-24.php
+application/logs/log-2014-07-29.php
+application/logs/log-2014-07-31.php
