@@ -59,11 +59,11 @@ if ( ! function_exists('LoadJSBundle'))
 	{
 		echo "	
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
-    	<script src='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
-    	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
-    	<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'></script>
-    	<script src='" .CreateURL("assets/js/custom.js'") ."></script>		
-    			";
+		<script src='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+		<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'></script>
+		<script src='" .CreateURL("assets/js/custom.js'") ."></script>		
+				";
 	}
 }
 
@@ -82,12 +82,12 @@ if ( ! function_exists('LoadCSSBundle'))
 	{
 		echo "
 		<!-- Bootstrap Core CSS -->
-    	<link href='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-    	<link href='/flubberC/assets/css/carousel.css' rel='stylesheet' type='text/css'> 
-    	<!-- jQuery UI CSS -->
-    	<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css' />
+		<link href='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+		<link href='/flubberC/assets/css/carousel.css' rel='stylesheet' type='text/css'> 
+		<!-- jQuery UI CSS -->
+		<link rel='stylesheet' href='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css' />
 		<!-- Fonts -->
-    	<link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+		<link href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 		<!-- Custom Styling -->
 		<link href='" .CreateURL("assets/css/custom.css'") ."rel='stylesheet' type='text/css'>
 		";
@@ -138,10 +138,10 @@ if ( ! function_exists('InterestsBox'))
 	{
 		echo "
 		<li class='list-group-item'>"
-    	.$interestInfo['title']
-    	."</p>"
-    	.$interestInfo['artist']
-  		."</li>
+		.$interestInfo['title']
+		."</p>"
+		.$interestInfo['artist']
+		."</li>
 		";
 	}
 }
@@ -159,30 +159,46 @@ if ( ! function_exists('memberInfoBox'))
 {
 	function memberInfoBox($member = "")
 	{
-		echo "
-		<li class='list-group-item'>"
-		."Email: "
-    	.$member['email']
-    	."</p>"
-    	."Profession: "
-    	.$member['profession']
-    	."</p>"
-    	."Address: "
-    	.$member['address']
-    	."</p>"
-    	."City: "
-    	.$member['city']
-    	."</p>"
-    	."Country: "
-    	.$member['country']
-    	."</p>"
-    	."Date of birth: "
-    	.$member['dateOfBirth']
-    	."</p>"
-    	."Status: "
-    	.$member['status']
-  		."</li>
-		";
+		echo
+"<div class='interests panel panel-default'>
+	<div class='panel-heading'>Profile Info
+	
+	</div>
+	 <ul class='list-group'>
+		<li class='list-group-item editable'>
+		Email:
+		<div class= 'editText'>"
+		.$member['email']
+		."</div></li>
+		<li class='list-group-item editText'>"
+		."Profession: 
+		<div class= 'editText'>"
+		.$member['profession']
+		."</div></li>
+		<li class='list-group-item editText'>"
+		."Address: "
+		.$member['address']
+		."</li>
+		<li class='list-group-item editText'>"
+		."City: "
+		.$member['city']
+		."</li>
+		<li class='list-group-item editText'>"
+		."Country: "
+		.$member['country']
+		."</li>
+		<li class='list-group-item editText'>"
+		."Date of birth: "
+		.$member['dateOfBirth']
+		."</li>
+		<li class='list-group-item editText'>"
+		."Status: "
+		.$member['status']
+		."</li>
+		</ul>
+	</div>
+	</div>
+";
 	}
 }
 
@@ -202,17 +218,17 @@ if ( ! function_exists('ContentBox'))
 	{
 		echo "
 		<div class='content panel panel-default'>
-  			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
-  				<div class='panel-title row'>
-    				<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
-    				<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-    				<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
-    			</div>
-  			</div>
- 	 		<div class='panel-body'> <div class='editText'>"
-    		.$PostInfo['content']
-    		."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
-  			</div>
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
+				<div class='panel-title row'>
+					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='20px' height='20px' style='margin:10px 10px'/>
+					<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+					<h4 class='col-md-6 text-right privacy' style='margin-top:15px'><small>" .$PostInfo['timeStamp'] ."</small></h4>
+				</div>
+			</div>
+			<div class='panel-body'> <div class='editText'>"
+			.$PostInfo['content']
+			."</div><div><button type='button' class='heart btn btn-default'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+			</div>
 		</div>
 		";
 	}
@@ -236,17 +252,17 @@ if ( ! function_exists('AddContentBox'))
 		echo "
 		<div class='panel panel-default'>
 			<div class='input-group'>
-	      		<input type='textarea' class='form-control' name='updatedStatus'>
-	      	  	<span class='input-group-btn'>
-	        		<button class='btn btn-default' type='submit'>Post</button>
-	    		</span>
-		    </div>
-		    <div class='panel-heading privacy'>
-	    		<h3 class='panel-title pull-left'>Status</h3>
-	    		</p>
-		  	</div>
+				<input type='textarea' class='form-control' name='updatedStatus'>
+				<span class='input-group-btn'>
+					<button class='btn btn-default' type='submit'>Post</button>
+				</span>
+			</div>
+			<div class='panel-heading privacy'>
+				<h3 class='panel-title pull-left'>Status</h3>
+				</p>
+			</div>
 
-	    </div>
+		</div>
 		";
 		echo form_close();
 	}
@@ -268,42 +284,42 @@ if ( ! function_exists('MenuBar'))
 		echo "
 		<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 			<div class='container-fluid'>
-    			<!-- Brand and toggle get grouped for better mobile display -->
-    			<div class='navbar-header'>
-      				<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#menu'>
-        				<span class='sr-only'>Toggle navigation</span>
-        				<span class='icon-bar'></span>
-        				<span class='icon-bar'></span>
-        				<span class='icon-bar'></span>
-      				</button>
-      			<a class='navbar-brand' href='#'>Flubber</a>
-    			</div>
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class='navbar-header'>
+					<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#menu'>
+						<span class='sr-only'>Toggle navigation</span>
+						<span class='icon-bar'></span>
+						<span class='icon-bar'></span>
+						<span class='icon-bar'></span>
+					</button>
+				<a class='navbar-brand' href='#'>Flubber</a>
+				</div>
 
-    			<!-- Collect the nav links, forms, and other content for toggling -->
-    			<div class='collapse navbar-collapse' id='menu'>
-      				<ul class='nav navbar-nav'>
-        				<li class='active'><a href='" .CreateURL('index') ."'>Home</a></li>
-        				<li><a href='" .CreateURL('profile') ."'>Profile</a></li>
-        				<li><a href='" .CreateURL('groups') ."'>Groups</a></li>
-        				<li><a href='" .CreateURL('friends') ."'>Friends</a></li>
-        				<li class='Settings'>
-          					<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Settings<span class='caret'></span></a>
-          					<ul class='dropdown-menu' role='menu'>
-            					<li><a href='#'>Privacy</a></li>
-            					<li class='divider'></li>
-            					<li><a href='#'>Logout</a></li>
-          					</ul>
-        				</li>
-      				</ul>
-      				<form class='navbar-form navbar-left' role='search'>
-        				<div class='form-group'>
-          					<input type='text' class='form-control' placeholder='Search'>
-        				</div>
-        				<button type='submit' class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button>
-      				</form>
-      				<div id='menu-profile' class='navbar-right'></div>
-    			</div><!-- /.navbar-collapse -->
-  			</div><!-- /.container-fluid -->
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class='collapse navbar-collapse' id='menu'>
+					<ul class='nav navbar-nav'>
+						<li class='active'><a href='" .CreateURL('index') ."'>Home</a></li>
+						<li><a href='" .CreateURL('profile') ."'>Profile</a></li>
+						<li><a href='" .CreateURL('groups') ."'>Groups</a></li>
+						<li><a href='" .CreateURL('friends') ."'>Friends</a></li>
+						<li class='Settings'>
+							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Settings<span class='caret'></span></a>
+							<ul class='dropdown-menu' role='menu'>
+								<li><a href='#'>Privacy</a></li>
+								<li class='divider'></li>
+								<li><a href='#'>Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+					<form class='navbar-form navbar-left' role='search'>
+						<div class='form-group'>
+							<input type='text' class='form-control' placeholder='Search'>
+						</div>
+						<button type='submit' class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button>
+					</form>
+					<div id='menu-profile' class='navbar-right'></div>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
 		</nav>
 		";
 	}
