@@ -225,7 +225,7 @@ if ( ! function_exists('ContentBox'))
 		<div class='content panel panel-default'>
 			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
 				<div class='panel-title row'>
-					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='20px' height='20px' style='margin:10px 10px'/>
+					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 					<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
 					<h4 class='col-md-6 text-right privacy' style='margin-top:15px'><small>" .$PostInfo['timeStamp'] ."</small></h4>
 				</div>
