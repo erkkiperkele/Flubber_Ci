@@ -249,7 +249,7 @@ toEdit.each(function(){
         $.ajax({
             type: "post",
             url: baseURL + "index.php/profile/updatePost/",
-            data: "id="+id+"&updatePost="+editInput.val(),
+            data: "id="+id+"&updatedPost="+editInput.val(),
         });
         editInput.remove();
       }
