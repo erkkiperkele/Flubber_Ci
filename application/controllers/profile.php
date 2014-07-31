@@ -37,6 +37,15 @@ class profile extends FL_Controller {
 		$this->index();
 	}
 
+	public function updatePost()
+	{
+		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
+		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
+		$content = $this->input->post('updatedPost');
+		$postId = $this->input->post('id');
+		$this->profile_model->update_Post($postId, $permissionId, $contentType, $content);
+	}
+
 	public function updateMemberInfo()
 	{
 		echo "IT IS HERE!!";

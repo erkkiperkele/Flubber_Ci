@@ -76,6 +76,16 @@ class profile_model extends CI_Model {
 		$originalPosterId = $this->memberId;
 		$this->db2->postWallContent($this->memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
+	
+	public function update_Post($wallContentNumber, $permissionId, $contentType, $content)
+	{
+		$this->delete_post($wallContentNumber);
+		$this->add_status($permissionId, $contentType, $content);
+
+	public function delete_post($wallContentNumber)
+	{
+		$this->db2->deleteWallContent($this->memberId;, $wallContentNumber);
+	}
 
 	public function update_MemberAddress($newAddress, $newCity, $newCountry)
 	{
