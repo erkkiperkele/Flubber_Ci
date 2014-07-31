@@ -238,6 +238,7 @@ var editbox = $('.editbar-input');
 var toEdit = $('.editable');
 toEdit.each(function(){
   var editContent = $(this).parent().find('.editText');
+  var id = $(this).parent().find('.panel-title').attr('id');
   var editInput;
   $(this).prepend(editbtn.clone().removeClass('hide').click(function(){
     if(editContent.hasClass('hide')){
@@ -248,7 +249,7 @@ toEdit.each(function(){
         $.ajax({
             type: "post",
             url: baseURL + "index.php/profile/updatePost/",
-            data: "id="+$(this).attr('id')+"&updatePost="+editInput.val(),
+            data: "id="+id+"&updatePost="+editInput.val(),
         });
         editInput.remove();
       }
