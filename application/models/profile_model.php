@@ -82,10 +82,10 @@ class profile_model extends CI_Model {
 		$this->delete_post($wallContentNumber);
 		$this->add_status($permissionId, $contentType, $content);
 	}
-	
+
 	public function delete_post($wallContentNumber)
 	{
-		$this->db2->deleteWallContent($this->memberId;, $wallContentNumber);
+		$this->db2->deleteWallContent($this->memberId, $wallContentNumber);
 	}
 
 	public function update_MemberAddress($newAddress, $newCity, $newCountry)
