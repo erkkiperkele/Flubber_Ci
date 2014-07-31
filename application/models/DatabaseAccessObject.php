@@ -810,12 +810,12 @@
 			public function sendMessage($sentTo, $sentFrom, $content){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(messageNumber) as maxValue FROM Message WHERE sentTo = :sentTo;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(messageNumber) as maxValueTemp FROM Message WHERE sentTo = :sentTo;');
 					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -923,12 +923,12 @@
 			public function sendRequest($sentTo, $sentFrom, $requestType, $content){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(requestNumber) as maxValue FROM Request WHERE sentTo = :sentTo;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(requestNumber) as maxValueTemp FROM Request WHERE sentTo = :sentTo;');
 					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1038,13 +1038,13 @@
 			public function addInterest($memberId, $interestTypeId, $title, $artist){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(interestNumber) as maxValue
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(interestNumber) as maxValueTemp
 					FROM Interest WHERE memberId = :memberId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1135,12 +1135,12 @@
 			public function sendGift($sentTo, $sentFrom, $giftTypeId){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(giftNumber) as maxValue FROM Gift WHERE sentTo = :sentTo;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(giftNumber) as maxValueTemp FROM Gift WHERE sentTo = :sentTo;');
 					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1249,13 +1249,13 @@
 			public function postWallContent($memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(wallContentNumber) as maxValue
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(wallContentNumber) as maxValueTemp
 					FROM WallContent WHERE memberId = :memberId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1350,12 +1350,12 @@
 			public function postPublicContent($memberId, $contentType, $content){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(publicContentNumber) as maxValue FROM PublicContent WHERE memberId = :memberId;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(publicContentNumber) as maxValueTemp FROM PublicContent WHERE memberId = :memberId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1619,12 +1619,12 @@
 			public function postGroupContent($groupId,$permissionId,$currentPosterId,$previousPosterId,$originalPosterId,$contentType,$content){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(groupContentNumber) as maxValue FROM GroupContent WHERE groupId = :groupId;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(groupContentNumber) as maxValueTemp FROM GroupContent WHERE groupId = :groupId;');
 					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
@@ -1719,12 +1719,12 @@
 			public function addGiftExchange($groupId, $giftExchangeName){
 				$newValue = 1;
 				try{
-					$statement = $this->db->prepare('SELECT count(*) as countValue, max(giftExchangeNumber) as maxValue FROM GiftExchange WHERE groupId = :groupId;');
+					$statement = $this->db->prepare('SELECT count(*) as countValue, max(giftExchangeNumber) as maxValueTemp FROM GiftExchange WHERE groupId = :groupId;');
 					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
 					$statement->execute();
 					$row = $statement->fetch(PDO::FETCH_ASSOC);
 					if ($row['countValue'] > 0){
-						$newValue = $row['maxValue'] + 1;
+						$newValue = $row['maxValueTemp'] + 1;
 					}
 				}
 				catch (PDOException $ex){
