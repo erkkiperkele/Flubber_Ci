@@ -34,6 +34,10 @@ class FL_Controller extends CI_Controller {
 	{
 		parent::__construct();
 
+
+		$this->load->helper('url');
+		$this->load->helper('FL_UIBuildingBlocks');
+		
 		$isLoggedIn = $this->isLogged();
 		if ($isLoggedIn == false)
 		{
@@ -54,8 +58,6 @@ class FL_Controller extends CI_Controller {
 	 */
 	public function render($viewFile, $viewData)
 	{
-		$this->load->helper('url');
-		$this->load->helper('FL_UIBuildingBlocks');
 		$this->load->view('templates/header_view', $viewData);		
 		$this->load->view($viewFile . '_view', $viewData);
         $this->load->view('templates/footer_view');

@@ -34,7 +34,7 @@ class profile extends FL_Controller {
 		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$content = $this->input->post('updatedStatus');
 		$this->profile_model->add_Status($permissionId, $contentType, $content);
-		#$this->index();
+		redirect('/profile/');
 	}
 
 	public function updatePost()
