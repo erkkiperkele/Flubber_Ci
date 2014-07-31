@@ -77,7 +77,10 @@ class profile_model extends CI_Model {
 		$this->db2->postWallContent($this->memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
-
+	public function update_MemberAddress($newAddress, $newCity, $newCountry)
+	{
+		$this->db2->setAddressOfMember($this->memberId, $newAddress, $newCity, $newCountry);
+	}
 
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
 	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')

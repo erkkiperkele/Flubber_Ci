@@ -2,12 +2,14 @@
 class profile extends FL_Controller {
 
 	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
+	private $currentMember;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('profile_model');
 		$this->load->helper('form');
+		$this->currentMember = $this->profile_model->get_user($this->memberId);
 
 		
 		#$this->load->helper('fl_DatabaseAccessObject');
@@ -33,5 +35,22 @@ class profile extends FL_Controller {
 		$content = $this->input->post('updatedStatus');
 		$this->profile_model->add_Status($permissionId, $contentType, $content);
 		$this->index();
+	}
+
+	public function updateMemberInfo()
+	{
+		$field = $this->input->post('field');
+		$content = $this->input->post('changedInfo');
+		$member = $this->currentMember;
+		switch ($field) {
+			case 'address':
+				$member['address'] = $content;
+				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country'])
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 	}
 }
