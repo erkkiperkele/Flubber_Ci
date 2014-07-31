@@ -259,9 +259,18 @@ toEdit.each(function(){
 });
 
 
-$('.list-group-item').bind('dblclick', function() {
+<<<<<<< HEAD
+// $('.list-group-item').bind('dblclick', function() {
+//     $(this).attr('contentEditable', true);
+// }).blur(function() {
+//     //ADD AJAX FUNCTION FOR CONTENT UPDATING
+//     $(this).attr('contentEditable', false);
+// });
+=======
+$('.memberEdit').bind('dblclick', function() {
     $(this).attr('contentEditable', true);
 }).blur(function() {
     //ADD AJAX FUNCTION FOR CONTENT UPDATING
     $(this).attr('contentEditable', false);
 });
+>>>>>>> FETCH_HEAD

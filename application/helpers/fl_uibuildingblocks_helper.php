@@ -165,36 +165,41 @@ if ( ! function_exists('memberInfoBox'))
 	
 	</div>
 	 <ul class='list-group'>
-		<li class='list-group-item editable'>
+		<li class='list-group-item'>
 		Email:
-		<div class= 'editText'>"
+		<div contentEditable='true'>"
 		.$member['email']
 		."</div></li>
-		<li class='list-group-item editText'>"
+		<li class='list-group-item'>"
 		."Profession: 
-		<div class= 'editText'>"
+		<div contentEditable='true'>"
 		.$member['profession']
 		."</div></li>
-		<li class='list-group-item editText'>"
-		."Address: "
+		<li class='list-group-item'>"
+		."Address: 
+		<div contentEditable='true'>"
 		.$member['address']
-		."</li>
-		<li class='list-group-item editText'>"
-		."City: "
+		."</div></li>
+		<li class='list-group-item'>"
+		."City: 
+		<div contentEditable='true'>"
 		.$member['city']
-		."</li>
-		<li class='list-group-item editText'>"
-		."Country: "
+		."</div></li>
+		<li class='list-group-item'>"
+		."Country: 
+		<div contentEditable='true'>"
 		.$member['country']
-		."</li>
-		<li class='list-group-item editText'>"
-		."Date of birth: "
+		."</div></li>
+		<li class='list-group-item'>"
+		."Date of birth: 
+		<div contentEditable='true'>"
 		.$member['dateOfBirth']
-		."</li>
-		<li class='list-group-item editText'>"
-		."Status: "
+		."</div></li>
+		<li class='list-group-item'>"
+		."Status: 
+		<div contentEditable='true'>"
 		.$member['status']
-		."</li>
+		."</div></li>
 		</ul>
 	</div>
 	</div>
