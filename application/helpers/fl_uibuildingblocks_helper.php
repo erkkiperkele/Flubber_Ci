@@ -167,37 +167,37 @@ if ( ! function_exists('memberInfoBox'))
 	 <ul class='list-group'>
 		<li class='list-group-item'>
 		Email:
-		<div contentEditable='true'>"
+		<div id='email' class='memberEdit'>"
 		.$member['email']
 		."</div></li>
 		<li class='list-group-item'>"
 		."Profession: 
-		<div contentEditable='true'>"
+		<div id='profession' class='memberEdit'>"
 		.$member['profession']
 		."</div></li>
 		<li class='list-group-item'>"
 		."Address: 
-		<div contentEditable='true'>"
+		<div id='address' class='memberEdit'>"
 		.$member['address']
 		."</div></li>
 		<li class='list-group-item'>"
 		."City: 
-		<div contentEditable='true'>"
+		<div id='city' class='memberEdit'>"
 		.$member['city']
 		."</div></li>
 		<li class='list-group-item'>"
 		."Country: 
-		<div contentEditable='true'>"
+		<div id='city' class='memberEdit'>"
 		.$member['country']
 		."</div></li>
 		<li class='list-group-item'>"
 		."Date of birth: 
-		<div contentEditable='true'>"
+		<div id='DOB' class='memberEdit'>"
 		.$member['dateOfBirth']
 		."</div></li>
 		<li class='list-group-item'>"
 		."Status: 
-		<div contentEditable='true'>"
+		<div id='status' class='memberEdit'>"
 		.$member['status']
 		."</div></li>
 		</ul>

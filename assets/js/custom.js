@@ -264,9 +264,16 @@ toEdit.each(function(){
 //     //ADD AJAX FUNCTION FOR CONTENT UPDATING
 //     $(this).attr('contentEditable', false);
 // });
-$('.memberEdit').bind('dblclick', function() {
+$('.memberEdit').bind('click', function() {
     $(this).attr('contentEditable', true);
 }).blur(function() {
-    //ADD AJAX FUNCTION FOR CONTENT UPDATING
     $(this).attr('contentEditable', false);
+    var changedInfo = $(this).text();
+    var field = $(this).attr('id');
+    $.ajax({
+        type: "post",
+        url: "/index.php/profile/updateMemberInfo/",
+        data: "field="+field+"&changedInfo="+changedInfo,
+        });
+
 });
