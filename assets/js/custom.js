@@ -260,6 +260,7 @@ toEdit.each(function(){
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // $('.list-group-item').bind('dblclick', function() {
 //     $(this).attr('contentEditable', true);
 // }).blur(function() {
@@ -267,6 +268,8 @@ toEdit.each(function(){
 //     $(this).attr('contentEditable', false);
 // });
 =======
+=======
+>>>>>>> FETCH_HEAD
 $('.memberEdit').bind('dblclick', function() {
     $(this).attr('contentEditable', true);
 }).blur(function() {
