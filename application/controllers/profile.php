@@ -39,13 +39,14 @@ class profile extends FL_Controller {
 
 	public function updateMemberInfo()
 	{
+		echo "IT IS HERE!!";
 		$field = $this->input->post('field');
 		$content = $this->input->post('changedInfo');
 		$member = $this->currentMember;
 		switch ($field) {
 			case 'address':
 				$member['address'] = $content;
-				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country'])
+				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country']);
 				break;
 			
 			default:

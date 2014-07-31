@@ -272,7 +272,7 @@ $('.memberEdit').bind('click', function() {
     var field = $(this).attr('id');
     $.ajax({
         type: "post",
-        url: "/index.php/profile/updateMemberInfo/",
+        url: baseURL + "index.php/profile/updateMemberInfo/",
         data: "field="+field+"&changedInfo="+changedInfo,
         });
 

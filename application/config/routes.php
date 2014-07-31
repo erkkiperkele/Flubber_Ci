@@ -47,6 +47,7 @@ $route['404_override'] = '';
 $route['profile'] = 'profile';
 $route['upload/file/(:any)'] = 'upload/file/$1';
 $route['profile/addStatus'] = 'profile/addStatus';
+$route['profile/updateMemberInfo'] = 'profile/updateMemberInfo';
 $route['(:any)'] = 'pages/view/$1';
 
 /* End of file routes.php */

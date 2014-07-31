@@ -62,8 +62,11 @@ if ( ! function_exists('LoadJSBundle'))
 		<script src='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
 		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
 		<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'></script>
-		<script src='" .CreateURL("assets/js/custom.js'") ."></script>		
-				";
+		<script type='text/javascript'>
+			var baseURL = '" .base_url()
+		."'</script>	
+		<script src='" .CreateURL("assets/js/custom.js'") ."></script>	
+		";
 	}
 }
 
