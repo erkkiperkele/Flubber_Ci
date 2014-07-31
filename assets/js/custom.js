@@ -245,7 +245,11 @@ toEdit.each(function(){
         editInput.remove();
       } else {
         editContent.text(editInput.val());
-        //ADD AJAX FUNCTION FOR CONTENT UPDATING
+        $.ajax({
+            type: "post",
+            url: baseURL + "index.php/profile/updatePost/",
+            data: "id="+$(this).attr('id')+"&updatePost="+editInput.val(),
+        });
         editInput.remove();
       }
       editContent.removeClass('hide');
