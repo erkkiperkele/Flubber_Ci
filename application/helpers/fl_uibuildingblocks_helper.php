@@ -164,9 +164,9 @@ if ( ! function_exists('memberInfoBox'))
 	{
 		echo
 "<div class='interests panel panel-default'>
-	<div class='panel-heading'>Profile Info
-	
-	</div>
+	<div class='panel-heading'>About "
+	.$member['firstName']
+	."</div>
 	 <ul class='list-group'>
 		<li class='list-group-item'>
 		Email:
@@ -190,7 +190,7 @@ if ( ! function_exists('memberInfoBox'))
 		."</div></li>
 		<li class='list-group-item'>"
 		."Country: 
-		<div id='city' class='memberEdit'>"
+		<div id='country' class='memberEdit'>"
 		.$member['country']
 		."</div></li>
 		<li class='list-group-item'>"

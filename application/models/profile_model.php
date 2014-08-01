@@ -93,6 +93,16 @@ class profile_model extends CI_Model {
 		$this->db2->setAddressOfMember($this->memberId, $newAddress, $newCity, $newCountry);
 	}
 
+	public function update_MemberEmail($newEmail)
+	{
+		$this->db2->setEmailOfMember($this->memberId, $newEmail);
+	}
+
+	public function update_MemberProfession($newProfession)
+	{
+		$this->db2->setProfessionOfMember($this->memberId, $newProfession);
+	}
+
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
 	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')
 	{

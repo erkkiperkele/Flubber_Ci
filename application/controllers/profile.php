@@ -53,11 +53,26 @@ class profile extends FL_Controller {
 		$content = $this->input->post('changedInfo');
 		$member = $this->currentMember;
 		switch ($field) {
+			case 'email':
+				$member['email'] = $content;
+				$this->profile_model->update_MemberEmail($member['email']);
+				break;
+			case 'profession':
+				$member['profession'] = $content;
+				$this->profile_model->update_MemberProfession($member['profession']);
+				break;
 			case 'address':
 				$member['address'] = $content;
 				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country']);
 				break;
-			
+			case 'city':
+				$member['city'] = $content;
+				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country']);
+				break;
+			case 'country':
+				$member['country'] = $content;
+				$this->profile_model->update_MemberAddress($member['address'], $member['city'], $member['country']);
+				break;
 			default:
 				#TODO!!!!!!!
 				break;
