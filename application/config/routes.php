@@ -38,20 +38,13 @@
 |
 */
 
-$route['default_controller'] = 'login';
-$route['login'] = 'login';
+$route['default_controller'] = 'flubber';
+#$route['login'] = 'login';
 $route['404_override'] = '';
 
 #$route['posts/(:any)'] = 'wall/view/$1';
 #$route['wall'] = 'wall';
-$route['profile'] = 'profile';
-$route['upload/file/(:any)'] = 'upload/file/$1';
-$route['profile/addStatus'] = 'profile/addStatus';
-$route['profile/updateMemberInfo'] = 'profile/updateMemberInfo';
-$route['profile/updatePost'] = 'profile/updatePost';
-$route['profile/updatePostPrivacy'] = 'profile/updatePostPrivacy';
-$route['friends'] = 'friends';
-$route['(:any)'] = 'pages/view/$1';
+#$route['(:any)'] = 'pages/view/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
