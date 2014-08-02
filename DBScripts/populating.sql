@@ -43,3 +43,20 @@ INSERT into Interest
 	(1, 6, 2, 'Django', 'Tarantino'),
 	(1, 7, 3, 'Le petit prince', 'St-Exupéry'),
 	(1, 8, 4, 'Guernica', 'Picasso');
+
+	
+INSERT into Related
+	(memberId, relatedId, relationshipTypeId)
+	VALUES
+	(1, 2, 3),
+	(2, 1, 3);
+	
+INSERT into Groups
+	(groupId, groupName, ownerId, description)
+	VALUES
+	(1, 'COMP5311G4', 1, 'Files and databases'),
+	(2, 'Book club 42', 1, 'Follow the thumb...'),
+	(3, 'Weird MS bugs', 2, 'Found yet another ineffable loophole in the great MS product? That is marked as treated even though you know it''s a lie? Share you stories here.'),
+	(4, 'Montreal Photo Society', 1, 'Challenge of the month: go to a metro station you have never been before and take the picture of the strangest thing in the area.')
+
+	
