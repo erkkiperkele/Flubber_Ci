@@ -64,6 +64,3 @@ class flubber extends CI_Controller {
 
 	}
 }
-
-?>
-
