@@ -38,11 +38,11 @@ class FL_Controller extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('FL_UIBuildingBlocks');
 		
-		$isLoggedIn = $this->isLogged();
+		/*$isLoggedIn = $this->isLogged();
 		if ($isLoggedIn == false)
 		{
 			redirect('/flubber/logout/');
-		}
+		}*/
 	}
 
 	/**
