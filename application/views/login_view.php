@@ -10,15 +10,15 @@
     <section class="container content-section text-right col-md-4 col-xs-4 col-md-offset-1 col-xs-offset-1">
       <h1>Welcome to Flubber</h1>
       <?php echo validation_errors(); ?>
-      <?php echo form_open('verifylogin'); ?>
+      <?php echo form_open('/flubber/login'); ?>
         <div class="input-group input-group-md">
           <span class="input-group-addon">Email:</span>
-          <input type="text" class="form-control" id="username" placeholder="Enter your Email">
+          <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Email">
         </div>
         <br/>
         <div class="input-group input-group-md">
           <span class="input-group-addon">Password:</span>
-          <input type="password" class="form-control" id="password" placeholder="Enter your Password">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password">
         </div>
         <br/>
         <button type="submit" class="btn btn-default" value="login">Login</button>
@@ -70,3 +70,5 @@
   </section>
 </body>
 <?php LoadJSBundle() ?>
+
+</script>
