@@ -41,7 +41,7 @@ class FL_Controller extends CI_Controller {
 		$isLoggedIn = $this->isLogged();
 		if ($isLoggedIn == false)
 		{
-			show_404();
+			redirect('/flubber/logout/');
 		}
 	}
 
@@ -50,7 +50,9 @@ class FL_Controller extends CI_Controller {
 	 */
 	public function isLogged()
 	{
-		return true;
+		if($this->session->userdata('memberId') != "")
+			return true;
+		return false;
 	}
 
 	/**

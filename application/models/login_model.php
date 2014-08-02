@@ -1,11 +1,20 @@
 <?php
-Class User extends CI_Model
+Class login_model extends CI_Model
 {
- function login($user, $pass)
- {
+	private $db2;
 
-   $db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
-   $db2->verifyLogin($user, $pass);
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->database();
+		$this->load->helper('fl_DatabaseAccessObject');
+		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
+	}
+	
+
+ function doLogin($user, $pass)
+ {
+   return $this->db2->verifyLogin($user, $pass);
  }
 }
 ?>
