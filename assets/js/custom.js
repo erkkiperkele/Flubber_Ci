@@ -218,6 +218,13 @@ $('.privacy').each(function(){
     $(this).prepend(privacyElement.clone().removeClass('hide').click(function (){
         if($(this).hasClass('fa-user')){
             $(this).removeClass('fa-user').addClass('fa-users').children().first().text(" Public");
+            var privacy = $(this).text();
+            var postId = $(this).parent().parent().attr('id');
+            $.ajax({
+                type: "post",
+                url: baseURL + "index.php/profile/updatePostPrivacy/",
+                data: "postId="+postId+"&privacy="+privacy,
+                });
             //.click(function(){//ADD AJAX FOR PRIVACY UPDATING OF CONTENT})
         }else{
             $(this).removeClass('fa-users').addClass('fa-user').children().first().text(" Private");

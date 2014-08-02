@@ -198,11 +198,6 @@ if ( ! function_exists('memberInfoBox'))
 		<div>"
 		.$member['dateOfBirth']
 		."</div></li>
-		<li class='list-group-item'>"
-		."Status: 
-		<div id='status' class='memberEdit'>"
-		.$member['status']
-		."</div></li>
 		</ul>
 	</div>
 	</div>

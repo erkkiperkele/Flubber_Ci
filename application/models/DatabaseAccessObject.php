@@ -1308,7 +1308,7 @@
 			
 			public function getWallContentInfo($memberId, $wallContentNumber){
 				try{
-					$statement = $this->db->prepare('SELECT memberId, wallContentNumber, permissionId, currentPosterId, previousPosterId, originalPosterId, contentType, content, timeStamp
+					$statement = $this->db->prepare('SELECT memberId, wallContentNumber, permissionId, currentPosterId, previousPosterId, originalPosterId, contentType, content, `timeStamp`
 					FROM WallContent WHERE memberId = :memberId AND wallContentNumber = :wallContentNumber;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':wallContentNumber', $wallContentNumber, PDO::PARAM_INT);

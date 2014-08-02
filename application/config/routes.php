@@ -49,6 +49,7 @@ $route['upload/file/(:any)'] = 'upload/file/$1';
 $route['profile/addStatus'] = 'profile/addStatus';
 $route['profile/updateMemberInfo'] = 'profile/updateMemberInfo';
 $route['profile/updatePost'] = 'profile/updatePost';
+$route['profile/updatePostPrivacy'] = 'profile/updatePostPrivacy';
 $route['friends'] = 'friends';
 $route['(:any)'] = 'pages/view/$1';
 

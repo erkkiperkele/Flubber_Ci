@@ -46,6 +46,23 @@ class profile extends FL_Controller {
 		$this->profile_model->update_Post($postId, $permissionId, $contentType, $content);
 	}
 
+	public function updatePostPrivacy()
+	{
+		$postId = $this->input->post('postId');
+		$privacy = $this->input->post('privacy');
+		$permissionId = 1;		//default is private
+		switch ($privacy) {
+			case ' Public':
+				$permissionId=2;
+				break;
+			default:
+				$permissionId=3;	//Should never happen. If permissionId not in db, update won't work
+			//TO COMPLETE once we have the drop down.
+		}
+		$this->profile_model->update_PostPrivacy($postId, $permissionId);
+		//$this->profile_model->add_Status($permissionId, 'text', $privacy);
+	}
+
 	public function updateMemberInfo()
 	{
 		echo "IT IS HERE!!";
