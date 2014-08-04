@@ -57,7 +57,20 @@ INSERT into Groups
 	VALUES
 	(1, 'COMP5311G4', 1, 'Files and databases'),
 	(2, 'Book club 42', 1, 'Follow the thumb...'),
-	(3, 'Weird MS bugs', 2, 'Found yet another ineffable loophole in the great MS product? That is marked as treated even though you know it''s a lie? Share you stories here.'),
+	(3, 'Weird MS bugs', 2, 'Found yet another ineffable loophole in the great MS product? That is marked as treated even though you know it''s a lie? Share your stories here.'),
 	(4, 'Montreal Photo Society', 1, 'Challenge of the month: go to a metro station you have never been before and take the picture of the strangest thing in the area.')
 
-	
+INSERT into memberofgroup
+	(memberId, groupId)
+	VALUES
+	(1,1),
+	(1,2),
+	(1,4),
+	(2,1),
+	(2,2),
+	(2,3);
+
+INSERT into groupcontent
+	(groupId, groupContentNumber, permissionId, currentPosterId, previousPosterId, originalPosterId, contentType, content, timeStamp)
+	VALUES
+	(3,1,1,1,1,1,1,'First poster!',CURRENT_TIMESTAMP);

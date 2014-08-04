@@ -8,7 +8,10 @@
 	<div style="margin-top: 5%">
 		<section class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
 		<?php 
-			ProfileHeader($member)
+			if($currentPage == 'groups')
+				GroupHeader($group, $owner);
+			else
+				ProfileHeader($member);
 		?>
 		</section>
 	</div>

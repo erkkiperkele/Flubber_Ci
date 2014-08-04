@@ -19,6 +19,8 @@ class profile extends FL_Controller {
 	{
 		if($id > 0)
 			$this->memberId = $id;
+		
+		$data['currentPage'] = 'profile';
 		#$data['posts'] = $this->profile_model->get_publicContent();
 		$data['posts'] = $this->profile_model->get_WallContent($this->memberId);
 		$data['member'] = $this->profile_model->get_user($this->memberId);

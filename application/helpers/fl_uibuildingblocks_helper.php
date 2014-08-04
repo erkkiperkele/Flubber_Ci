@@ -243,6 +243,38 @@ if ( ! function_exists('ContentBox'))
  * Random Element - Takes an array as input and returns a random element
  *
  * @access	public
+ * @param	User 			contains	firstName, lastName and photographURL
+ * @param   PostContent		contains	content, TimeStamp
+ * @return	nothing
+ */
+if ( ! function_exists('GroupContentBox'))
+{
+	function GroupContentBox($PostInfo = "")
+	{
+		echo "
+		<div class='content panel panel-default'>
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
+				<div class='panel-title row' id='".$PostInfo['groupContentNumber']."'>
+					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+					<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+					<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
+				</div>
+			</div>
+			<div class='panel-body'> <div class='editText'>"
+			.$PostInfo['content']
+			."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+			</div>
+		</div>
+		";
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
  * @param	User 			contains	FirstName, LastName and photographURL
  * @param   PostContent		contains	content, TimeStamp
  * @return	nothing
@@ -364,14 +396,14 @@ if ( ! function_exists('InputBox'))
  */
 if ( ! function_exists('GroupHeader'))
 {
-	function GroupHeader($firstName, $lastName, $picHref = "http://placehold.it/220x160")
+	function GroupHeader($group, $owner)
 	{
 		echo "
+		<div id='group-name' class='jumbotron col-md-9' style='background-image:url(".$owner['coverPictureURL']."); background-size: cover'>
+		<h1>" .$group['groupName'] ."<br/><small> " .$owner['firstName'].' '.$owner['lastName'] ."</small></h1>
+		</div>
 		<div class='col-md-3'>
-			<img id='group-pic' class='img-responsive pull-right' src='" .$picHref ."'/>
-		</div>	
-		<div id='group-name' class='jumbotron text-center col-md-9'>
-			<h2>" .$firstName ."<small>" .$lastName ."</small></h2>
+		<img id='group-pic' class='img-responsive pull-right' src='" .$owner['photographURL'] ."' style='width:190px; height:190px'/>
 		</div>
 		";
 	}
@@ -497,6 +529,111 @@ if ( ! function_exists('FriendsCarousel'))
 					<span class=\"glyphicon glyphicon-chevron-left\"></span>
 				  </a>
 				  <a class=\"right carousel-control\" href=\"#".$friendType."-carousel\" role=\"button\" data-slide=\"next\">
+					<span class=\"glyphicon glyphicon-chevron-right\"></span>
+				  </a>
+				";
+			}
+			
+			echo "
+			</div>
+			</div>
+			";
+		}
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	User 			contains	firstName, lastName and photographURL
+ * @param   PostContent		contains	content, TimeStamp
+ * @return	nothing
+ */
+if ( ! function_exists('GroupsCarousel'))
+{
+	function GroupsCarousel($memberList, $ownerId, $boxsize = 8)
+	{
+		$total = count($memberList);
+		$page = ceil($total / $boxsize);
+		
+		if (is_array($memberList) && $total > 0)
+		{
+			echo "
+			<div class=\"col-md-12\">
+			<!-- Start Carousel -->
+			<div id=\"group-carousel\" class=\"carousel slide\" data-ride=\"carousel\">
+			<!-- Indicators -->
+			<ol class=\"carousel-indicators\">
+			";
+			
+			if ($page > 1)
+			{
+				echo "				
+				<li data-target=\"#group-carousel\" data-slide-to=\"0\" class=\"active\"></li>
+				";
+				
+				for($i = 1; $i < $page; $i++)
+				{
+					echo "
+					<li data-target=\"#group-carousel\" data-slide-to=\"".$i."\"></li>
+					";
+				}
+			}
+			
+			echo "
+			</ol>
+
+			<!-- Wrapper for slides -->
+			<div class=\"carousel-inner\">
+				<div class=\"item active\">
+					<div class=\"row\">
+			";
+			
+			for($i = 0; $i < $total; $i++)
+			{
+				$member = $memberList[$i];
+				if($i != 0)
+				{
+					if ($i % $boxsize == 0)
+					{
+						echo "
+							</div>
+						</div>
+						<div class=\"item\">
+							<div class=\"row\">
+						";
+					}
+					else if ($i % 2 == 0)
+					{
+						echo "
+						</div>
+						<div class=\"row\">
+						";
+					}
+				}
+				if ($member['memberId'] == $ownerId)
+					echo FriendBox($member['firstName'], $member['lastName'].' (owner)');
+				else
+					echo FriendBox($member['firstName'], $member['lastName']);
+			}
+			
+			echo "
+				</div>
+			</div>
+			</div>
+			";
+			
+			if ($page > 1)
+			{
+				echo "
+				  <!-- Controls -->
+				  <a class=\"left carousel-control\" href=\"#group-carousel\" role=\"button\" data-slide=\"prev\">
+					<span class=\"glyphicon glyphicon-chevron-left\"></span>
+				  </a>
+				  <a class=\"right carousel-control\" href=\"#group-carousel\" role=\"button\" data-slide=\"next\">
 					<span class=\"glyphicon glyphicon-chevron-right\"></span>
 				  </a>
 				";
