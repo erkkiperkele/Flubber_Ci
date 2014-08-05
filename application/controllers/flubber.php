@@ -2,6 +2,7 @@
 
 class flubber extends CI_Controller {
 
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -22,8 +23,8 @@ class flubber extends CI_Controller {
 	{
 		$this->load->library('form_validation');
 
-    	$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|valid_email');
-    	$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_verify_pwd');
+    	$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|valid_email|');
+    	$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_verify_pwd|callback_verify_notsuspended');
 
     	if($this->form_validation->run() == TRUE)
 	    {	
@@ -48,10 +49,8 @@ class flubber extends CI_Controller {
 	   	$this->load->model('login_model');
 	   	if($this->login_model->doLogin($username, $password))
 		{
-			$userdata = array(
-				'memberId' => $_SESSION['login']
-			);
-			
+			$userdata = $this->login_model->get_user($_SESSION['login']);
+
 			$this->session->set_userdata( $userdata );
 
 			return TRUE;
@@ -61,6 +60,18 @@ class flubber extends CI_Controller {
 			$this->form_validation->set_message('verify_pwd', "Invalid Username or Password");
 		    return FALSE;
 		}
+	}
 
+	function verify_notsuspended($password)
+	{
+		if($this->session->userdata('status') == 3)
+		{
+			$this->form_validation->set_message('verify_notsuspended', "You have been suspended. Please contact the admin!");
+		}
+		else
+		{
+			return TRUE;
+		}
+		return FALSE;
 	}
 }

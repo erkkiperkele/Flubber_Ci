@@ -16,6 +16,13 @@ Class login_model extends CI_Model
  {
    return $this->db2->verifyLogin($user, $pass);
  }
+ 
+ function get_user($memberId)
+ {
+	$userInfo = $this->db2->getMemberInfo($memberId);
+	return $userInfo;
+ }
+ 
 }
 
 
