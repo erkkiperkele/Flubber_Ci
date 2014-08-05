@@ -17,5 +17,5 @@ Class login_model extends CI_Model
    return $this->db2->verifyLogin($user, $pass);
  }
 }
-?>
+
 
