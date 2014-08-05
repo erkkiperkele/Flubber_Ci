@@ -314,7 +314,7 @@ if ( ! function_exists('AddContentBox'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar()
+	function MenuBar($Admin=FALSE)
 	{
 		echo "
 		<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
@@ -336,8 +336,21 @@ if ( ! function_exists('MenuBar'))
 						<li class='active'><a href='" .CreateURL('index') ."'>Home</a></li>
 						<li><a href='" .CreateURL('profile') ."'>Profile</a></li>
 						<li><a href='" .CreateURL('groups') ."'>Groups</a></li>
-						<li><a href='" .CreateURL('friends') ."'>Friends</a></li>
-						<li class='Settings'>
+						<li><a href='" .CreateURL('friends') ."'>Friends</a></li>";
+						if($Admin){
+							echo "<li>
+									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
+									<ul class='dropdown-menu' role='menu'>
+										<li><a href='#'>Add New Member</a></li>
+										<li><a href='#'>Change status of a Member</a></li>
+										<li class='divider'></li>
+										<li><a href='#'>Ran out of things to write</a></li>
+									</ul>
+								  </li>
+							";
+
+						}
+						echo "<li class='Settings'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Settings<span class='caret'></span></a>
 							<ul class='dropdown-menu' role='menu'>
 								<li><a href='#'>Privacy</a></li>
