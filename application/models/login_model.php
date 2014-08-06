@@ -22,7 +22,17 @@ Class login_model extends CI_Model
 	$userInfo = $this->db2->getMemberInfo($memberId);
 	return $userInfo;
  }
- 
+
+ function register_user($first, $last, $email, $pass, $dob)
+ {
+ 	return $this->db2->addMember($first,$last,$email, $pass, "", "", "", "", "", "", "", $dob, 1);
+ }
+
+ function user_exists($user)
+ {
+ 	return true;
+ 	//return $this->db2->CHECKIFUSEREXISTS($user['name'],$user['dob'],$user['email']);
+ }
 }
 
 

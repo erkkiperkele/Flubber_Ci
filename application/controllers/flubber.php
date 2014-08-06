@@ -2,7 +2,6 @@
 
 class flubber extends CI_Controller {
 
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -10,19 +9,18 @@ class flubber extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('form');
 		$this->load->model('login_model');
+		$this->load->library('form_validation');
 
 	}
 	function index()
 	{
-		$data = array('username' => 'Enter your Username', 'password' => '');
-
+		$data['doLogin'] = FALSE;
+		$data['doRegister'] = FALSE;
 		$this->load->view('login_view');
 	}
 
 	function login()
 	{
-		$this->load->library('form_validation');
-
     	$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|valid_email|');
     	$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_verify_pwd|callback_verify_notsuspended');
 
@@ -32,7 +30,9 @@ class flubber extends CI_Controller {
 	    }
 	    else
 	    {
-	      $this->load->view('login_view');
+	    	$data['doLogin'] = TRUE;
+	    	$data['doRegister'] = FALSE;
+	      	$this->load->view('login_view', $data);
 	    }
 
 	}
@@ -41,6 +41,58 @@ class flubber extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		redirect('/');
+	}
+
+	function register()
+	{
+		$this->form_validation->set_rules('username', "User's name", 'trim|required|xss_clean');
+    	$this->form_validation->set_rules('userdob', 'Date of Birth of User', 'trim|required|xss_clean|');
+    	$this->form_validation->set_rules('useremail', "User's Email", 'trim|required|xss_clean|valid_email|callback_verify_user');
+    	$this->form_validation->set_rules('newfirstname', 'Firstname', 'trim|required|xss_clean');
+    	$this->form_validation->set_rules('newlastname', 'Lastname', 'trim|required|xss_clean');
+    	$this->form_validation->set_rules('newdob', 'Date Of Birth', 'trim|required|xss_clean|');
+    	$this->form_validation->set_rules('newemail', 'Email', 'trim|required|xss_clean|valid_email');
+    	$this->form_validation->set_rules('newpassword', 'Password', 'trim|required|xss_clean');
+
+    	if($this->form_validation->run() == TRUE)
+	    {	
+	    	$first = $this->input->post('newfirstname');
+	    	$last = $this->input->post('newlastname');
+	    	$dob = $this->input->post('newdob');
+	    	$email = $this->input->post('newemail');
+	    	$pass = $this->input->post('newpassword');
+	    	$result = $this->login_model->register_user($first, $last, $email, $pass, $dob);
+
+	    	if($result == TRUE)
+	    		redirect('/profile/');
+	    	else
+	    	{
+	    		$this->form_validation->set_message('newfirstname', 'Something went wrong! We will fix it as soon as we can! :)');
+	    		redirect('/');
+	    	}
+	    }
+	    else
+	    {
+	    	$data['doRegister'] = TRUE;
+	    	$data['doLogin'] = FALSE;
+	      	$this->load->view('login_view', $data);
+	    }
+	}
+
+	function registerByKey()
+	{
+		$this->form_validation->set_rules('key', 'key', 'trim|required|xss_clean|callback_validate_key');
+    	if($this->form_validation->run() == TRUE)
+	    {	
+	    	//Get Member by Key!?
+	    	redirect('/profile/');
+	    }
+	    else
+	    {
+	    	$data['doRegister'] = TRUE;
+	    	$data['doLogin'] = FALSE;
+	      	$this->load->view('login_view', $data);
+	    }
 	}
 
 	function verify_pwd($password)
@@ -73,5 +125,15 @@ class flubber extends CI_Controller {
 			return TRUE;
 		}
 		return FALSE;
+	}
+	function verify_user($useremail)
+	{
+		$user['name'] = $this->input->post('username');
+		$user['dob'] = $this->input->post('userdob');
+		$user['email'] = $useremail;
+		if($this->login_model->user_exists($user) == TRUE)
+			return TRUE;
+		else
+			$this->form_validation->set_message('verify_user', 'There is no user with this info! Please try again.');
 	}
 }
