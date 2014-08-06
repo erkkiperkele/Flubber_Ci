@@ -10,6 +10,8 @@ class search extends FL_Controller {
 		$query = $this->input->post('query');
 		
 		$data['result'] = $this->search_model->do_search($user, $query);
-		$this->load->view('search_view', $data);
+		$data['currentPage'] = 'search';
+		$data['member'] = $this->session->all_userdata();
+		$this->render('search', $data);
 	}
 }
