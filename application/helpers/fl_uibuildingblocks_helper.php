@@ -61,7 +61,7 @@ if ( ! function_exists('LoadJSBundle'))
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 		<script src='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
 		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
-		<script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'></script>
+		<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'></script>
 		<script type='text/javascript'>
 			var baseURL = '" .base_url()
 		."'</script>	
@@ -314,8 +314,13 @@ if ( ! function_exists('AddContentBox'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar($Admin=FALSE)
+	function MenuBar($memberInMenu, $Admin=FALSE)
 	{
+		if(!isset($memberInMenu))
+		{
+			$memberInMenu['firstName'] = "";
+			$memberInMenu['photographURL'] = "";
+		}
 		echo "
 		<nav class='navbar navbar-default navbar-fixed-top' role='navigation'>
 			<div class='container-fluid'>
@@ -333,7 +338,7 @@ if ( ! function_exists('MenuBar'))
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class='collapse navbar-collapse' id='menu'>
 					<ul class='nav navbar-nav'>
-						<li class='active'><a href='" .CreateURL('index') ."'>Home</a></li>
+						<li class='active'><a href='" .CreateURL('/') ."'>Home</a></li>
 						<li><a href='" .CreateURL('profile') ."'>Profile</a></li>
 						<li><a href='" .CreateURL('groups') ."'>Groups</a></li>
 						<li><a href='" .CreateURL('friends') ."'>Friends</a></li>";
@@ -348,7 +353,6 @@ if ( ! function_exists('MenuBar'))
 									</ul>
 								  </li>
 							";
-
 						}
 						echo "<li class='Settings'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Settings<span class='caret'></span></a>
@@ -359,13 +363,17 @@ if ( ! function_exists('MenuBar'))
 							</ul>
 						</li>
 					</ul>
-					<form class='navbar-form navbar-left' role='search'>
+					<form action='" .CreateURL('search') ."' class='navbar-form navbar-left' role='search'>
 						<div class='form-group'>
-							<input type='text' class='form-control' placeholder='Search'>
+							<input type='text' name='query' class='form-control' placeholder='Search'>
 						</div>
 						<button type='submit' class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button>
 					</form>
-					<div id='menu-profile' class='navbar-right'></div>
+					<div id='menu-profile' class='hide navbar-right' style='display: block;'>
+						<img class='nav navbar-nav img-circle' src='". $memberInMenu['photographURL'] ."' 
+							style='width: 50px; height: 50px; margin-right: 10px;'>
+						<h1 class='nav navbar-nav'>" .$memberInMenu['firstName'] ."</h1>
+					</div>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
@@ -660,5 +668,48 @@ if ( ! function_exists('GroupsCarousel'))
 	}
 }
 
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	array
+ * @return	mixed	depends on what the array contains
+ */
+if ( ! function_exists('SearchResultMember'))
+{
+	function SearchResultMember($member)
+	{
+		echo "
+		<div class='well well-sm'>
+			<a href='" .CreateURL('index.php/profile/') .$member['memberId'] ."'
+				<h1>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
+			</a>
+		</div>";
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	array
+ * @return	mixed	depends on what the array contains
+ */
+if ( ! function_exists('SearchResultGroup'))
+{
+	function SearchResultGroup($group)
+	{
+		echo "
+		<div class='well well-sm'>
+			<a href='" .CreateURL('index.php/group/') .$group['groupId'] ."'
+				<h1>" .$group['groupName'] ."</h1>
+			</a>
+		</div>";
+	}
+}
 /* End of file FL_UIBuildingBlocks_helper.php */
 /* Location: ./system/helpers/FL_UIBuildingBlocks_helper.php */
