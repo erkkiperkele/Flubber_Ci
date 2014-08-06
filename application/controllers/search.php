@@ -11,6 +11,7 @@ class search extends FL_Controller {
 		
 		$data['result'] = $this->search_model->do_search($user, $query);
 		$data['currentPage'] = 'search';
+		$data['title'] = 'Flubber - Search Results for ' .$query;
 		$data['member'] = $this->session->all_userdata();
 		$this->render('search', $data);
 	}
