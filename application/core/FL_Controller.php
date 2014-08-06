@@ -60,6 +60,8 @@ class FL_Controller extends CI_Controller {
 	 */
 	public function render($viewFile, $viewData)
 	{
+		$viewData['memberInMenu']['firstname'] = $this->session->userdata('firstName');
+		$viewData['memberInMenu']['photographURL'] = $this->session->userdata('photographURL');
 		$this->load->view('templates/header_view', $viewData);		
 		$this->load->view($viewFile . '_view', $viewData);
         $this->load->view('templates/footer_view');

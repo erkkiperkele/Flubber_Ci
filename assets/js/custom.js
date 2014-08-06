@@ -48,31 +48,10 @@ $(document).ready(function(){
 	});
 });
 
-//jQuery based functionality to add jumbotron's children to the menubar
-function addProfileHeaderToMenuBar(){
-            $("#profile-pic-top").remove();
-            $("#profile-name-top").remove();
-            $("#group-name-top").remove();
-            $("#group-pic-top").remove();
-            var name = $("#profile-name").children().clone().addClass("nav navbar-nav").attr('id', 'profile-name-top');
-            var pic =  $("#profile-pic").clone().removeClass("pull-right img-responsive").addClass("nav navbar-nav img-circle")
-                        .css("width", 50).css("height", 50).css("margin-right", 10).attr('id', 'profile-pic-top');
-            if(name.length == 0){
-                name = $("#group-name").children().clone().addClass("nav navbar-nav").css("margin-top", 5).attr('id', 'group-name-top');
-                pic = $("#group-pic").clone().removeClass("pull-right img-responsive").addClass("nav navbar-nav img-circle")
-                        .css("width", 50).css("height", 50).css("margin-right", 10).attr('id', 'group-pic-top');
-            }
-            var moreName = name.children().clone();
-            name.children().remove();
-            name.attr("data-toggle", "tooltip").attr("data-placement","bottom").attr("title", moreName.text())
-            $("#menu-profile").append(pic).append(name).hide();
-}
-$(document).ready(addProfileHeaderToMenuBar());
-
 $(window).scroll(function() {
     if ($(".navbar").offset().top >= 100){
         if($("#menu-profile").is(":visible") == false){
-            $("#menu-profile").show(animateUp);
+            $("#menu-profile").removeClass('hide').show(animateUp);
         }
     } else if ($("#menu-profile").is(":visible") == true){
             $("#menu-profile").hide(animateUp);
@@ -132,12 +111,12 @@ function handleFileUpload(file,obj, elem)
     //var status = new createStatusbar(obj); //Using this we can set progress.
     //status.setFileNameSize(files[i].name,files[i].size);
     sendFileToServer(fd, elem/*,status*/);
-	$('#self').attr('src', "http://127.0.0.1/Flubber_Ci/index.php/assets/imgs/" + file.item(0).name);
+	$('#self').attr('src', baseURL + "index.php/assets/imgs/" + file.item(0).name);
 }
 //4. jQuery AJAX API for actual uploading to the database (currently going to the server as a file):
 function sendFileToServer(formData, elem/*,status*/)
 {
-    var uploadURL ="http://127.0.0.1/Flubber_Ci/index.php/upload/file/" + elem; //Upload URL
+    var uploadURL = baseURL + "index.php/upload/file/" + elem; //Upload URL
     var extraData ={}; //Extra Data.
     var jqXHR=$.ajax({
             url: uploadURL,
@@ -188,13 +167,13 @@ $(document).ready(function(){
  $(document).ready(function(){
     var interests = $(".interests");
     for(var iter = interests.first(); iter.next().length > 0; iter = iter.next()){
-        iter.css("border-top", "2px solid #1abc9c").css("border-color", "none");
+        iter.css("border-top", "2px solid #e74c3c").css("border-color", "none");
         iter = iter.next();
         iter.css("border-top", "2px solid #2ecc71").css("border-color", "none");
         iter = iter.next();
         iter.css("border-top", "2px solid #3498db").css("border-color", "none");
         iter = iter.next();
-        iter.css("border-top", "2px solid #e74c3c").css("border-color", "none");
+        iter.css("border-top", "2px solid #1abc9c").css("border-color", "none");
         iter = iter.next();
         iter.css("border-top", "2px solid #34495e").css("border-color", "none");
     }
