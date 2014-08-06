@@ -1,7 +1,7 @@
 <?php
 
 	/*****************************************************
-	* This file goes through all use cases of the        *
+	* This file gos through all use cases of the         *
 	* DatabaseAccessObject.  This is important for       *
 	* anybody using DatabaseAccessObject.                *
 	*****************************************************/
@@ -12,6 +12,7 @@
 	//You can put whatever database information you want in here.  For now, I've put the one on the ENCS server.
 	//Please note, I tested this code on my own server, so make sure the information in the constructor below is correct.
 	$db = new DatabaseAccessObject('localhost', 'occ55311', 'occ55311', 'DGt4lAT');
+	
 	
 	
 echo "Delete all current members";
@@ -130,7 +131,7 @@ echo "Display all friends of second Member:";
 	
 echo "Send message from first member to second member:";
 	echo '<br>';
-	print_r($db->sendMessage($secondId, $_SESSION['login'], "Hello, it's ME."));
+	print_r($db->sendMessage($secondId, $_SESSION['login'], "Subject line", "Hello, it's ME."));
 	echo '<br>';
 	
 	echo '<br>';
@@ -151,7 +152,7 @@ echo "Read messages sent by first user:";
 	
 echo "Create a group owned by first member:";
 	echo '<br>';
-	print_r($db->createGroup("First Group", $_SESSION['login'], "This group is for testing purposes only"));
+	print_r($db->createGroup("First Group", $_SESSION['login'], "This group is for testing purposes only", NULL, NULL, NULL));
 	echo '<br>';
 	
 	echo '<br>';
@@ -203,7 +204,7 @@ echo "Get group contents:";
 	
 echo "Second user is going to create a new group:";
 	echo '<br>';
-	print_r($db->createGroup("Second Group", $secondId, "This is the second group."));
+	print_r($db->createGroup("Second Group", $secondId, "This is the second group.", NULL, NULL, NULL));
 	echo '<br>';
 	
 	echo '<br>';
@@ -564,7 +565,7 @@ echo "Check to see that gift exchange is closed by checked open gift exchanges b
 	
 echo "Send request from user 2 to user 1:";
 	echo '<br>';
-	print_r($db->sendRequest($_SESSION['login'], $secondId, "Upgrade status", "Please upgrade my status to senior member"));
+	print_r($db->sendRequest($_SESSION['login'], $secondId, "Subject line", "Upgrade status", "Please upgrade my status to senior member"));
 	echo '<br>';
 	
 	echo '<br>';
@@ -706,9 +707,97 @@ echo "First user will now search for members (or groups) having 'tz' in their na
 	
 	echo '<br>';
 	
-echo "Search for any member of group containing the string 'o' (this should match all member names and group names, except for the searching member)";
+echo "First user will now search for any member of group containing the string 'o' (this should match all member names and group names, except for the searching member)";
 	echo '<br>';
-	print_r($db->searchString($_SESSION['login'], 'o'));
+	$retVal = $db->searchString($_SESSION['login'], 'o');
+	print_r($retVal);
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "The return value of the searchString method can of course be subdivided into member values returned as well as group values returned.";
+	echo '<br>';
+	echo "All members returned:";
+	echo '<br>';
+	print_r($retVal[0]);
+	echo '<br>';
+	echo "All groups returned:";
+	echo '<br>';
+	print_r($retVal[1]);
+	echo '<br>';
+	
+	echo '<br>';
+	
+	
+echo "Now, we will suspend the second user, and set the third user to inactive";
+echo "Be aware: this privilege requires administrator privileges!  But we will not check for the purposes of this example.";
+	echo '<br>';
+	print_r($db->setStatusOfMember($secondId, 'suspended'));
+	echo '<br>';
+	print_r($db->setStatusOfMember($thirdId, 'inactive'));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "First user will now search for any member of group containing the string 'o' (this should be the same result as before, minus the second
+and third member, because they are suspended and inactive respectively)";
+	echo '<br>';
+	$retVal = $db->searchString($_SESSION['login'], 'o');
+	echo "All members returned:";
+	echo '<br>';
+	print_r($retVal[0]);
+	echo '<br>';
+	echo "All groups returned:";
+	echo '<br>';
+	print_r($retVal[1]);
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Administrator privilege has the power to bypass the searchString method by retrieving all memberIds directly, which we do:";
+	echo '<br>';
+	print_r($db->retrieveAllMembers());
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Verify that member 2 and 3 have the correct statuses";
+	echo '<br>';
+	print_r($db->getMemberInfo($secondId));
+	echo '<br>';
+	print_r($db->getMemberInfo($thirdId));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Now we will reset the status of the second and third member back to active";
+	echo '<br>';
+	print_r($db->setStatusOfMember($secondId, 'active'));
+	echo '<br>';
+	print_r($db->setStatusOfMember($thirdId, 'active'));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Verify that the second and third member have the correct statuses";
+	echo '<br>';
+	print_r($db->getMemberInfo($secondId));
+	echo '<br>';
+	print_r($db->getMemberInfo($thirdId));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "First user will now search again for any member of group containing the string 'o', which should once more return all members and groups";
+	echo '<br>';
+	$retVal = $db->searchString($_SESSION['login'], 'o');
+	echo "All members returned:";
+	echo '<br>';
+	print_r($retVal[0]);
+	echo '<br>';
+	echo "All groups returned:";
+	echo '<br>';
+	print_r($retVal[1]);
 	echo '<br>';
 	
 	echo '<br>';

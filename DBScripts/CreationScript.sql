@@ -48,7 +48,7 @@ CREATE TABLE Member (
 	dateOfBirth DATE NOT NULL,
 	privacy VARCHAR(7) NOT NULL,
 	privilege VARCHAR(13) NOT NULL,
-	status VARCHAR(9) NOT NULL,
+	status VARCHAR(9) NOT NULL DEFAULT 'active',
 	PRIMARY KEY(memberId),
 	CONSTRAINT heartsPositive CHECK (hearts >= 0)
 );
@@ -136,6 +136,9 @@ CREATE TABLE Groups(
 	groupName VARCHAR(35) UNIQUE NOT NULL,
 	ownerId INT NOT NULL,
 	description VARCHAR(255),
+	photographURL NVARCHAR(255),
+	coverPictureURL NVARCHAR(255),
+	thumbnailURL NVARCHAR(255),
 	timeStamp TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	PRIMARY KEY(groupId),
 	FOREIGN KEY(ownerId) REFERENCES Member(memberId) ON DELETE CASCADE
@@ -154,7 +157,6 @@ CREATE TABLE GroupContent(
 	PRIMARY KEY(groupId, groupContentNumber),
 	FOREIGN KEY(groupId) REFERENCES Groups(groupId) ON DELETE CASCADE,
 	FOREIGN KEY(permissionId) REFERENCES Permission(permissionId),
-	-- FOREIGN KEY(wrote) REFERENCES Member(memberId) ON DELETE CASCADE,
 	FOREIGN KEY(currentPosterId) REFERENCES Member(memberId) ON DELETE CASCADE,
 	FOREIGN KEY(previousPosterId) REFERENCES Member(memberId) ON DELETE SET NULL,
 	FOREIGN KEY(originalPosterId) REFERENCES Member(memberId) ON DELETE SET NULL
@@ -182,6 +184,8 @@ CREATE TABLE Request(
 	sentTo INT,
 	sentFrom INT,
 	requestNumber INT,
+	isRead BOOL NOT NULL DEFAULT FALSE,
+	title VARCHAR(55),
 	requestType VARCHAR(15),
 	content VARCHAR(255),
 	timeStamp TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
@@ -194,6 +198,8 @@ CREATE TABLE Message(
 	sentTo INT,
 	sentFrom INT,
 	messageNumber INT,
+	isRead BOOL NOT NULL DEFAULT FALSE,
+	title VARCHAR(55),
 	content VARCHAR(255),
 	timeStamp TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
 	PRIMARY KEY(sentTo, sentFrom, messageNumber),
