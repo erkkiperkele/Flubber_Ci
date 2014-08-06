@@ -338,10 +338,10 @@ if ( ! function_exists('MenuBar'))
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class='collapse navbar-collapse' id='menu'>
 					<ul class='nav navbar-nav'>
-						<li class='active'><a href='" .CreateURL('/') ."'>Home</a></li>
-						<li><a href='" .CreateURL('profile') ."'>Profile</a></li>
-						<li><a href='" .CreateURL('groups') ."'>Groups</a></li>
-						<li><a href='" .CreateURL('friends') ."'>Friends</a></li>";
+						<li class=''><a href='" .CreateURL('/') ."'>Home</a></li>
+						<li class='active'><a href='" .CreateURL('index.php/profile') ."'>Profile</a></li>
+						<li><a href='" .CreateURL('index.php/groups') ."'>Groups</a></li>
+						<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>";
 						if($Admin){
 							echo "<li>
 									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
@@ -363,7 +363,7 @@ if ( ! function_exists('MenuBar'))
 							</ul>
 						</li>
 					</ul>
-					<form action='" .CreateURL('search') ."' class='navbar-form navbar-left' role='search'>
+					<form action='" .CreateURL('index.php/search') ."' class='navbar-form navbar-left' role='search'>
 						<div class='form-group'>
 							<input type='text' name='query' class='form-control' placeholder='Search'>
 						</div>
