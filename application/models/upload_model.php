@@ -26,7 +26,7 @@ class upload_model extends CI_Model {
 			{
 				$fileName = $_FILES["file"]["name"];
 				move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName);
-				$fileURL = "http://127.0.0.1/Flubber_Ci/assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
+				$fileURL = base_url() ."assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
 			}
 			return $fileURL;
 		}

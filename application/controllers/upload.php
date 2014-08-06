@@ -19,8 +19,15 @@ class upload extends FL_Controller {
 		$fileURL = $this->upload_model->do_upload($this->memberId, $ContentType);
 		if(isset($fileURL))
 			$response = $this->upload_model->updateURLinDB($this->memberId, $fileURL, $ContentType);
-		if($response === true)
+		if($response === true){
+			$user = $this->session->all_userdata();
+			if($ContentType == "photograph")
+				$user['photographURL'] = $fileURL;
+			else if($ContentType == "coverPicture")
+				$user['coverPictureURL'] = $fileURL;
+			$this->session->set_userdata( $user );
 			echo $fileURL;
+		}
 	}
 
 }
