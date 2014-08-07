@@ -94,7 +94,7 @@ class profile_model extends CI_Model {
 		if ($previousPost['memberId'] == $this->memberId)
 		{
 			$this->delete_post($wallContentNumber);
-			$this->add_status($permissionId, $contentType, $content);
+			$this->add_status($permissionId, $contentType, $content, $previousPost['memberId']);
 		}
 	}
 
