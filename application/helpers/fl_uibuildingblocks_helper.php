@@ -225,10 +225,10 @@ if ( ! function_exists('ContentBox'))
 						if($PostInfo['isEditable'])
 						{
 							echo
-							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;''>
+							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 								<span class='glyphicon glyphicon-pencil'></span>
 							</button>
-							<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;''>
+							<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 								<span class='glyphicon glyphicon-remove'></span>
 							</button>
 							";
@@ -269,8 +269,6 @@ if ( ! function_exists('ContentBox'))
 							."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
 							</div>
 						</div>
-
-						
 						";
 	}
 }

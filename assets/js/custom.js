@@ -255,7 +255,7 @@ toEdit.each(function(){
         {
             type: "post",
             url: baseURL + "index.php/profile/updatePost/",
-            data: "id="+id+"&updatedPost="+editbox.val(),
+            data: "id="+postId+"&updatedPost="+editbox.val(),
         });
         editbox.addClass('hide');
       }
