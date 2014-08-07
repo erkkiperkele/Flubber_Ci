@@ -65,6 +65,12 @@ class profile extends FL_Controller {
 		//$this->profile_model->add_Status($permissionId, 'text', $privacy);
 	}
 
+	public function deletePost($postId)
+	{
+		$this->profile_model->delete_post($postId);
+		// redirect($_SERVER['HTTP_REFERER'],'refresh');
+	}
+
 	public function updateMemberInfo()
 	{
 		echo "IT IS HERE!!";

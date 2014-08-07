@@ -227,7 +227,11 @@ if ( ! function_exists('ContentBox'))
 							echo
 							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;''>
 								<span class='glyphicon glyphicon-pencil'></span>
-							</button>";
+							</button>
+							<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;''>
+								<span class='glyphicon glyphicon-remove'></span>
+							</button>
+							";
 						}
 
 						echo 
@@ -317,7 +321,7 @@ if ( ! function_exists('AddContentBox'))
 {
 	function AddContentBox($profileId)
 	{
-		echo form_open('profile/addStatus'); #ToTest
+		echo form_open('profile/addStatus');
 		echo "
 		<div class='panel panel-default'>
 			<div class='input-group'>
