@@ -51,16 +51,22 @@ class profile_model extends CI_Model {
 		
 		#Get every public post information
 		$wallContents = $this->db2->getWallContents($memberId);
-		$posts = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
-		usort($posts, 'cmp');
-		return $posts;
+		if (!empty($wallContents))
+		{
+			$posts = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
+			usort($posts, 'cmp');
+			return $posts;
+		}
 	}
 	
 	public function get_Interests($memberId)
 	{
 		$interestContents = $this->db2->getInterestsOfMember($memberId);
-		$interestTypes = $this->GroupInterestsByType($interestContents);
-		return $interestTypes;
+		if (!empty($interestContents))
+		{
+			$interestTypes = $this->GroupInterestsByType($interestContents);
+			return $interestTypes;
+		}
 	}
 	
 	private function get_InterestTypeDetails($interestTypeId)
@@ -125,7 +131,7 @@ class profile_model extends CI_Model {
 		
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
-			$content['isEditable'] = $currentMemberId == $content['originalPosterId'];		//can only edit content originally created by the member connected
+			$content['isEditable'] = $this->memberId == $content['originalPosterId'];		//can only edit content originally created by the member connected
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
 			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
