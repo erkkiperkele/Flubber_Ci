@@ -36,20 +36,10 @@ class profile extends FL_Controller {
 	public function addStatus()
 	{
 			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
-			// $permissionId = $this->session->userdata('permissionId'); #HARD CODED TEST!!! DO NOT CHECKIN!
 			$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 			$content = $this->input->post('updatedStatus');
 			$this->profile_model->add_Status($permissionId, $contentType, $content);
 			redirect($_SERVER['HTTP_REFERER']);
-
-
-		// redirect('/profile/index/'.$this->session->flashdata());
-		// redirect('/profile/index/2');
-		// $currentAddress = current_Url();
-		 // redirect("profile/index", "refresh");
-
-		// redirect(current_Url().uri_string());
-
 	}
 
 	public function updatePost()
