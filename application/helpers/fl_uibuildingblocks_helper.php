@@ -238,9 +238,21 @@ if ( ! function_exists('ContentBox'))
 									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
 									<h4 class='col-md-6 pull-right text-right small'>";
 									switch($PostInfo['permissionId']){
-										case 1: echo "<span class='privacy pull-right fa fa-user'><small> Private</small></span>"; break;
-										case 2: echo "<span class='privacy pull-right fa fa-users'><small> Public</small></span>"; break;
-										default: echo "<span class='privacy pull-right fa fa-user'><small> Private</small></span>"; break;
+										case 1: echo "<span class='"; 
+												if($PostInfo['isEditable']) 
+													echo "privacy "; 
+												echo "pull-right fa fa-user'><small> Private</small></span>"; 
+												break;
+										case 2: echo "<span class='";
+										 		if($PostInfo['isEditable'])
+										 			echo "privacy ";
+										 		echo "pull-right fa fa-users'><small> Public</small></span>";
+										 		break;
+										default: echo "<span class='";
+												 if($PostInfo['isEditable'])
+												 	echo "privacy ";
+												 echo "pull-right fa fa-user'><small> Private</small></span>";
+												 break;
 									}
 										echo "<small>" .$PostInfo['timeStamp'] ."</small>
 									</h4>
