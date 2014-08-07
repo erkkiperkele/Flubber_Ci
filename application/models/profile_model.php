@@ -51,7 +51,7 @@ class profile_model extends CI_Model {
 		
 		#Get every public post information
 		$wallContents = $this->db2->getWallContents($memberId);
-		$posts = $this->ExtendWithMemberDetails($wallContents, 'currentPosterId');
+		$posts = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
 		usort($posts, 'cmp');
 		return $posts;
 	}
@@ -115,12 +115,13 @@ class profile_model extends CI_Model {
 	}
 
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
-	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')
+	private function ExtendWithMemberDetails($arrayToExtend, $currentMemberId, $fieldNameForMemberId = 'currentPosterId')
 	{
 		$extendedArray = array();
 		
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
+			$content['isEditable'] = $currentMemberId == $content['originalPosterId'];		//can only edit content originally created by the member connected
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
 			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details

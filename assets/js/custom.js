@@ -219,14 +219,17 @@ $('.privacy').each(function(){
                 cover it in a div element with the above mentioned class.
             3.  Make sure editable and editText are in elements that have a common parent! 
  */
-var editbtn = $('.editbar-btn');
-var editbox = $('.editbar-input');
+
+
 var toEdit = $('.editable');
 toEdit.each(function(){
   var editContent = $(this).parent().find('.editText');
   var id = $(this).parent().find('.panel-title').attr('id');
   var editInput;
-  $(this).prepend(editbtn.clone().removeClass('hide').click(function(){
+//  $(this).prepend(editbtn.clone().removeClass('hide').click(function(){
+    $(this).parent().find('.editbar-btn').click(function(){
+    
+    var editbox = $(this).parent().find('.editbar-input');
     if(editContent.hasClass('hide')){
       if(editInput.val() === ""){
         editInput.remove();
@@ -246,7 +249,7 @@ toEdit.each(function(){
                  .attr('placeholder', content));
       editContent.addClass('hide');
     }
-  }))
+  })
 });
 
 // $('.list-group-item').bind('dblclick', function() {

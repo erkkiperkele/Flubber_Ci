@@ -221,19 +221,32 @@ if ( ! function_exists('ContentBox'))
 	{
 		echo "
 		<div class='content panel panel-default'>
-			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
-				<div class='panel-title row' id='".$PostInfo['wallContentNumber']."'>
-					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
-					<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-					<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
-				</div>
-			</div>
-			<div class='panel-body'> <div class='editText'>"
-			.$PostInfo['content']
-			."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
-			</div>
-		</div>
-		";
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						if($PostInfo['isEditable'])
+						{
+							echo
+							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;''>
+								<span class='glyphicon glyphicon-pencil'></span>
+							</button>";
+						}
+
+						echo 
+								"<div class='panel-title row' id='".$PostInfo['wallContentNumber']."'>
+									<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+									<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
+								</div>
+							</div>
+							<div class='panel-body'> 
+								<input type='text' class='editbar-input form-control hide' placeholder=''>
+								<div class='editText'>"
+							.$PostInfo['content']
+							."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+							</div>
+						</div>
+
+						
+						";
 	}
 }
 
