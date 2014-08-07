@@ -1,42 +1,55 @@
 <?php
 class profile extends FL_Controller {
 
-	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
-	private $currentMember;
+	private $profileId;	#profile memberId being viewed.
+
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('profile_model');
 		$this->load->helper('form');
-		$this->currentMember = $this->profile_model->get_user($this->memberId);
-
-		
-		#$this->load->helper('fl_DatabaseAccessObject');
+		$this->profileId = $this->session->userdata('memberId');
 	}
 
 	public function index($id=0)
 	{
 		if($id > 0)
-			$this->memberId = $id;
-		
+		{
+			$this->profileId = $id;
+		}
+			
 		$data['currentPage'] = 'profile';
 		#$data['posts'] = $this->profile_model->get_publicContent();
-		$data['posts'] = $this->profile_model->get_WallContent($this->memberId);
-		$data['member'] = $this->profile_model->get_user($this->memberId);
-		$data['interestTypes'] = $this->profile_model->get_Interests($this->memberId);
+		$data['posts'] = $this->profile_model->get_WallContent($this->profileId);
+		$data['member'] = $this->profile_model->get_user($this->profileId);
+		$data['interestTypes'] = $this->profile_model->get_Interests($this->profileId);
 		$data['title'] = $data['member']['firstName'];
+		
+		print_r('</br></br></br></br></br>');
+		print_r($this->profileId);
+		print_r($this->session->userdata('memberId'));
 		
 		$this->render('pages/profile', $data);
 	}
 
 	public function addStatus()
 	{
-		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
-		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
-		$content = $this->input->post('updatedStatus');
-		$this->profile_model->add_Status($permissionId, $contentType, $content);
-		redirect('/profile/');
+			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
+			// $permissionId = $this->session->userdata('permissionId'); #HARD CODED TEST!!! DO NOT CHECKIN!
+			$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
+			$content = $this->input->post('updatedStatus');
+			$this->profile_model->add_Status($permissionId, $contentType, $content);
+			redirect($_SERVER['HTTP_REFERER']);
+
+
+		// redirect('/profile/index/'.$this->session->flashdata());
+		// redirect('/profile/index/2');
+		// $currentAddress = current_Url();
+		 // redirect("profile/index", "refresh");
+
+		// redirect(current_Url().uri_string());
+
 	}
 
 	public function updatePost()

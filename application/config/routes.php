@@ -39,12 +39,7 @@
 */
 
 $route['default_controller'] = 'flubber';
-#$route['login'] = 'login';
 $route['404_override'] = '';
-
-#$route['posts/(:any)'] = 'wall/view/$1';
-#$route['wall'] = 'wall';
-#$route['(:any)'] = 'pages/view/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
