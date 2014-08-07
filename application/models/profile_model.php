@@ -5,13 +5,13 @@ include "DatabaseAccessObject.php";
 class profile_model extends CI_Model {
 	
 	private $db2;
-	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
+	private $memberId;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->database();
-		#$this->load->helper('fl_DatabaseAccessObject');
+		$this->memberId = $this->session->userdata('memberId');
 		
 		#REFACTOR: Call the variables from the config file instead of hardcoded
 		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
@@ -69,11 +69,11 @@ class profile_model extends CI_Model {
 		 return $interestTypeDetails;
 	}
 	
-	public function add_status($permissionId, $contentType, $content)
+	public function add_status($permissionId, $contentType, $content, $postedOnMemberId)
 	{
-		$currentPosterId = $this->memberId;
-		$previousPosterId = $this->memberId;
-		$originalPosterId = $this->memberId;
+		$currentPosterId = $postedOnMemberId;
+		$previousPosterId = null;
+		$originalPosterId = $postedOnMemberId;
 		$this->db2->postWallContent($this->memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
@@ -84,8 +84,12 @@ class profile_model extends CI_Model {
 	
 	public function update_Post($wallContentNumber, $permissionId, $contentType, $content)
 	{
-		$this->delete_post($wallContentNumber);
-		$this->add_status($permissionId, $contentType, $content);
+		$previousPost = $this->get_Post($wallContentNumber);
+		if ($previousPost['memberId'] == $this->memberId)
+		{
+			$this->delete_post($wallContentNumber);
+			$this->add_status($permissionId, $contentType, $content);
+		}
 	}
 
 	public function update_PostPrivacy($wallContentNumber, $permissionId)

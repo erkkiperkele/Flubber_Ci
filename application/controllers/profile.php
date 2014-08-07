@@ -25,11 +25,7 @@ class profile extends FL_Controller {
 		$data['member'] = $this->profile_model->get_user($this->profileId);
 		$data['interestTypes'] = $this->profile_model->get_Interests($this->profileId);
 		$data['title'] = $data['member']['firstName'];
-		
-		print_r('</br></br></br></br></br>');
-		print_r($this->profileId);
-		print_r($this->session->userdata('memberId'));
-		
+		$data['profileId'] = $this->profileId;
 		$this->render('pages/profile', $data);
 	}
 
