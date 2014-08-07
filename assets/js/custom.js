@@ -223,29 +223,26 @@ $('.privacy').each(function(){
 
 var toEdit = $('.editable');
 toEdit.each(function(){
-  var editContent = $(this).parent().find('.editText');
-  var id = $(this).parent().find('.panel-title').attr('id');
-  var editInput;
-//  $(this).prepend(editbtn.clone().removeClass('hide').click(function(){
-    $(this).parent().find('.editbar-btn').click(function(){
-    
+    var editContent = $(this).parent().find('.editText');
+    var id = $(this).parent().find('.panel-title').attr('id');
     var editbox = $(this).parent().find('.editbar-input');
+    $(this).parent().find('.editbar-btn').click(function(){
     if(editContent.hasClass('hide')){
-      if(editInput.val() === ""){
-        editInput.remove();
+      if(editbox.val() === ""){
+        editbox.addClass('hide');
       } else {
-        editContent.text(editInput.val());
+        editContent.text(editbox.val());
         $.ajax({
             type: "post",
             url: baseURL + "index.php/profile/updatePost/",
-            data: "id="+id+"&updatedPost="+editInput.val(),
+            data: "id="+id+"&updatedPost="+editbox.val(),
         });
-        editInput.remove();
+        editbox.addClass('hide');
       }
       editContent.removeClass('hide');
     } else {
       var content = editContent.text();
-      editContent.parent().prepend(editInput = editbox.clone().removeClass('hide')
+      editContent.parent().prepend(editbox.removeClass('hide')
                  .attr('placeholder', content));
       editContent.addClass('hide');
     }
