@@ -69,12 +69,12 @@ class profile_model extends CI_Model {
 		 return $interestTypeDetails;
 	}
 	
-	public function add_status($permissionId, $contentType, $content, $postedOnMemberId)
+	public function add_status($permissionId, $contentType, $content, $profileId)
 	{
-		$currentPosterId = $postedOnMemberId;
+		$currentPosterId = $this->memberId;
 		$previousPosterId = null;
-		$originalPosterId = $postedOnMemberId;
-		$this->db2->postWallContent($this->memberId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
+		$originalPosterId = $this->memberId;
+		$this->db2->postWallContent($profileId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
 	public function get_Post($wallContentNumber)

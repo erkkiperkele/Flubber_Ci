@@ -34,7 +34,8 @@ class profile extends FL_Controller {
 			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
 			$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 			$content = $this->input->post('updatedStatus');
-			$this->profile_model->add_Status($permissionId, $contentType, $content);
+			$profileId = $this->input->post('profileId');
+			$this->profile_model->add_Status($permissionId, $contentType, $content, $profileId);
 			redirect($_SERVER['HTTP_REFERER']);
 	}
 
