@@ -294,13 +294,14 @@ if ( ! function_exists('GroupContentBox'))
  */
 if ( ! function_exists('AddContentBox'))
 {
-	function AddContentBox()
+	function AddContentBox($profileId)
 	{
 		echo form_open('profile/addStatus'); #ToTest
 		echo "
 		<div class='panel panel-default'>
 			<div class='input-group'>
 				<input type='textarea' class='form-control' name='updatedStatus'>
+				<input type='hidden' class='form-control' name='profileId' value='" .$profileId ."'>
 				<span class='input-group-btn'>
 					<button class='btn btn-default' type='submit'>Post</button>
 				</span>

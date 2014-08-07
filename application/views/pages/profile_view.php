@@ -39,7 +39,7 @@
 </section>
 <section class="container content-section col-md-6 col-xs-6">
 <?php
-	AddContentBox();
+	AddContentBox($profileId);
 ?>
 <?php
 	if(count($posts) > 0)
