@@ -2,8 +2,6 @@
     			top:97%;
     			right:10px;'>Flubber &copy; 2014</strong>
 
-<span class='privacyElem pull-right fa fa-user hide'><small> Private</small></span>
-
 <button class="editbar-btn btn pull-right hide clearfix" style="margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;">
 	<span class="glyphicon glyphicon-pencil"></span>
 </button>

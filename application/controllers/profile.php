@@ -54,7 +54,7 @@ class profile extends FL_Controller {
 		$privacy = $this->input->post('privacy');
 		$permissionId = 1;		//default is private
 		switch ($privacy) {
-			case ' Public':
+			case 'public':
 				$permissionId=2;
 				break;
 			default:

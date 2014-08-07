@@ -231,12 +231,19 @@ if ( ! function_exists('ContentBox'))
 						}
 
 						echo 
-								"<div class='panel-title row' id='".$PostInfo['wallContentNumber']."'>
+								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['wallContentNumber']."'>
 									<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
 										<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 									</a>
 									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-									<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
+									<h4 class='col-md-6 pull-right text-right small'>";
+									switch($PostInfo['privacy']){
+										case 1: echo "<span class='privacy pull-right fa fa-user'><small> Private</small></span>"; break;
+										case 2: echo "<span class='privacy pull-right fa fa-users'><small> Public</small></span>"; break;
+										default: echo "<span class='privacy pull-right fa fa-user'><small> Private</small></span>"; break;
+									}
+										echo "<small>" .$PostInfo['timeStamp'] ."</small>
+									</h4>
 								</div>
 							</div>
 							<div class='panel-body'> 
@@ -330,7 +337,7 @@ if ( ! function_exists('AddContentBox'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar($memberInMenu, $Admin=FALSE)
+	function MenuBar($memberInMenu, $isAdmin=FALSE)
 	{
 		if(!isset($memberInMenu))
 		{
@@ -358,7 +365,7 @@ if ( ! function_exists('MenuBar'))
 						<li class='active'><a href='" .CreateURL('index.php/profile') ."'>Profile</a></li>
 						<li><a href='" .CreateURL('index.php/groups') ."'>Groups</a></li>
 						<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>";
-						if($Admin){
+						if($isAdmin){
 							echo "<li>
 									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
 									<ul class='dropdown-menu' role='menu'>
