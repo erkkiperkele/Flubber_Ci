@@ -18,6 +18,7 @@ drop table if exists Groups;
 drop table if exists PublicContent;
 
 drop table if exists Interest;
+drop table if exists Comment;
 drop table if exists WallContent;
 drop table if exists Gift;
 
@@ -108,6 +109,18 @@ CREATE TABLE WallContent(
 	FOREIGN KEY(currentPosterId) REFERENCES Member(memberId) ON DELETE SET NULL,
 	FOREIGN KEY(previousPosterId) REFERENCES Member(memberId) ON DELETE SET NULL,
 	FOREIGN KEY(originalPosterId) REFERENCES Member(memberId) ON DELETE SET NULL
+);
+
+CREATE TABLE Comment(
+	memberId INT,
+	wallContentNumber INT,
+	commentNumber INT,
+	commenterId INT,
+	content VARCHAR(255),
+	timeStamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(memberId, wallContentNumber, commentNumber),
+	FOREIGN KEY(commenterId) REFERENCES Member(memberId) ON DELETE SET NULL,
+	FOREIGN KEY(memberId, wallContentNumber) REFERENCES WallContent(memberId, wallContentNumber) ON DELETE CASCADE
 );
 
 CREATE TABLE Interest(

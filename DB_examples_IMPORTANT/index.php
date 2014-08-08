@@ -1,7 +1,7 @@
 <?php
 
 	/*****************************************************
-	* This file gos through all use cases of the         *
+	* This file goes through all use cases of the        *
 	* DatabaseAccessObject.  This is important for       *
 	* anybody using DatabaseAccessObject.                *
 	*****************************************************/
@@ -831,6 +831,16 @@ echo "View wall contents of second user:";
 	echo '<br>';
 	
 	echo '<br>';
+	
+/*****************************************************
+* What follows is the 'original' way to add comments *
+* via reposting.  It should still be used in the     *
+* case of reposting-with-comment, but I have devised *
+* a more efficient method of commenting directly upon*
+* somebody's wall without reposting.  For the 'new'  *
+* method of commenting-without-reposting, please see *
+* lines  of this document.                           *
+******************************************************/
 
 echo "Now, third user will repost the first (and only) post from the first user's wall to the second user's wall:";
 	echo '<br>';
@@ -883,6 +893,55 @@ echo "Now, we retrieve the second posting on the first user's wall in order to v
 	
 	echo '<br>';
 	
+/********************************************
+* I have devised an efficient method of     *
+* commenting on a user's post in the case   *
+* where there is no reposting.  It involves *
+* use of the newly-created Comment table in *
+* the database.  Basically, comments are now*
+* treated as weak entities of wall posts.   *
+*********************************************/
+
+echo "First, we view wall contents of first user:";
+	echo '<br>';
+	print_r($db->getWallContents($_SESSION['login']));
+	echo '<br>';
+	
+	echo '<br>';
+
+echo "Next, the second user will comment on the first user's first post:";
+	echo '<br>';
+	print_r($db->postComment($_SESSION['login'], 1, $secondId, "I am commenting on your post"));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Next, the third user will comment on the first user's first post:";
+	echo '<br>';
+	print_r($db->postComment($_SESSION['login'], 1, $thirdId, "I am commenting on your post too."));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Now, if we view all wall contents of first member the comments DO NOT appear:";
+	echo '<br>';
+	print_r($db->getWallContents($_SESSION['login']));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "If we wish to view the comments of a post, we must know the wallContentNumber (as well as who's wall it is on).";
+	echo '<br>';
+	echo "Let us view the comments for the first user's first wall post:";
+	print_r($db->getComments($_SESSION['login'], 1));
+	echo '<br>';
+	
+	echo '<br>';
+
+/*************************************
+* End of commenting examples         *
+**************************************/
+
 echo "Now we will log out the first user:";
 	echo '<br>';
 	print_r($db->logout());
