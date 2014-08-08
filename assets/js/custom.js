@@ -226,12 +226,14 @@ toEdit.each(function(){
     var editContent = $(this).parent().find('.editText');
     var postId = $(this).parent().find('.panel-title').attr('id');
     var editbox = $(this).parent().find('.editbar-input');
+    var profileId = $(this).parent().find('.profilePic').attr('id');
     $(this).parent().find('.editbar-del-btn').click(function()      //delete function
     {
         $.ajax(
         {
-            type: "delete",
+            type: "post",
             url: baseURL + "index.php/profile/deletePost/"+postId,
+            data: "profileId="+profileId,
             success: function(data)
             {
                
@@ -255,7 +257,9 @@ toEdit.each(function(){
         {
             type: "post",
             url: baseURL + "index.php/profile/updatePost/",
-            data: "id="+postId+"&updatedPost="+editbox.val(),
+            data: "id="+postId
+                    +"&profileId="+profileId
+                    +"&updatedPost="+editbox.val(),
         });
         editbox.addClass('hide');
       }

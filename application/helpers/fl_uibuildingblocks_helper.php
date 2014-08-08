@@ -237,7 +237,7 @@ if ( ! function_exists('ContentBox'))
 						echo 
 								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['wallContentNumber']."'>
 									<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
-										<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+										<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['profileId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 									</a>
 									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
 									<h4 class='col-md-6 pull-right text-right small'>";

@@ -83,30 +83,36 @@ class profile_model extends CI_Model {
 		$this->db2->postWallContent($profileId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
-	public function get_Post($wallContentNumber)
+	public function get_Post($profileId, $wallContentNumber)
 	{
-		return $this->db2->getWallContentInfo($this->memberId, $wallContentNumber);
+		return $this->db2->getWallContentInfo($profileId, $wallContentNumber);
 	}
 	
-	public function update_Post($wallContentNumber, $permissionId, $contentType, $content)
+	public function update_Post($profileId, $wallContentNumber, $permissionId, $contentType, $content)
 	{
-		$previousPost = $this->get_Post($wallContentNumber);
-		if ($previousPost['memberId'] == $this->memberId)
+		$previousPost = $this->get_Post($profileId, $wallContentNumber);
+		if ($previousPost['currentPosterId'] == $this->memberId)
 		{
-			$this->delete_post($wallContentNumber);
+			$this->delete_post($profileId, $wallContentNumber);
 			$this->add_status($permissionId, $contentType, $content, $previousPost['memberId']);
 		}
 	}
 
 	public function update_PostPrivacy($wallContentNumber, $permissionId)
 	{
-		$post = $this->get_Post($wallContentNumber);
+		$post = $this->get_Post($this->memberId, $wallContentNumber);
 		$this->update_Post($wallContentNumber, $permissionId, $post['contentType'], $post['content']);
 	}	
 
-	public function delete_post($wallContentNumber)
+	public function delete_post($profileId, $wallContentNumber)
 	{
-		$this->db2->deleteWallContent($this->memberId, $wallContentNumber);
+
+		$previousPost = $this->get_Post($profileId, $wallContentNumber);
+
+		if ($previousPost['currentPosterId'] == $this->memberId)
+		{
+			$this->db2->deleteWallContent($profileId, $wallContentNumber);
+		}
 	}
 
 	public function update_MemberAddress($newAddress, $newCity, $newCountry)
@@ -131,7 +137,8 @@ class profile_model extends CI_Model {
 		
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
-			$content['isEditable'] = $this->memberId == $content['originalPosterId'];		//can only edit content originally created by the member connected
+			$content['isEditable'] = $this->memberId == $content['currentPosterId'];		//can only edit content originally created by the member connected
+			$content['profileId'] = $content['memberId'];		//memberId copied because it gets overwritten by member's table memberId
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
 			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details

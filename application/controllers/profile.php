@@ -20,7 +20,6 @@ class profile extends FL_Controller {
 		}
 			
 		$data['currentPage'] = 'profile';
-		#$data['posts'] = $this->profile_model->get_publicContent();
 		$data['posts'] = $this->profile_model->get_WallContent($this->profileId);
 		$data['member'] = $this->profile_model->get_user($this->profileId);
 		$data['interestTypes'] = $this->profile_model->get_Interests($this->profileId);
@@ -45,7 +44,8 @@ class profile extends FL_Controller {
 		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$content = $this->input->post('updatedPost');
 		$postId = $this->input->post('id');
-		$this->profile_model->update_Post($postId, $permissionId, $contentType, $content);
+		$profileId = $this->input->post('profileId');
+		$this->profile_model->update_Post($profileId, $postId, $permissionId, $contentType, $content);
 	}
 
 	public function updatePostPrivacy()
@@ -62,21 +62,19 @@ class profile extends FL_Controller {
 			//TO COMPLETE once we have the drop down.
 		}
 		$this->profile_model->update_PostPrivacy($postId, $permissionId);
-		//$this->profile_model->add_Status($permissionId, 'text', $privacy);
 	}
 
 	public function deletePost($postId)
 	{
-		$this->profile_model->delete_post($postId);
-		// redirect($_SERVER['HTTP_REFERER'],'refresh');
+		$profileId = $this->input->post('profileId');
+		$this->profile_model->delete_post($profileId, $postId);
 	}
-
+	
 	public function updateMemberInfo()
 	{
-		echo "IT IS HERE!!";
 		$field = $this->input->post('field');
 		$content = $this->input->post('changedInfo');
-		$member = $this->currentMember;
+		$member = $this->profile_model->get_user($this->session->userdata('memberId'));
 		switch ($field) {
 			case 'email':
 				$member['email'] = $content;
