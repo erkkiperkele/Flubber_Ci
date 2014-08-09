@@ -405,7 +405,7 @@ if ( ! function_exists('MenuBar'))
 							<ul class='dropdown-menu' role='menu'>
 								<li><a href='#'>Privacy</a></li>
 								<li class='divider'></li>
-								<li><a href='#'>Logout</a></li>
+								<li><a href='" .CreateURL('index.php/flubber/logout') ."'>Logout</a></li>
 							</ul>
 						</li>
 					</ul>
