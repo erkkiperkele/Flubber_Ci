@@ -31,7 +31,7 @@ class profile extends FL_Controller {
 	public function addStatus()
 	{
 			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
-			$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
+			$contentType = $this->input->post('contentType'); #HARD CODED TEST!!! DO NOT CHECKIN!
 			$content = $this->input->post('updatedStatus');
 			$profileId = $this->input->post('profileId');
 			$this->profile_model->add_Status($permissionId, $contentType, $content, $profileId);
