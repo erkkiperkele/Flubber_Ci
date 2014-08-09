@@ -264,9 +264,17 @@ if ( ! function_exists('ContentBox'))
 							</div>
 							<div class='panel-body'> 
 								<input type='text' class='editbar-input form-control hide' placeholder=''>
-								<div class='editText'>"
-							.$PostInfo['content']
-							."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+								<div class='editText'>";
+								if($PostInfo['contentType'] === 'image')
+									echo "<img style='width:480px; height:640px' src='".$PostInfo['content']."'/>";
+								else if($PostInfo['contentType'] === 'video')
+									echo "<video width='320' height='240' controls>  
+											<source src=" .$PostInfo['content'] ." type='video/mp4'>
+											Your browser does not support the video tag.
+										  </video>";
+								else
+									echo $PostInfo['content'];
+							echo "</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
 							</div>
 						</div>
 						";
@@ -321,10 +329,11 @@ if ( ! function_exists('AddContentBox'))
 	{
 		echo form_open('profile/addStatus');
 		echo "
-		<div class='panel panel-default'>
+		<div id='addContentBox' class='panel panel-default'>
 			<div class='input-group'>
-				<input type='textarea' class='form-control' name='updatedStatus'>
-				<input type='hidden' class='form-control' name='profileId' value='" .$profileId ."'>
+				<input type='textarea' class='form-control' id='updatedStatus' name='updatedStatus'>
+				<input type='hidden' class='form-control' id='contentType' name='contentType' value='text'>
+				<input type='hidden' class='form-control' id='profileId' name='profileId' value='" .$profileId ."'>
 				<span class='input-group-btn'>
 					<button class='btn btn-default' type='submit'>Post</button>
 				</span>
@@ -406,7 +415,7 @@ if ( ! function_exists('MenuBar'))
 						</div>
 						<button type='submit' class='btn btn-default'><span class='glyphicon glyphicon-search'></span></button>
 					</form>
-					<div id='menu-profile' class='hide navbar-right' style='display: block;'>
+					<div id='menu-profile' class='hide navbar-right' style='display: block; margin-right: 20px'>
 						<img class='nav navbar-nav img-circle' src='". $memberInMenu['photographURL'] ."' 
 							style='width: 50px; height: 50px; margin-right: 10px;'>
 						<h1 class='nav navbar-nav'>" .$memberInMenu['firstName'] ."</h1>

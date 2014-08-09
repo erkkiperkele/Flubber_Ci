@@ -18,15 +18,20 @@ class upload_model extends CI_Model {
 
 	public function do_upload($memberId, $fileContentType)
 	{
-		$output_dir = "D:\\xampp\\htdocs\\Flubber_Ci\\assets\\imgs\\";
+		$output_dir = "D:\\xampp\\htdocs\\Flubber_Ci\\assets\\content\\";
 		if(isset($_FILES["file"]))
 		{
 			$error =$_FILES["file"]["error"];
 			if(!is_array($_FILES["file"]["name"])) //Only accept single file
 			{
-				$fileName = $_FILES["file"]["name"];
-				move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName);
-				$fileURL = base_url() ."assets/imgs/".$memberId.'-'.$fileContentType.'-'.$fileName;
+				$ext = explode(".", $_FILES["file"]["name"]);
+				$extSize = count($ext);
+				$ext = $ext[$extSize-1];
+				$fileName = uniqid($memberId .'-') .'.' .$ext; 
+				if(move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName))
+					$fileURL = base_url() ."assets/content/".$memberId.'-'.$fileContentType.'-'.$fileName;
+				else
+					$fileURL = $error;
 			}
 			return $fileURL;
 		}

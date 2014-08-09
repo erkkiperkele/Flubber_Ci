@@ -60,30 +60,35 @@ $(window).scroll(function() {
 
 //jQuery Drag'n drop feature for uploading images
 //1. Handling the drag'n drop
-var obj = $('#profile-pic, #profile-name');
+var obj = $('#profile-pic, #profile-name, #addContentBox');
+function stopPickingTextInContentBox(){$('#addContentBox').find('textarea').prop('disabled', true);}
+function startPickingTextInContentBox(){$('#addContentBox').find('textarea').prop('disabled', false);}
+var borderStyle = $(obj[2]).css('border');
 obj.on('dragenter', function (e) 
 {
     e.stopPropagation();
     e.preventDefault();
+    stopPickingTextInContentBox();
     $(this).css('border', '2px dotted #0B85A1');
 });
 obj.on('dragover', function (e) 
 {
      e.stopPropagation();
      e.preventDefault();
+     stopPickingTextInContentBox();
      $(this).css('border', '2px dotted #0B85A1');
 });
 obj.on('drop', function (e) 
 {
- 
-     $(this).css('border', '2px dotted #0B85A1');
      e.preventDefault();
      var files = e.originalEvent.dataTransfer.files;
  
-     //Sending the image to the Database
+     //Sending the file to the Database
      handleFileUpload(files,obj, $(this).attr('id'));
-     $(this).css('border', 'none');
+     obj.css('border', borderStyle);
+     startPickingTextInContentBox();
 }); 
+
 
 //2. Block dropping outside the image area:
 $(document).on('dragenter', function (e) 
@@ -100,6 +105,7 @@ $(document).on('drop', function (e)
 {
     e.stopPropagation();
     e.preventDefault();
+    startPickingTextInContentBox();
 });
 
 //3. Read the image dropped on the profile section
@@ -118,6 +124,8 @@ function sendFileToServer(formData, elem/*,status*/)
 {
     var uploadURL = baseURL + "index.php/upload/file/" + elem; //Upload URL
     var extraData ={}; //Extra Data.
+    if(elem === 'addContentBox')
+        formData.append('profileId', $('#'+elem).find('#profileId').val());
     var jqXHR=$.ajax({
             url: uploadURL,
             type: "POST",
@@ -126,24 +134,31 @@ function sendFileToServer(formData, elem/*,status*/)
             cache: false,
             data: formData,
             success: function(data){
-                if(elem === 'profile-pic')
+                if(elem === 'profile-pic')          //profilePicture
                 {
                     $('#'+elem).attr('src', data)
-                    addProfileHeaderToMenuBar();
+                    $('#menu-profile').children().first().attr('src', data);
                 }
-                else
+                else if(elem == 'profile-name')     //coverPicture
                 {
                     $('#'+elem).css('background', 'url("' + data + '") no-repeat center');
                 }
+                else if(elem == 'addContentBox')
+                {
+                    if(data !="")
+                    {
+                        var addContentBox = $('#addContentBox');
+                        addContentBox.find('#updatedStatus').val(data);
+                        if(data.match(/mp4$/) == "mp4")
+                            addContentBox.find('#contentType').val('video');
+                        else
+                            addContentBox.find('#contentType').val('image');
+                        addContentBox.find('button').click();
+                    }
+                }
 
             }
-                /*status.setProgress(100);
-     
-                //$("#status1").append("File upload Done<br>");           
-            }*/
     }); 
- 
-    //status.setAbort(jqXHR);
 }
 
 
