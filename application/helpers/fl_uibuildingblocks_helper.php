@@ -729,9 +729,19 @@ if ( ! function_exists('SearchResultMember'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a href='" .CreateURL('index.php/profile/') .$member['memberId'] ."'
-				<h1>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
+			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/profile/') .$member['memberId'] ."'
+				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>
+			<div class='col-md-offset-4 btn-group btn-group-sm'>
+				<button type='button' class='btn btn-default btn-info dropdown-toggle' data-toggle='dropdown'>
+				Add as..<span class='caret'></span>
+				</button>
+				<ul class='dropdown-menu' role='menu'>
+					<li><a href='" .CreateURL('index.php/friends/') ."'>Friend</a></li>
+	 				<li><a href='" .CreateURL('index.php/friends/') ."'>Family</a></li>
+	 				<li><a href='" .CreateURL('index.php/friends/') ."'>Colleague</a></li>
+	    		</ul>
+    		</div>
 		</div>";
 	}
 }
@@ -751,9 +761,12 @@ if ( ! function_exists('SearchResultGroup'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a href='" .CreateURL('index.php/group/') .$group['groupId'] ."'
-				<h1>" .$group['groupName'] ."</h1>
+			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/group/') .$group['groupId'] ."'
+				<h1 style='font-size:large'>" .$group['groupName'] ."</h1>
 			</a>
+			<div class='col-md-offset-4 btn-group btn-group-sm'>
+				<button type='button' class='btn btn-default btn-info' href='".CreateURL('index.php/group/') ."'>Join!</button>
+			</div>
 		</div>";
 	}
 }
