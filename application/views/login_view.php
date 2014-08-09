@@ -44,11 +44,6 @@
       <br/>
       <button type="submit" class="btn btn-default" value="register">Register</button>
     </form>
-    <!-- <h2> If you were provided a secret key from a friend...</h2>
-    <div class="input-group input-group-md">
-      <span class="input-group-addon">Enter the secret key:</span>
-      <input type="password" class="form-control" id="newkey" placeholder="Enter secret key">
-    </div> --><br/>
 
   </section>
 </body>

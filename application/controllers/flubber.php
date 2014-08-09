@@ -51,7 +51,7 @@ class flubber extends CI_Controller {
     	$this->form_validation->set_rules('newfirstname', 'Firstname', 'trim|required|xss_clean');
     	$this->form_validation->set_rules('newlastname', 'Lastname', 'trim|required|xss_clean');
     	$this->form_validation->set_rules('newdob', 'Date Of Birth', 'trim|required|xss_clean|');
-    	$this->form_validation->set_rules('newemail', 'Email', 'trim|required|xss_clean|valid_email');
+    	$this->form_validation->set_rules('newemail', 'Email', 'trim|required|xss_clean|valid_email|callback_verify_email_is_unique');
     	$this->form_validation->set_rules('newpassword', 'Password', 'trim|required|xss_clean');
 
     	if($this->form_validation->run() == TRUE)
@@ -61,31 +61,11 @@ class flubber extends CI_Controller {
 	    	$dob = $this->input->post('newdob');
 	    	$email = $this->input->post('newemail');
 	    	$pass = $this->input->post('newpassword');
-	    	$result = $this->login_model->register_user($first, $last, $email, $pass, $dob);
-
-	    	if($result == TRUE)
-	    		redirect('/profile/');
-	    	else
-	    	{
-	    		$this->form_validation->set_message('newfirstname', 'Something went wrong! We will fix it as soon as we can! :)');
-	    		redirect('/');
-	    	}
-	    }
-	    else
-	    {
-	    	$data['doRegister'] = TRUE;
-	    	$data['doLogin'] = FALSE;
-	      	$this->load->view('login_view', $data);
-	    }
-	}
-
-	function registerByKey()
-	{
-		$this->form_validation->set_rules('key', 'key', 'trim|required|xss_clean|callback_validate_key');
-    	if($this->form_validation->run() == TRUE)
-	    {	
-	    	//Get Member by Key!?
-	    	redirect('/profile/');
+	    	$this->login_model->register_user($first, $last, $email, $pass, $dob);
+			$this->login_model->doLogin($email, $pass);	
+	    	$userdata = $this->login_model->get_user($_SESSION['login']);
+			$this->session->set_userdata( $userdata );
+    		redirect('/profile/');
 	    }
 	    else
 	    {
@@ -98,7 +78,6 @@ class flubber extends CI_Controller {
 	function verify_pwd($password)
 	{
 		$username = $this->input->post('username');
-	   	$this->load->model('login_model');
 	   	if($this->login_model->doLogin($username, $password))
 		{
 			$userdata = $this->login_model->get_user($_SESSION['login']);
@@ -116,7 +95,7 @@ class flubber extends CI_Controller {
 
 	function verify_notsuspended($password)
 	{
-		if($this->session->userdata('status') == 3)
+		if($this->session->userdata('status') === 3)
 		{
 			$this->form_validation->set_message('verify_notsuspended', "You have been suspended. Please contact the admin!");
 		}
@@ -131,9 +110,18 @@ class flubber extends CI_Controller {
 		$user['name'] = $this->input->post('username');
 		$user['dob'] = $this->input->post('userdob');
 		$user['email'] = $useremail;
-		if($this->login_model->user_exists($user) == TRUE)
+		if($this->login_model->user_exists($user) === TRUE)
 			return TRUE;
 		else
 			$this->form_validation->set_message('verify_user', 'There is no user with this info! Please try again.');
+		return FALSE;
+	}
+	function verify_email_is_unique($registrantEmail)
+	{
+		if($this->login_model->email_unique($registrantEmail))
+			return TRUE;
+		else
+			$this->form_validation->set_message('verify_email_is_unique', 'This email is already registered in our system. If you have forgotten your password, please contact the administrator.');
+		return FALSE;
 	}
 }

@@ -31,8 +31,17 @@ Class login_model extends CI_Model
 
  function user_exists($user)
  {
- 	return true;
- 	//return $this->db2->CHECKIFUSEREXISTS($user['name'],$user['dob'],$user['email']);
+ 	$id = $this->db2->getMemberId(strtolower($user['email']));
+ 	$info = $this->db2->getMemberInfo($id['memberId']);
+ 	if (strtolower($info['firstName']) == strtolower($user['name']) &&
+ 	    $info['dateOfBirth'] == $user['dob']) 
+ 		return true;
+ 	else
+ 		return $info;
+ }
+ function email_unique($email)
+ {
+ 	return $this->db2->checkEmailNotDuplicate($email);
  }
 }
 
