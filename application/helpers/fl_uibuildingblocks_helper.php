@@ -409,7 +409,7 @@ if ( ! function_exists('MenuBar'))
 							</ul>
 						</li>
 					</ul>
-					<form action='" .CreateURL('index.php/search') ."' class='navbar-form navbar-left' role='search'>
+					<form action='" .CreateURL('index.php/search') ."' class='navbar-form navbar-left' method='POST' role='search'>
 						<div class='form-group'>
 							<input type='text' name='query' class='form-control' placeholder='Search'>
 						</div>
@@ -729,7 +729,7 @@ if ( ! function_exists('SearchResultMember'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/profile/') .$member['memberId'] ."'
+			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>
 			<div class='col-md-offset-4 btn-group btn-group-sm'>

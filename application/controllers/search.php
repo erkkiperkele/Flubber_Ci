@@ -8,7 +8,8 @@ class search extends FL_Controller {
 		
 		$user = $this->session->userdata('memberId');
 		$query = $this->input->post('query');
-		
+		if(!isset($query) || $query == "")
+			redirect("/profile/");
 		$data['result'] = $this->search_model->do_search($user, $query);
 		$data['currentPage'] = 'search';
 		$data['title'] = 'Flubber - Search Results for ' .$query;
