@@ -14,6 +14,8 @@ class flubber extends CI_Controller {
 	}
 	function index()
 	{
+		if($this->session->userdata('memberId') != "")
+			redirect("/profile/");
 		$data['doLogin'] = FALSE;
 		$data['doRegister'] = FALSE;
 		$this->load->view('login_view');
