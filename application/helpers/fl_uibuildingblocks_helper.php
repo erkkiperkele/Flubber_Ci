@@ -731,18 +731,40 @@ if ( ! function_exists('SearchResultMember'))
 		<div class='well well-sm'>
 			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
-			</a>
-			<div class='col-md-offset-4 btn-group btn-group-sm'>
-				<button type='button' class='btn btn-default btn-info dropdown-toggle' data-toggle='dropdown'>
-				Add as..<span class='caret'></span>
-				</button>
-				<ul class='dropdown-menu' role='menu'>
-					<li><a href='" .CreateURL('index.php/friends/') ."'>Friend</a></li>
-	 				<li><a href='" .CreateURL('index.php/friends/') ."'>Family</a></li>
-	 				<li><a href='" .CreateURL('index.php/friends/') ."'>Colleague</a></li>
-	    		</ul>
-    		</div>
-		</div>";
+			</a>";
+		if(isset($member['related']))
+		{
+			echo "<div class='col-md-offset-3 text-left btn-group btn-group-sm'>";
+			echo	"<a href='" .CreateURL('index.php/friends/') ."' class='btn btn-default btn-info pull' id='remove'>Remove ";
+					switch($member['related']){
+						case 'family': 		echo "Family";	break;
+						case 'friend': 		echo "Friend"; break;
+						case 'colleague': 	echo "Colleague";	break;
+						}
+			echo 	"</a>";
+			echo  "</div>";
+		} 
+		else if(!isset($member['related']) || $member['related'] == 0)
+		{
+			echo "
+				<div class='col-md-offset-3 text-left btn-group btn-group-sm'>
+					<button type='button' class='btn btn-default btn-info dropdown-toggle' data-toggle='dropdown'>
+					Add as..<span class='caret'></span>
+					</button>
+					<ul class='dropdown-menu' role='menu'>
+						<li><a href='" .CreateURL('index.php/friends/') ."'>Friend</a></li>
+		 				<li><a href='" .CreateURL('index.php/friends/') ."'>Family</a></li>
+		 				<li><a href='" .CreateURL('index.php/friends/') ."'>Colleague</a></li>
+		    		</ul>
+	    		</div>";
+		}
+		echo
+		"</div>
+		<script type='text/javascript'>
+		$('#remove').onclick(function(){CreateURL('index.php/friends/')
+		</script>
+		";
+
 	}
 }
 
