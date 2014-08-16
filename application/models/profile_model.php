@@ -53,7 +53,10 @@ class profile_model extends CI_Model {
 		$wallContents = $this->db2->getWallContents($memberId);
 		if (!empty($wallContents))
 		{
-			$posts = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
+			$postsTemp = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
+		
+		
+			$posts = $this->ExtendWitComments($postsTemp, 'currentPosterId');
 			usort($posts, 'cmp');
 			return $posts;
 		}
@@ -81,6 +84,17 @@ class profile_model extends CI_Model {
 		$previousPosterId = null;
 		$originalPosterId = $this->memberId;
 		$this->db2->postWallContent($profileId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
+	}
+
+	public function add_comment($profileId, $wallContentNumber, $commentContent)
+	{
+		$this->db2->postComment($profileId, $wallContentNumber, $this->memberId, $commentContent);
+	}
+
+	//NOT TESTED!
+	public function get_Comments($memberId, $wallContentNumber)
+	{
+		$this->db2->getComments($memberId, $wallContentNumber);
 	}
 
 	public function get_Post($profileId, $wallContentNumber)
@@ -143,6 +157,30 @@ class profile_model extends CI_Model {
 			$contentTemp = $content;
 			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
 			array_push($extendedArray, (array)$extendedContent);
+		endforeach;
+		return $extendedArray;
+	}
+
+	//Extends with comments NOT TESTED
+	private function ExtendWitComments($posts, $fieldNameForMemberId = 'currentPosterId')
+	{
+		$extendedArray = array();
+		foreach($posts as $content):
+			print_r("</br>");
+			print_r($content[$fieldNameForMemberId]);
+			print_r("</br>");
+			print_r($content['wallContentNumber']);
+			print_r("</br>");
+			print_r("fracking comment");
+			$test = $this->get_Comments($fieldNameForMemberId, $content['wallContentNumber']);
+			print_r($test);
+			
+
+			$content['comments'] = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
+			// $content['comments'] = 'testComments';
+			$contentTemp = $content;
+			// $extendedContent = (object) array_merge((array) $contentTemp, (array) $comments);		#extends the post information with full member details
+			array_push($extendedArray, $contentTemp);
 		endforeach;
 		return $extendedArray;
 	}

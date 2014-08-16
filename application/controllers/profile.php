@@ -31,12 +31,28 @@ class profile extends FL_Controller {
 	public function addStatus()
 	{
 			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
-			$contentType = $this->input->post('contentType'); #HARD CODED TEST!!! DO NOT CHECKIN!
+			$contentType = $this->input->post('contentType');
 			$content = $this->input->post('updatedStatus');
 			$profileId = $this->input->post('profileId');
 			$this->profile_model->add_Status($permissionId, $contentType, $content, $profileId);
 			redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function addComment()
+	{
+		$profileId = $this->input->post('profileId');
+		$wallContentNumber = $this->input->post('postId');
+		$commentContent = $this->input->post('commentContent');
+		$this->profile_model->add_comment($profileId, $wallContentNumber, $commentContent);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	//TESTING ONLY - TO DELETE
+	public function addComment2($profileId, $wallContentNumber, $commentContent)
+	{
+		$this->profile_model->add_comment($profileId, $wallContentNumber, $commentContent);
+	}
+	//END OF TO DELETE
 
 	public function updatePost()
 	{

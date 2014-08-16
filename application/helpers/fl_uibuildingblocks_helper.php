@@ -274,10 +274,74 @@ if ( ! function_exists('ContentBox'))
 										  </video>";
 								else
 									echo $PostInfo['content'];
-							echo "</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
+
+
+								echo "
+								</div>
+							</div>";
+		
+
+							echo form_open('profile/addComment/');
+							
+							echo "
+							<div class='input-group'>
+								<input type='textarea' class='form-control' id='commentContent' name='commentContent'>
+								<input type='hidden' class='form-control' id='profileId' name='profileId' value='" .$PostInfo['profileId'] ."'>
+								<input type='hidden' class='form-control' id='postId' name='postId' value='" .$PostInfo['wallContentNumber'] ."'>
+								<span class='input-group-btn'>
+									<button class='btn btn-default' type='submit'>Post</button>
+								</span>
 							</div>
+							";
+
+							echo form_close();
+
+
+							print_r($PostInfo);
+					    		CommentContent($PostInfo['comments']);
+							echo
+							"
 						</div>
 						";
+	}
+}
+
+//TO BE FINISHED WHEN COMMENTS ARE PROPERLY FETCHED
+if ( ! function_exists('CommentContent'))
+{
+	function CommentContent($PostComments = "")
+	{
+		// echo "
+		
+		// 	<ul class='list-group'>
+		// 		<li class='list-group-item'>
+		// 		"
+		// 		.$PostComments['content']."
+		// 		</p>
+		// 		"
+		// 		.$PostComments['content']."
+		// 		</li>
+		// 	</ul>
+		// ";
+		echo "
+		
+			<ul class='list-group'>
+				";
+		if (isset($PostComments))
+		{
+
+		foreach ($PostComments as $comment): 
+    		// echo "foreach";
+    		echo "
+    			<li class='list-group-item'>
+    			".$comment."
+    			</li>";
+    	endforeach;
+		}
+				
+		echo "
+			</ul>
+		";
 	}
 }
 
