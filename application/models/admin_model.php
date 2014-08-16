@@ -85,6 +85,27 @@ class admin_model extends flubber_model {
 	///////////////////////////////
 	
 	//admin POSN public content (as a send message to all)
+	
+	public function getMessagesPOSN ($adminId);
+	{
+		//TODO get messages from all admins
+		
+		#Get every public post information
+		$messagesPOSN = $this->db2->getPublicContents();
+		
+		$posts = array();
+		
+		#Extends each post with its member details
+		foreach($publicContents as $content):
+			$member = $this->get_user($content['memberId']);
+			$contentTemp = $content;
+			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
+			array_push($posts, (array)$postDetails);
+		endforeach;
+
+		return $posts;
+	}
+	
 	public function messagePOSN ($subject , $content , $admin) 
 	{
 		$members = $this->db2->retrieveAllMembers();

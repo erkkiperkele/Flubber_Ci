@@ -55,26 +55,4 @@ class adminList extends FL_Controller {
 		$this->admin_model->deleteGroup($name);
 	}
 	
-	//Public content functions
-	public function postPublic()
-	{
-		$contentType = $this->input->post('contentType');
-		$content = $this->input->post('content');
-		$this->admin_model->postPublicContent( $admin , $contentType, $content);
-		redirect($_SERVER['HTTP_REFERER']);
-	}
-	
-	public function deletePublic($postId)
-	{
-		$this->admin_model->deletePublicContent($admin, $postId);
-	}
-	
-	//POSN message function
-	public function messageAllMembers() 
-	{
-		$subject = $this->input->post('subjectAll');
-		$content = $this->input->post('contentAll');
-		
-		$this->admin_model->messagePOSN ($subject , $content , $admin);
-	}
 }
