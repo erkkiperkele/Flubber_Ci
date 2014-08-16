@@ -62,9 +62,9 @@ class groups_model extends flubber_model {
 				|| ($this->session->userdata('privilege') == 1)				//can remove content if admin
 				|| ($this->memberId == $content['memberId']);				//can remove content on your wall
 
-			$member = $this->get_user($content[$fieldNameForMemberId]);
+			$postedBy = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
-			$extendedContent = (object) array_merge((array) $contentTemp, (array) $this->member);		#extends the post information with full member details
+			$extendedContent = (object) array_merge((array) $contentTemp, (array) $postedBy);		#extends the post information with full member details
 			array_push($extendedArray, (array)$extendedContent);
 		endforeach;
 		return $extendedArray;
