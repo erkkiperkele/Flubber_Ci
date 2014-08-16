@@ -1004,5 +1004,89 @@ if ( ! function_exists('SearchResultGroup'))
 		</div>";
 	}
 }
+
+/////////////////////////
+//Admin building blocks
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	User 			contains	firstName, lastName and photographURL
+ * 
+ * @return	nothing
+ */
+if ( ! function_exists('MemberBox'))
+{
+	function MemberBox($MemberInfo = "")
+	{
+		echo "
+		<div class='content panel panel-default'>
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						echo
+						"<button class='editbar-del-btnMember btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+							<span class='glyphicon glyphicon-remove'></span>
+						</button>
+						";
+
+						echo 
+								"<div class='panel-title row' style='margin-right:10px;'id='".$MemberInfo['memberId']."'>
+									<a href='" .CreateURL("/index.php/profile/index/".$MemberInfo['memberId']) ."'>
+										<img class='profilePic col-md-1 col-md-offset-1' id='".$MemberInfo['coverPictureURL'] ."' src='" .$MemberInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+									</a>
+									<h4 class='col-md-3 text-left'>".$MemberInfo['firstName'] ." <small>" .$MemberInfo['lastName']." </small></h4>
+								</div>
+							</div>
+						<div class='panel-body'> 
+						</div>
+			</div>";
+			echo
+			"
+		</div>
+		";
+		
+		
+		
+	}
+}
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	User 			contains	firstName, lastName and photographURL
+ * 
+ * @return	nothing
+ */
+if ( ! function_exists('GroupBox'))
+{
+	function GroupBox($GroupInfo = "")
+	{
+		echo "
+		<div class='content panel panel-default'>
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						echo
+						"<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+							<span class='glyphicon glyphicon-remove'></span>
+						</button>
+						";
+
+						echo 
+								"<div class='panel-title row' style='margin-right:10px;'id='".$GroupInfo['groupId']."'>
+									<a href='" .CreateURL("/index.php/profile/index/".$GroupInfo['groupId']) ."'>
+										<img class='profilePic col-md-1 col-md-offset-1' id='".$GroupInfo['coverPictureURL'] ."' src='" .$GroupInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+									</a>
+									<h4 class='col-md-3 text-left'>".$GroupInfo['groupName'] ." <small>" ." </small></h4>
+									<h4 class='col-md-6 pull-right text-right small'>";
+									"</h4>
+								</div>
+						<div class='panel-body'> 
+						</div>
+			</div>";
+			echo"
+		</div>
+		";
+	}
+}
+
 /* End of file FL_UIBuildingBlocks_helper.php */
 /* Location: ./system/helpers/FL_UIBuildingBlocks_helper.php */
