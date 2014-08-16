@@ -286,7 +286,7 @@ if ( ! function_exists('ContentBox'))
 							echo "
 							<div class='input-group'>
 								<input type='textarea' class='form-control' id='commentContent' name='commentContent'>
-								<input type='hidden' class='form-control' id='profileId' name='profileId' value='" .$PostInfo['profileId'] ."'>
+								<input type='hidden' class='form-control' id='postMemberId' name='postMemberId' value='" .$PostInfo['memberId'] ."'>
 								<input type='hidden' class='form-control' id='postId' name='postId' value='" .$PostInfo['wallContentNumber'] ."'>
 								<span class='input-group-btn'>
 									<button class='btn btn-default' type='submit'>Post</button>
@@ -311,7 +311,7 @@ if ( ! function_exists('CommentContent'))
 		echo "
 			<ul class='list-group'>
 				";
-		if (isset($PostComments))
+		if (!empty($PostComments))
 		{
 			foreach ($PostComments as $comment): 
 	    		// echo "foreach";

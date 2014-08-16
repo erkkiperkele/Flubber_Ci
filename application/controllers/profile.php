@@ -16,7 +16,7 @@ class profile extends core {
 			$this->profileId = $id;
 		}
 			
-		$data['member'] = $this->member;
+		$data['member'] = $this->profile_model->get_user($this->profileId);	//Isn't it stored on top controller?
 		$data['groupList'] = $this->groupList;
 		$data['newRequestNb'] = 0;
 		$data['newMessageNb'] = 0;
@@ -40,10 +40,10 @@ class profile extends core {
 
 	public function addComment()
 	{
-		$profileId = $this->input->post('profileId');
+		$postMemberId = $this->input->post('postMemberId');
 		$wallContentNumber = $this->input->post('postId');
 		$commentContent = $this->input->post('commentContent');
-		$this->profile_model->add_comment($profileId, $wallContentNumber, $commentContent);
+		$this->profile_model->add_comment($postMemberId, $wallContentNumber, $commentContent);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 

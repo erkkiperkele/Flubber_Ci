@@ -70,9 +70,9 @@ class profile_model extends core_model {
 		$this->db2->postWallContent($profileId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
-	public function add_comment($profileId, $wallContentNumber, $commentContent)
+	public function add_comment($postMemberId, $wallContentNumber, $commentContent)
 	{
-		$this->db2->postComment($profileId, $wallContentNumber, $this->memberId, $commentContent);
+		$this->db2->postComment($postMemberId, $wallContentNumber, $this->memberId, $commentContent);
 	}
 
 	//NOT TESTED!
