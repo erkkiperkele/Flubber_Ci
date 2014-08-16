@@ -118,6 +118,11 @@ class profile_model extends flubber_model {
 		}
 	}
 
+	public function delete_comment($profileId, $wallContentNumber, $commentNumber)
+	{
+		$this->db2->deleteComment($profileId, $wallContentNumber, $commentNumber);
+	}
+
 	public function update_MemberAddress($newAddress, $newCity, $newCountry)
 	{
 		$this->db2->setAddressOfMember($this->memberId, $newAddress, $newCity, $newCountry);
@@ -176,8 +181,6 @@ class profile_model extends flubber_model {
 			$contentTemp = $content;
 			array_push($extendedArray, $contentTemp);
 		endforeach;
-
-	
 		return $extendedArray;
 	}
 	

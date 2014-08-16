@@ -78,9 +78,9 @@ class profile extends FL_Controller {
 		$this->profile_model->delete_post($profileId, $postId);
 	}
 
-	public function deleteComment($postId, $profileId)
+	public function deleteComment($wallContentNumber, $profileId, $commentNumber)
 	{
-		print_r($postId);
+		$this->profile_model->delete_comment($profileId, $wallContentNumber, $commentNumber);
 	}
 	
 	public function updateMemberInfo()
