@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'controllers/core.php';
-class friends extends core {
+class friends extends FL_Controller {
 
 	public function __construct()
 	{

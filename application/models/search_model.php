@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'models/core_model.php';
-Class search_model extends core_model
+Class search_model extends flubber_model
 {
 
 	public function __construct()

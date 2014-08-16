@@ -27,6 +27,10 @@
  */
 class FL_Controller extends CI_Controller {
 
+	public $profileId;	#profile memberId being viewed.
+	public $member;
+	public $groupList;
+	
 	/**
 	 * Constructor
 	 */
@@ -37,6 +41,10 @@ class FL_Controller extends CI_Controller {
 
 		$this->load->helper('url');
 		$this->load->helper('FL_UIBuildingBlocks');
+		$this->load->model('flubber_model');
+		$this->profileId = $this->session->userdata('memberId');
+		$this->member = $this->flubber_model->get_user($this->profileId);
+		$this->groupList = $this->flubber_model->get_groupList($this->profileId);
 		
 		$isLoggedIn = $this->isLogged();
 		if ($isLoggedIn == false)

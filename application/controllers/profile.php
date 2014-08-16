@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'controllers/core.php';
-class profile extends core {
+class profile extends FL_Controller {
 
 	public function __construct()
 	{

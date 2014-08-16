@@ -1,7 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once APPPATH.'controllers/core.php';
-class search extends core {
+class search extends FL_Controller {
 
 	function index()
 	{

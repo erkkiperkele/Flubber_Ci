@@ -1,8 +1,5 @@
 <?php
-
-// include "DatabaseAccessObject.php";
-require_once APPPATH.'models/core_model.php';
-class admin_model extends core_model {
+class admin_model extends flubber_model {
 	
 	// private $db2;
 

@@ -1,6 +1,6 @@
 <?php
-require_once APPPATH.'models/core_model.php';
-class groups_model extends core_model {
+require_once APPPATH.'models/flubber_model.php';
+class groups_model extends flubber_model {
 	
 	public function __construct()
 	{
@@ -37,13 +37,14 @@ class groups_model extends core_model {
 		}
 		
 		#Get every public post information
-		$groupContents = $this->db2->getGroupContents($memberId);
+		$groupContents = $this->db2->getGroupContents($groupId);
 		if (!empty($groupContents))
 		{
-			$postsTemp = $this->ExtendWithMemberDetails($groupContents, $memberId, 'currentPosterId');
-			usort($posts, 'cmp');
-			return $posts;
+			$postsTemp = $this->ExtendWithMemberDetails($groupContents, $this->memberId, 'currentPosterId');
+			usort($postsTemp, 'cmp');
+			return $postsTemp;
 		}
+		return $groupContents;
 	}
 	
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
@@ -54,7 +55,6 @@ class groups_model extends core_model {
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
 			$content['isEditable'] = $this->memberId == $content['currentPosterId'];		//can only edit content originally created by the member connected
-			$content['profileId'] = $content['memberId'];		//memberId copied because it gets overwritten by member's table memberId
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
 			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details

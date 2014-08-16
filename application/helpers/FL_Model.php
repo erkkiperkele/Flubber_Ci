@@ -1,9 +1,35 @@
-<?php
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include "DatabaseAccessObject.php";
+include "/../models/DatabaseAccessObject.php";
 
-class core_model extends CI_Model {
-	
+/**
+ * Flubber
+ *
+ *
+ * @package		Flubber
+ * @author		Flubber Dev Team
+ * @copyright	Copyright (c) 2014, Flubber, Inc.
+ * @license		
+ * @link		
+ * @since		Version 0.03
+ * @filesource
+ */
+
+// ------------------------------------------------------------------------
+
+/**
+ * Flubber Application Model Class
+ *
+ * This class object is the super class that every model in
+ * Flubber will derive from.
+ *
+ * @package		Flubber
+ * @subpackage	Libraries
+ * @category	Libraries
+ * @author		Flubber Dev Team
+ */
+class FL_Model extends CI_Model {
+
 	public $db2;
 	public $memberId;
 	
@@ -14,7 +40,7 @@ class core_model extends CI_Model {
 		$this->memberId = $this->session->userdata('memberId');
 		
 		#REFACTOR: Call the variables from the config file instead of hardcoded
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
+		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber', 'root', '');
 	}
 	
 	public function get_user($memberId)
@@ -43,3 +69,7 @@ class core_model extends CI_Model {
 		return $groupInfoList;
 	}
 }
+// END FL_Model class
+
+/* End of file FL_Model.php */
+/* Location: ./application/core/FL_Model.php */

@@ -1,6 +1,6 @@
 <?php
-require_once APPPATH.'controllers/core.php';
-class upload extends core {
+
+class upload extends FL_Controller {
 
 	public function __construct()
 	{

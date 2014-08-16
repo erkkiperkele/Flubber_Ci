@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'controllers/core.php';
-class messages extends core {
+class messages extends FL_Controller {
 
 	public function __construct()
 	{

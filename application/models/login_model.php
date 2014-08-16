@@ -1,6 +1,6 @@
 <?php
-require_once APPPATH.'models/core_model.php';
-Class login_model extends core_model
+require_once APPPATH.'models/flubber_model.php';
+Class login_model extends flubber_model
 {
 	public function __construct()
 	{

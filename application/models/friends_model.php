@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'models/core_model.php';
-class friends_model extends core_model {
+class friends_model extends flubber_model {
 	
 	public function __construct()
 	{

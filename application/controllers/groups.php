@@ -1,6 +1,5 @@
 <?php
-require_once APPPATH.'controllers/core.php';
-class groups extends core {
+class groups extends FL_Controller {
 
 	private $groupId;
 
