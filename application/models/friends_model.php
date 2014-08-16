@@ -1,24 +1,10 @@
 <?php
-
-include "DatabaseAccessObject.php";
-
-class friends_model extends CI_Model {
-	
-	private $db2;
+require_once APPPATH.'models/core_model.php';
+class friends_model extends core_model {
 	
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
-		
-		#REFACTOR: Call the variables from the config file instead of hardcoded
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
-	}
-	
-	public function get_user($memberId)
-	{
-		$userInfo = $this->db2->getMemberInfo($memberId);
-		return $userInfo;
 	}
 	
 	public function get_family($memberId)

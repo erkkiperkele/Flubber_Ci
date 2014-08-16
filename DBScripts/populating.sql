@@ -53,12 +53,12 @@ INSERT into Related
 	(2, 1, 2);
 	
 INSERT into Groups
-	(groupId, groupName, ownerId, description)
+	(groupId, groupName, ownerId, description, photographURL, coverPictureURL, thumbnailURL)
 	VALUES
-	(1, 'COMP5311G4', 1, 'Files and databases'),
-	(2, 'Book club 42', 1, 'Follow the thumb...'),
-	(3, 'Weird MS bugs', 2, 'Found yet another ineffable loophole in the great MS product? That is marked as treated even though you know it''s a lie? Share your stories here.'),
-	(4, 'Montreal Photo Society', 1, 'Challenge of the month: go to a metro station you have never been before and take the picture of the strangest thing in the area.')
+	(1, 'COMP5311G4', 1, 'Files and databases',null,null,null),
+	(2, 'Book club 42', 1, 'Follow the thumb...',null,null,null),
+	(3, 'Weird MS bugs', 2, 'Found yet another ineffable loophole in the great MS product? That is marked as treated even though you know it''s a lie? Share your stories here.',null,null,null),
+	(4, 'Montreal Photo Society', 1, 'Challenge of the month: go to a metro station you have never been before and take the picture of the strangest thing in the area.',null,null,null);
 
 INSERT into memberofgroup
 	(memberId, groupId)

@@ -18,6 +18,8 @@
         <li><a href="profile.php">Profile</a></li>
         <li><a href="groups.php">Groups</a></li>
         <li><a href="friends.php">Friends</a></li>
+        <li><a href="friends.php">Requests</a></li>
+        <li><a href="friends.php">Messages</a></li>
         <li class="Settings">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">

@@ -202,6 +202,35 @@ $(document).ready(function(){
             delaytime += 50;
     }
 });
+//Coloring the top borders of the Description boxes:
+$(document).ready(function(){
+    $(".description").each(function(){
+        $(this).children().first().css("border-top", "2px solid #FFCC00").css("border-color", "none");
+        $(this).hide();
+         });
+    var delaytime = 50;
+    for(var item = $(".description").first(); item.length > 0; item = item.next()){
+        item.delay(delaytime).show(animateDown);
+         if(delaytime < 100);
+            delaytime += 50;
+    }
+    $(".description").first().show(animateDown);
+});
+
+//Coloring the top borders of the Message boxes:
+$(document).ready(function(){
+    $(".message").each(function(){
+        $(this).children().first().css("border-top", "2px solid #6C2DC7").css("border-color", "none");
+        $(this).hide();
+         });
+    var delaytime = 50;
+    for(var item = $(".message").first(); item.length > 0; item = item.next()){
+        item.delay(delaytime).show(animateDown);
+         if(delaytime < 100);
+            delaytime += 50;
+    }
+    $(".message").first().show(animateDown);
+});
 
 //Code to add privacy:
 /*

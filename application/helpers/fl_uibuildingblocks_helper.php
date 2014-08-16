@@ -343,19 +343,68 @@ if ( ! function_exists('GroupContentBox'))
 	{
 		echo "
 		<div class='content panel panel-default'>
-			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>
-				<div class='panel-title row' id='".$PostInfo['groupContentNumber']."'>
-					<img class='col-md-1 col-md-offset-1' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
-					<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-					<h4 class='col-md-6 pull-right text-right small privacy'><small>" .$PostInfo['timeStamp'] ."</small></h4>
-				</div>
-			</div>
-			<div class='panel-body'> <div class='editText'>"
-			.$PostInfo['content']
-			."</div><div><button type='button' class='heart btn pull-right' style='background:none'><span class='glyphicon glyphicon-heart-empty'></span></button></div>
-			</div>
-		</div>
-		";
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						if($PostInfo['isEditable'])
+						{
+							echo
+							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+								<span class='glyphicon glyphicon-pencil'></span>
+							</button>
+							<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+								<span class='glyphicon glyphicon-remove'></span>
+							</button>
+							";
+						}
+
+						echo 
+								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['groupContentNumber']."'>
+									<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
+										<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['profileId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+									</a>
+									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+									<h4 class='col-md-6 pull-right text-right small'>";
+									switch($PostInfo['permissionId']){
+										case 1: echo "<span class='"; 
+												if($PostInfo['isEditable']) 
+													echo "privacy "; 
+												echo "pull-right fa fa-user'><small> Private</small></span>"; 
+												break;
+										case 2: echo "<span class='";
+										 		if($PostInfo['isEditable'])
+										 			echo "privacy ";
+										 		echo "pull-right fa fa-users'><small> Public</small></span>";
+										 		break;
+										default: echo "<span class='";
+												 if($PostInfo['isEditable'])
+												 	echo "privacy ";
+												 echo "pull-right fa fa-user'><small> Private</small></span>";
+												 break;
+									}
+										echo "<small>" .$PostInfo['timeStamp'] ."</small>
+									</h4>
+								</div>
+							</div>
+							<div class='panel-body'> 
+								<input type='text' class='editbar-input form-control hide' placeholder=''>
+								<div class='editText'>";
+								if($PostInfo['contentType'] === 'image')
+									echo "<img style='width:480px; height:640px' src='".$PostInfo['content']."'/>";
+								else if($PostInfo['contentType'] === 'video')
+									echo "<video width='320' height='240' controls>  
+											<source src=" .$PostInfo['content'] ." type='video/mp4'>
+											Your browser does not support the video tag.
+										  </video>";
+								else
+									echo $PostInfo['content'];
+
+
+								echo "
+								</div>
+							</div>";
+							echo
+							"
+						</div>
+						";
 	}
 }
 
@@ -395,6 +444,50 @@ if ( ! function_exists('AddContentBox'))
 	}
 }
 
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	User 			contains	FirstName, LastName and photographURL
+ * @param   PostContent		contains	content, TimeStamp
+ * @return	nothing
+ */
+if ( ! function_exists('UserMessageBox'))
+{
+	function UserMessageBox($PostInfo = "")
+	{
+	echo "
+		<div class='message panel panel-default'>
+			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						echo 
+								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['messageNumber']."'>
+									<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
+										<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['memberId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+									</a>
+									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+									<h4 class='col-md-3 text-left'>".$PostInfo['title']."</h4>
+									<h4 class='col-md-6 pull-right text-right small'>";
+										echo "<small>" .$PostInfo['timeStamp'] ."</small>
+									</h4>
+								</div>
+							</div>
+							<div class='panel-body'> 
+								<input type='text' class='editbar-input form-control hide' placeholder=''>
+								<div class='editText'>";
+								echo $PostInfo['content'];
+								echo "
+								</div>
+							</div>";
+							echo
+							"
+						</div>
+						";
+	}
+}
+
 // --------------------------------------------------------------------
 
 /**
@@ -406,7 +499,7 @@ if ( ! function_exists('AddContentBox'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar($memberInMenu, $isAdmin=FALSE)
+	function MenuBar($memberInMenu, $groupList, $newRequestNb, $newMessageNb, $privilege)
 	{
 		if(!isset($memberInMenu))
 		{
@@ -432,9 +525,45 @@ if ( ! function_exists('MenuBar'))
 					<ul class='nav navbar-nav'>
 						<li class=''><a href='" .CreateURL('/') ."'>Home</a></li>
 						<li class='active'><a href='" .CreateURL('index.php/profile') ."'>Profile</a></li>
-						<li><a href='" .CreateURL('index.php/groups') ."'>Groups</a></li>
-						<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>";
-						if($isAdmin){
+						";
+						if ((!is_array($groupList) || count($groupList) == 0) && $privilege > 2){
+							echo "
+								<li><a href='" .CreateURL('index.php/search') ."'>Groups</a></li>
+								";
+						}
+						else {
+							echo "<li class='Groups'>
+								<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Groups<span class='caret'></span></a>
+								<ul class='dropdown-menu' role='menu'>
+								";
+							if(is_array($groupList) && count($groupList) > 0) {
+								foreach($groupList as $group):
+									echo "
+									<li><a href='" .CreateURL('index.php/groups/index/'.$group['groupId']) ."'>".$group['groupName']."</a></li>
+									";
+								endforeach;
+							}
+							if (is_array($groupList) && count($groupList) > 0 && $privilege < 3) {
+								echo "
+								<li class='divider'></li>
+								";
+							}
+							if($privilege < 3){
+								echo "
+								<li><a href='#'>New group</a></li>
+								";
+							}
+							echo "
+								</ul>
+							</li>
+							";
+						}
+						echo "
+							<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>
+							<li><a href='" .CreateURL('index.php/requests') ."'>Requests"; if ($newRequestNb > 0) { echo " (".$newRequestNb.")"; } echo "</a></li>
+							<li><a href='" .CreateURL('index.php/messages') ."'>Messages"; if ($newMessageNb > 0) { echo " (".$newMessageNb.")"; } echo "</a></li>
+							";
+						if($privilege==1){
 							echo "<li>
 									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
 									<ul class='dropdown-menu' role='menu'>
@@ -512,11 +641,11 @@ if ( ! function_exists('GroupHeader'))
 	function GroupHeader($group, $owner)
 	{
 		echo "
-		<div id='group-name' class='jumbotron col-md-9' style='background-image:url(".$owner['coverPictureURL']."); background-size: cover'>
-		<h1>" .$group['groupName'] ."<br/><small> " .$owner['firstName'].' '.$owner['lastName'] ."</small></h1>
-		</div>
 		<div class='col-md-3'>
 		<img id='group-pic' class='img-responsive pull-right' src='" .$owner['photographURL'] ."' style='width:190px; height:190px'/>
+		</div>
+		<div id='group-name' class='jumbotron col-md-9' style='background-image:url(".$owner['coverPictureURL']."); background-size: cover'>
+		<h1>" .$group['groupName'] ."<br/><small> " .$owner['firstName'].' '.$owner['lastName'] ."</small></h1>
 		</div>
 		";
 	}
@@ -531,19 +660,22 @@ if ( ! function_exists('GroupHeader'))
  * @param	array
  * @return	mixed	depends on what the array contains
  */
-if ( ! function_exists('FriendBox'))
+if ( ! function_exists('PersonBox'))
 {
-	function FriendBox($friendFirst, $friendLast, $picHref = "http://placehold.it/100x95")
+	function PersonBox($member, $isOwner = false, $picHref = "http://placehold.it/100x95")
 	{
 		echo "
 		<div class='col-md-6 portfolio-item'>
-			<a href='#'>
+			<a href='".CreateURL('index.php/profile/index/').$member['memberId'] ."'>
 				<ul class='list-inline'>
 					<li><img class='img-circle' src='" .$picHref ."'></li>
 					<li>
 						<ul class='list-unstyled'>
-							<li><small class='nopadding'>" .$friendFirst ."</small></li>
-							<li><small class='nopadding'>" .$friendLast ."</small></li>
+							<li><small class='nopadding'>" .$member['firstName'] ."</small></li>
+							<li><small class='nopadding'>" .$member['lastName'] ."</small></li>";
+							if ($isOwner)
+								echo "<li><small class='nopadding'>(owner)</small></li>";
+		echo "
 						</ul>
 					</li>
 				</ul>
@@ -625,7 +757,7 @@ if ( ! function_exists('FriendsCarousel'))
 						";
 					}
 				}
-				echo FriendBox($friend['firstName'], $friend['lastName']);
+				echo PersonBox($friend);
 			}
 			
 			echo "
@@ -728,9 +860,9 @@ if ( ! function_exists('GroupsCarousel'))
 					}
 				}
 				if ($member['memberId'] == $ownerId)
-					echo FriendBox($member['firstName'], $member['lastName'].' (owner)');
+					echo PersonBox($member, true);
 				else
-					echo FriendBox($member['firstName'], $member['lastName']);
+					echo PersonBox($member);
 			}
 			
 			echo "

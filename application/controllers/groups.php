@@ -1,8 +1,8 @@
 <?php
-class groups extends FL_Controller {
+require_once APPPATH.'controllers/core.php';
+class groups extends core {
 
-	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
-	private $groupId = 3; #dummy group
+	private $groupId;
 
 	public function __construct()
 	{
@@ -10,18 +10,24 @@ class groups extends FL_Controller {
 		$this->load->model('groups_model');
 	}
 
-	public function index($id=0)
+	public function index($id=0, $id2=0)
 	{
 		if($id > 0)
-			$this->memberId = $id;
+			$this->groupId = $id;
+		
+		if($id2 > 0)
+			$this->profileId = $id2;
 		
 		$data['currentPage'] = 'groups';
-		$data['member'] = $this->groups_model->get_user($this->memberId);
+		$data['member'] = $this->member;
+		$data['groupList'] = $this->groupList;
+		$data['newRequestNb'] = 0;
+		$data['newMessageNb'] = 0;
 		$data['group'] = $this->groups_model->get_group($this->groupId);
 		$data['owner'] = $this->groups_model->get_owner($this->groupId);
 		$data['groupMembers'] = $this->groups_model->get_groupMembers($this->groupId);
 		$data['title'] = 'Groups - '.$data['group']['groupName'];
-		$data['posts'] = $this->groups_model->get_groupPosts($this->groupId);
+		$data['groupPosts'] = $this->groups_model->get_groupPosts($this->groupId);
 		
 		$this->render('pages/groups', $data);
 	}

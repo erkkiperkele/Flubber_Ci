@@ -1,7 +1,6 @@
 <?php
-class friends extends FL_Controller {
-
-	private $memberId = 1;	#dummy user (Aymeric, he!he!he! :)
+require_once APPPATH.'controllers/core.php';
+class friends extends core {
 
 	public function __construct()
 	{
@@ -12,14 +11,17 @@ class friends extends FL_Controller {
 	public function index($id=0)
 	{
 		if($id > 0)
-			$this->memberId = $id;
+			$this->profileId = $id;
 		
 		$data['currentPage'] = 'friends';
-		$data['member'] = $this->friends_model->get_user($this->memberId);
+		$data['member'] = $this->member;
+		$data['groupList'] = $this->groupList;
+		$data['newRequestNb'] = 0;
+		$data['newMessageNb'] = 0;
 		$data['title'] = 'Friends of '.$data['member']['firstName'].' '.$data['member']['lastName'];
-		$data['memberRelatives'] = $this->friends_model->get_family($this->memberId);
-		$data['memberFriends'] = $this->friends_model->get_friends($this->memberId);
-		$data['memberColleagues'] = $this->friends_model->get_colleagues($this->memberId);
+		$data['memberRelatives'] = $this->friends_model->get_family($this->profileId);
+		$data['memberFriends'] = $this->friends_model->get_friends($this->profileId);
+		$data['memberColleagues'] = $this->friends_model->get_colleagues($this->profileId);
 		
 		$this->render('pages/friends', $data);
 	}

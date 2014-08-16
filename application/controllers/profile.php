@@ -1,15 +1,12 @@
 <?php
-class profile extends FL_Controller {
-
-	private $profileId;	#profile memberId being viewed.
-
+require_once APPPATH.'controllers/core.php';
+class profile extends core {
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('profile_model');
 		$this->load->helper('form');
-		$this->profileId = $this->session->userdata('memberId');
 	}
 
 	public function index($id=0)
@@ -19,9 +16,12 @@ class profile extends FL_Controller {
 			$this->profileId = $id;
 		}
 			
+		$data['member'] = $this->member;
+		$data['groupList'] = $this->groupList;
+		$data['newRequestNb'] = 0;
+		$data['newMessageNb'] = 0;
 		$data['currentPage'] = 'profile';
 		$data['posts'] = $this->profile_model->get_WallContent($this->profileId);
-		$data['member'] = $this->profile_model->get_user($this->profileId);
 		$data['interestTypes'] = $this->profile_model->get_Interests($this->profileId);
 		$data['title'] = $data['member']['firstName'];
 		$data['profileId'] = $this->profileId;

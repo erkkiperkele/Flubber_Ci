@@ -3,7 +3,7 @@
 			<div class="row">
 			<?php
 				echo
-					"<div class='interests panel panel-default'>
+					"<div class='description panel panel-default'>
 					<div class='panel-heading'>Description</div>
 					<ul class='list-group'>
 					<li class='list-group-item'>"
@@ -19,10 +19,10 @@
 			</div>
 			<div class="row">
 			<?php
-				if(is_array($posts) && count($posts) > 0)
-				foreach ($posts as $postInfo): 
+				if(is_array($groupPosts) && count($groupPosts) > 0)
+				foreach ($groupPosts as $postInfo): 
 					GroupContentBox($postInfo);
-				endforeach 
+				endforeach;
 			?>
 			</div>
 		</section>

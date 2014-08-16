@@ -1,15 +1,10 @@
 <?php
-
-include "DatabaseAccessObject.php";
-
-Class login_model extends CI_Model
+require_once APPPATH.'models/core_model.php';
+Class login_model extends core_model
 {
-	private $db2;
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
 	}
 	
 

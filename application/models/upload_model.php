@@ -1,19 +1,12 @@
 <?php
-
-include "DatabaseAccessObject.php";
-
-class upload_model extends CI_Model {
+require_once APPPATH.'models/core_model.php';
+class upload_model extends core_model {
 	
 	private $db2;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
-		#$this->load->helper('fl_DatabaseAccessObject');
-		
-		#REFACTOR: Call the variables from the config file instead of hardcoded
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
 	}
 
 	public function do_upload($memberId, $fileContentType)

@@ -1,20 +1,10 @@
 <?php
-
-include "DatabaseAccessObject.php";
-
-class profile_model extends CI_Model {
+require_once APPPATH.'models/core_model.php';
+class profile_model extends core_model {
 	
-	private $db2;
-	private $memberId;
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
-		$this->memberId = $this->session->userdata('memberId');
-		
-		#REFACTOR: Call the variables from the config file instead of hardcoded
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
 	}
 	
 	public function get_publicContent()
@@ -33,12 +23,6 @@ class profile_model extends CI_Model {
 		endforeach;
 
 		return $posts;
-	}
-	
-	public function get_user($memberId)
-	{
-		 $userInfo = $this->db2->getMemberInfo($memberId);
-		 return $userInfo;
 	}
 	
 	public function get_WallContent($memberId)
