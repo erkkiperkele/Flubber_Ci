@@ -2,7 +2,6 @@
 require_once APPPATH.'models/core_model.php';
 Class search_model extends core_model
 {
-	private $db2;
 
 	public function __construct()
 	{
