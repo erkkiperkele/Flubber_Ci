@@ -235,56 +235,83 @@ if ( ! function_exists('ContentBox'))
 						}
 
 						echo 
-								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['wallContentNumber']."'>
-									<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
-										<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['profileId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
-									</a>
-									<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
-									<h4 class='col-md-6 pull-right text-right small'>";
-									switch($PostInfo['permissionId']){
-										case 1: echo "<span class='"; 
-												if($PostInfo['isEditable']) 
-													echo "privacy "; 
-												echo "pull-right fa fa-user'><small> Private</small></span>"; 
-												break;
-										case 2: echo "<span class='";
-										 		if($PostInfo['isEditable'])
-										 			echo "privacy ";
-										 		echo "pull-right fa fa-users'><small> Public</small></span>";
-										 		break;
-										default: echo "<span class='";
-												 if($PostInfo['isEditable'])
-												 	echo "privacy ";
-												 echo "pull-right fa fa-user'><small> Private</small></span>";
-												 break;
-									}
-										echo "<small>" .$PostInfo['timeStamp'] ."</small>
-									</h4>
-								</div>
-							</div>
-							<div class='panel-body'> 
-								<input type='text' class='editbar-input form-control hide' placeholder=''>
-								<div class='editText'>";
-								if($PostInfo['contentType'] === 'image')
-									echo "<img style='width:480px; height:640px' src='".$PostInfo['content']."'/>";
-								else if($PostInfo['contentType'] === 'video')
-									echo "<video width='320' height='240' controls>  
-											<source src=" .$PostInfo['content'] ." type='video/mp4'>
-											Your browser does not support the video tag.
-										  </video>";
-								else
-									echo $PostInfo['content'];
+								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['wallContentNumber']."'>";
+						PostHeader($PostInfo);
+								
+						echo "</div>";
+
+						echo "<div class='panel-body'>";
+
+						PostBody($PostInfo);
+
+						echo "</div>";
+
+						AddComment($PostInfo['profileId'], $PostInfo['wallContentNumber']);
+
+						if (isset($PostInfo['comments']))
+						{
+				    		CommentContent($PostInfo['comments']);
+						}
+						echo
+						"
+					</div>
+					";
+	}
+}
 
 
-								echo "
-								</div>
-							</div>";
-							AddComment($PostInfo['profileId'], $PostInfo['wallContentNumber']);
-					    	CommentContent($PostInfo['comments']);
-							echo
-							"
-						</div>
-						";
+if ( ! function_exists('PostHeader'))
+{
+	function PostHeader($PostInfo)
+	{
+		echo "
+			<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
+				<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['profileId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+			</a>
+			<h4 class='col-md-3 text-left'>".$PostInfo['firstName'] ." <small>" .$PostInfo['lastName']." </small></h4>
+			<h4 class='col-md-6 pull-right text-right small'>";
+			switch($PostInfo['permissionId']){
+				case 1: echo "<span class='"; 
+						if($PostInfo['isEditable']) 
+							echo "privacy "; 
+						echo "pull-right fa fa-user'><small> Private</small></span>"; 
+						break;
+				case 2: echo "<span class='";
+				 		if($PostInfo['isEditable'])
+				 			echo "privacy ";
+				 		echo "pull-right fa fa-users'><small> Public</small></span>";
+				 		break;
+				default: echo "<span class='";
+						 if($PostInfo['isEditable'])
+						 	echo "privacy ";
+						 echo "pull-right fa fa-user'><small> Private</small></span>";
+						 break;
+			}
+				echo "<small>" .$PostInfo['timeStamp'] ."</small>
+			</h4>
+		</div>";
+	}
+}
+
+if ( ! function_exists('PostBody'))
+{
+	function PostBody($PostInfo)
+	{
+		echo "
+			<input type='text' class='editbar-input form-control hide' placeholder=''>
+			<div class='editText'>";
+			if($PostInfo['contentType'] === 'image')
+				echo "<img style='width:480px; height:640px' src='".$PostInfo['content']."'/>";
+			else if($PostInfo['contentType'] === 'video')
+				echo "<video width='320' height='240' controls>  
+						<source src=" .$PostInfo['content'] ." type='video/mp4'>
+						Your browser does not support the video tag.
+					  </video>";
+			else
+				echo $PostInfo['content'];
+
+
+		echo "</div>";
 	}
 }
 
@@ -316,22 +343,33 @@ if ( ! function_exists('CommentContent'))
 {
 	function CommentContent($PostComments = "")
 	{
-		echo "
-			<ul class='list-group'>
-				";
+		echo "<ul class='list-group'>";
+
 		if (!empty($PostComments))
 		{
 			foreach ($PostComments as $comment): 
-	    		// echo "foreach";
+
+ 				echo "<li class='list-group-item'>";
+ 				echo "<div style='height:20px'>";
 	    		echo "
-	    			<li class='list-group-item'>
+					<a href='" .CreateURL("/index.php/profile/index/".$comment['memberId']) ."'>
+						<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
+					</a>
+					<h4 class='text-left'>".$comment['firstName'] ." <small>" .$comment['lastName']." </small></h4>
+					<h4 class='pull-right text-right small'>
+				";
+
+				echo "<small>" .$comment['timeStamp'] ."</small>";
+ 				echo "</div>";
+ 				// echo "<div>";
+	    		echo "
 	    			".$comment['content']."
 	    			</li>";
+ 				// echo "</div>";
+
 	    	endforeach;
 		}
-		echo "
-			</ul>
-		";
+		echo "</ul>";
 	}
 }
 

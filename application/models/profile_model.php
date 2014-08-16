@@ -37,7 +37,7 @@ class profile_model extends core_model {
 		$wallContents = $this->db2->getWallContents($memberId);
 		if (!empty($wallContents))
 		{
-			$postsTemp = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
+			$postsTemp = $this->ExtendWithMemberDetails($wallContents, 'currentPosterId');
 			$posts = $this->ExtendWitComments($postsTemp, 'profileId');
 			usort($posts, 'cmp');
 			return $posts;
@@ -127,13 +127,13 @@ class profile_model extends core_model {
 	}
 
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
-	private function ExtendWithMemberDetails($arrayToExtend, $currentMemberId, $fieldNameForMemberId = 'currentPosterId')
+	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')
 	{
 		$extendedArray = array();
 		
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
-			$content['isEditable'] = $this->memberId == $content['currentPosterId'];		//can only edit content originally created by the member connected
+			$content['isEditable'] = $this->memberId == $content[$fieldNameForMemberId];		//can only edit content originally created by the member connected
 			$content['profileId'] = $content['memberId'];		//memberId copied because it gets overwritten by member's table memberId
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
@@ -147,10 +147,20 @@ class profile_model extends core_model {
 	{
 		$extendedArray = array();
 		foreach($posts as $content):
-			$content['comments'] = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
+			$comments = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
+
+			if (!empty($comments))
+			{
+				$extendedArrayWithMember = $this->ExtendWithMemberDetails($comments, 'commenterId');
+				$content['comments'] = $extendedArrayWithMember;
+			}
+			
+
 			$contentTemp = $content;
 			array_push($extendedArray, $contentTemp);
 		endforeach;
+
+	
 		return $extendedArray;
 	}
 	
