@@ -222,12 +222,28 @@ if ( ! function_exists('ContentBox'))
 		echo "
 		<div class='content panel panel-default'>
 			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+						// if($PostInfo['isEditable'])
+						// {
+						// 	echo
+						// 	"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+						// 		<span class='glyphicon glyphicon-pencil'></span>
+						// 	</button>
+						// 	<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+						// 		<span class='glyphicon glyphicon-remove'></span>
+						// 	</button>
+						// 	";
+						// }
+
 						if($PostInfo['isEditable'])
 						{
 							echo
 							"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 								<span class='glyphicon glyphicon-pencil'></span>
-							</button>
+							</button>";
+						}
+						if ($PostInfo['isDeletable'])
+						{
+							echo "
 							<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 								<span class='glyphicon glyphicon-remove'></span>
 							</button>
@@ -355,11 +371,15 @@ if ( ! function_exists('CommentContent'))
 					<a href='" .CreateURL("/index.php/profile/index/".$comment['memberId']) ."'>
 						<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 					</a>
+				 	<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+						<span class='glyphicon glyphicon-remove'></span>
+				 	</button>
 					<h4 class='text-left'>".$comment['firstName'] ." <small>" .$comment['lastName']." </small></h4>
 					<h4 class='pull-right text-right small'>
 				";
 
 				echo "<small>" .$comment['timeStamp'] ."</small>";
+				
  				echo "</div>";
  				// echo "<div>";
 	    		echo "
