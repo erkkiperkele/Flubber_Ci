@@ -1530,7 +1530,7 @@
 				try{
 					$statement = $this->db->prepare('SELECT memberId,wallContentNumber,commentNumber,commenterId,content,timeStamp
 					FROM Comment WHERE memberId = :memberId AND wallContentNumber = :wallContentNumber
-					ORDER BY timeStamp ASC;');
+					ORDER BY timeStamp DESC;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':wallContentNumber', $wallContentNumber, PDO::PARAM_INT);
 					$statement->execute();
