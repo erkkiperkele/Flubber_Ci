@@ -72,11 +72,15 @@ class profile extends FL_Controller {
 		$this->profile_model->update_PostPrivacy($postId, $permissionId);
 	}
 
-	//NOT TESTED
 	public function deletePost($postId)
 	{
 		$profileId = $this->input->post('profileId');
 		$this->profile_model->delete_post($profileId, $postId);
+	}
+
+	public function deleteComment($postId, $profileId)
+	{
+		print_r($postId);
 	}
 	
 	public function updateMemberInfo()

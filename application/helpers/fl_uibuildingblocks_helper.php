@@ -222,17 +222,6 @@ if ( ! function_exists('ContentBox'))
 		echo "
 		<div class='content panel panel-default'>
 			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
-						// if($PostInfo['isEditable'])
-						// {
-						// 	echo
-						// 	"<button class='editbar-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-						// 		<span class='glyphicon glyphicon-pencil'></span>
-						// 	</button>
-						// 	<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-						// 		<span class='glyphicon glyphicon-remove'></span>
-						// 	</button>
-						// 	";
-						// }
 
 						if($PostInfo['isEditable'])
 						{
@@ -252,6 +241,7 @@ if ( ! function_exists('ContentBox'))
 
 						echo 
 								"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['wallContentNumber']."'>";
+						
 						PostHeader($PostInfo);
 								
 						echo "</div>";
@@ -366,12 +356,12 @@ if ( ! function_exists('CommentContent'))
 			foreach ($PostComments as $comment): 
 
  				echo "<li class='list-group-item'>";
- 				echo "<div style='height:20px'>";
+ 				echo "<div class='comment-editable'id='". $comment['commentNumber'] ."' style='height:20px'>";
 	    		echo "
 					<a href='" .CreateURL("/index.php/profile/index/".$comment['memberId']) ."'>
 						<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 					</a>
-				 	<button class='editbar-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+				 	<button class='comment-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 						<span class='glyphicon glyphicon-remove'></span>
 				 	</button>
 					<h4 class='text-left'>".$comment['firstName'] ." <small>" .$comment['lastName']." </small></h4>

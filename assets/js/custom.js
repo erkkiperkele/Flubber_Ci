@@ -270,6 +270,26 @@ function updatePrivacy(postId, privacy){
  */
 
 
+var toEdit = $('.comment-editable');
+toEdit.each(function(){
+    var postId = $(this).parent().parent().parent().find('.panel-title').attr('id');
+    var profileId = $(this).parent().find('.profilePic').attr('id');
+    var commentId = $(this).attr('id');
+    $(this).parent().find('.comment-del-btn').click(function()      //delete function
+    {
+        $.ajax(
+        {
+            type: "delete",
+            url: baseURL + "index.php/profile/deleteComment/"+postId+"/"+profileId+"/"+commentId,
+            success: function(data)
+            {
+                window.location.reload();     
+            }  
+        });
+    })
+});
+
+
 var toEdit = $('.editable');
 toEdit.each(function(){
     var editContent = $(this).parent().find('.editText');
@@ -285,9 +305,7 @@ toEdit.each(function(){
             data: "profileId="+profileId,
             success: function(data)
             {
-               
                     window.location.reload();     
-
             }  
         });
     })
