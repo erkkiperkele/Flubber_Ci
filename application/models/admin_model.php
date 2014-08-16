@@ -1,13 +1,15 @@
 <?php
+//<<<<<<< HEAD
+require_once APPPATH.'models/flubber_model.php';
+//=======
 class admin_model extends flubber_model {
-	
+//>>>>>>> origin/master
+
 	// private $db2;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
-		
 		#REFACTOR: Call the variables from the config file instead of hardcoded
 		// $this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
 		// $this->db2 = new DatabaseAccessObject('localhost', 'admin', 'admin', 'admin');
@@ -15,6 +17,21 @@ class admin_model extends flubber_model {
 	
 	
 	//admin member functions
+	
+	//Returns members with their info
+	public function getMemberList ()
+	{
+		$list = array();
+		$idList = $this->db2->retrieveAllMembers();
+		
+		foreach ($idList as $memberid)
+		{
+			$list[$memberid['memberId']] = $this->db2->getMemberInfo($memberid['memberId']);
+		}
+		
+		return $list;
+	}
+	
 	public function getMemberID ($targetEmail)
 	{
 		//Not a real change
@@ -28,50 +45,6 @@ class admin_model extends flubber_model {
 		$this->db2->removeMember($id);
 	}
 	
-	public function createMember($firstName,$lastName,$email, $password, $dob, $status = 'active', $privilege = 'junior')
-	{
-		$this->db2->addMember($firstName,$lastName,$email,$password,"","","","","","","",$dateOfBirth,$privacy);
-		$targetID = $this->db2->getMemberId($email) ;
-		
-		$this->editMemberStatus($targetID , $status);
-		$this->editMemberPrivilege($targetID , $privilege);
-	}
-	
-	public function editMemberStatus($targetEmail, $newStatus) 
-	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->setStatusOfMember($id, $newStatus);
-	}
-
-	public function editMemberPrivilege($targetEmail, $newPrivilege)
-	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->setPrivilegeOfMember($id, $newPrivilege);
-	}
-	
-	public function editMemberAddress($targetEmail , $newAddress, $newCity, $newCountry)
-	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->setAddressOfMember($id, $newAddress, $newCity, $newCountry);
-	}
-
-	public function editMemberEmail($targetEmail , $newEmail)
-	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->setEmailOfMember($id, $newEmail);
-	}
-
-	public function editMemberProfession($targetEmail , $newProfession)
-	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->setProfessionOfMember($id, $newProfession);
-	}
-	
-	function searchMember($memberID)
-	{
-		//array indexed by column
-		return $this->db2->getMemberInfo($memberID);
-	}
 	///////////////////////////////
 	
 	//admin public content functions
@@ -124,17 +97,25 @@ class admin_model extends flubber_model {
 	///////////////////////////////
 	//Admin group functions
 	
+	//Returns groups with their info
+	public function getGroupList ()
+	{
+		$list = array();
+		/* Disabled pending approval of Dao modification, returns empty list
+		$idList = $this->db2->retrieveAllGroups();
+		
+		foreach ($idList as $groupid)
+		{
+			$list[$memberid['groupId']] = $this->db2->getMemberInfo($memberid['groupId']);
+		}
+		*/
+		return $list;
+	}
+	
 	public function getGroupID ($groupName)
 	{
 		$groupID = $this->db2->getGroupId ($groupName);
 		return $groupID;
-	}
-	
-	public function createGroup($groupName, $ownerEmail , $description , $photo , $coverPic , $thumbnail)
-	{
-		$ownerID = $this->getMemberID ($ownerEmail);
-		
-		$this->db2->createGroup($groupName, $ownerID, $description , $photo , $coverPic , $thumbnail);
 	}
 	
 	public function deleteGroup($groupName)
@@ -143,33 +124,5 @@ class admin_model extends flubber_model {
 		$this->db2->deleteGroup($groupId);
 	}
 	
-	public function addGroupMember( $memberEmail , $groupName)
-	{
-		$groupId = $this->getGroupID ($groupName);
-		$memberId = $this->getMemberID ($memberEmail);
-		
-		$this->db2->addMemberOfGroup ( $memberId , $groupId);
-	}
-	
-	public function removeGroupMember( $memberEmail , $groupName)
-	{
-		$groupId = $this->getGroupID ($groupName);
-		$memberId = $this->getMemberID ($memberEmail);
-		
-		$this->db2->removeMemberOfGroup ( $memberId , $groupId);
-	}
 	///////////////////////////////
-	//Admin requests 
-	
-	public function getRequests ($admin)
-	{
-		$requests = $this->db2->getRequestsSentToMember ($admin);
-	}
-	
-	public function deleteRequest ($admin , $sender , $msgnumber)
-	{
-		$this->db2->deleteRequest($admin , $sender , $msgnumber);
-	}
-	
-	//mark request read?
 }
