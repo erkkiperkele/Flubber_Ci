@@ -47,13 +47,6 @@ class profile extends core {
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	//TESTING ONLY - TO DELETE
-	public function addComment2($profileId, $wallContentNumber, $commentContent)
-	{
-		$this->profile_model->add_comment($profileId, $wallContentNumber, $commentContent);
-	}
-	//END OF TO DELETE
-
 	public function updatePost()
 	{
 		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!

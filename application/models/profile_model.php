@@ -38,9 +38,7 @@ class profile_model extends core_model {
 		if (!empty($wallContents))
 		{
 			$postsTemp = $this->ExtendWithMemberDetails($wallContents, $memberId, 'currentPosterId');
-		
-		
-			$posts = $this->ExtendWitComments($postsTemp, 'currentPosterId');
+			$posts = $this->ExtendWitComments($postsTemp, 'profileId');
 			usort($posts, 'cmp');
 			return $posts;
 		}

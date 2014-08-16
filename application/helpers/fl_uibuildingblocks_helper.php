@@ -279,29 +279,38 @@ if ( ! function_exists('ContentBox'))
 								echo "
 								</div>
 							</div>";
-		
-
-							echo form_open('profile/addComment/');
-							
-							echo "
-							<div class='input-group'>
-								<input type='textarea' class='form-control' id='commentContent' name='commentContent'>
-								<input type='hidden' class='form-control' id='postMemberId' name='postMemberId' value='" .$PostInfo['memberId'] ."'>
-								<input type='hidden' class='form-control' id='postId' name='postId' value='" .$PostInfo['wallContentNumber'] ."'>
-								<span class='input-group-btn'>
-									<button class='btn btn-default' type='submit'>Post</button>
-								</span>
-							</div>
-							";
-
-							echo form_close();
-					    		CommentContent($PostInfo['comments']);
+							print_r($PostInfo);
+							AddComment($PostInfo['profileId'], $PostInfo['wallContentNumber']);
+					    	CommentContent($PostInfo['comments']);
 							echo
 							"
 						</div>
 						";
 	}
 }
+
+//TO BE FINISHED WHEN COMMENTS ARE PROPERLY FETCHED
+if ( ! function_exists('AddComment'))
+{
+	function AddComment($PostMemberId, $PostId)
+	{
+		echo form_open('profile/addComment/');
+						
+		echo "
+		<div class='input-group'>
+			<input type='textarea' class='form-control' id='commentContent' name='commentContent'>
+			<input type='hidden' class='form-control' id='postMemberId' name='postMemberId' value='" .$PostMemberId ."'>
+			<input type='hidden' class='form-control' id='postId' name='postId' value='" .$PostId ."'>
+			<span class='input-group-btn'>
+				<button class='btn btn-default' type='submit'>Post</button>
+			</span>
+		</div>
+		";
+
+		echo form_close();
+	}
+}
+
 
 //TO BE FINISHED WHEN COMMENTS ARE PROPERLY FETCHED
 if ( ! function_exists('CommentContent'))
