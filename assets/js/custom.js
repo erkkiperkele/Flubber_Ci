@@ -277,13 +277,14 @@ toEdit.each(function(){
     var commentId = $(this).attr('id');
     $(this).parent().find('.comment-del-btn').click(function()      //delete function
     {
+        var me = $(this);
         $.ajax(
         {
             type: "delete",
             url: baseURL + "index.php/profile/deleteComment/"+postId+"/"+profileId+"/"+commentId,
             success: function(data)
             {
-                window.location.reload();     
+                me.parent().parent().hide(animateUp);
             }  
         });
     })
@@ -298,6 +299,7 @@ toEdit.each(function(){
     var profileId = $(this).parent().find('.profilePic').attr('id');
     $(this).parent().find('.editbar-del-btn').click(function()      //delete function
     {
+        var me = $(this);
         $.ajax(
         {
             type: "post",
@@ -305,7 +307,7 @@ toEdit.each(function(){
             data: "profileId="+profileId,
             success: function(data)
             {
-                    window.location.reload();     
+                me.parent().parent().hide(animateRight);
             }  
         });
     })
