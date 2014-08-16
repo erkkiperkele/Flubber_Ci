@@ -324,6 +324,59 @@ toEdit.each(function(){
   })
 });
 
+var toGroupEdit = $('.groupeditable');
+toGroupEdit.each(function(){
+    var editContent = $(this).parent().find('.editText');
+    var postId = $(this).parent().find('.panel-title').attr('id');
+    var editbox = $(this).parent().find('.editbar-input');
+    var profileId = $(this).parent().find('.profilePic').attr('id');
+    $(this).parent().find('.editbar-del-btn').click(function()      //delete function
+    {
+        $.ajax(
+        {
+            type: "post",
+            url: baseURL + "index.php/groups/deleteGroupPost/"+postId,
+            data: "profileId="+profileId,
+            success: function(data)
+            {
+               
+                    window.location.reload();     
+
+            }  
+        });
+    })
+    $(this).parent().find('.editbar-btn').click(function()          //edit function
+    {
+    if(editContent.hasClass('hide'))
+    {
+      if(editbox.val() === "")
+      {
+        editbox.addClass('hide');
+      } 
+      else 
+      {
+        editContent.text(editbox.val());
+        $.ajax(
+        {
+            type: "post",
+            url: baseURL + "index.php/groups/updateGroupPost/",
+            data: "id="+postId
+                    +"&updatedPost="+editbox.val(),
+        });
+        editbox.addClass('hide');
+      }
+      editContent.removeClass('hide');
+    } 
+    else 
+    {
+      var content = editContent.text();
+      editContent.parent().prepend(editbox.removeClass('hide')
+                 .attr('placeholder', content));
+      editContent.addClass('hide');
+    }
+  })
+});
+
 // $('.list-group-item').bind('dblclick', function() {
 //     $(this).attr('contentEditable', true);
 // }).blur(function() {

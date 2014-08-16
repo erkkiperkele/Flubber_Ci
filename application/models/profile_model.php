@@ -95,8 +95,12 @@ class profile_model extends flubber_model {
 
 	public function update_PostPrivacy($wallContentNumber, $permissionId)
 	{
-		$post = $this->get_Post($this->memberId, $wallContentNumber);
-		$this->update_Post($wallContentNumber, $permissionId, $post['contentType'], $post['content']);
+		$isEditable = $this->memberId == $previousPost['currentPosterId'];
+		if ($isEditable)
+		{
+			$post = $this->get_Post($this->memberId, $wallContentNumber);
+			$this->update_Post($wallContentNumber, $permissionId, $post['contentType'], $post['content']);	
+		}
 	}	
 
 	public function delete_post($profileId, $wallContentNumber)
@@ -104,7 +108,11 @@ class profile_model extends flubber_model {
 
 		$previousPost = $this->get_Post($profileId, $wallContentNumber);
 
-		if ($previousPost['currentPosterId'] == $this->memberId)
+		//TO KEEP IN SYNC WITH EXTENDWITHMEMBERDETAILS!!
+		$isDeletable = ($this->memberId == $previousPost['currentPosterId'])
+				|| ($this->session->userdata('privilege') == 1)
+				|| ($this->memberId == $content['memberId']);
+		if ($isDeletable)
 		{
 			$this->db2->deleteWallContent($profileId, $wallContentNumber);
 		}
@@ -133,11 +141,15 @@ class profile_model extends flubber_model {
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
 
-			$content['isEditable'] = $this->memberId == $content[$fieldNameForMemberId];		//can only edit content originally created by the member connected
+			$comments = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
+			$content['isEditable'] = 
+				($this->memberId == $content[$fieldNameForMemberId])		//can only edit content originally created by the member connected
+				&& (empty($comments));										//for posts not yet commented
+
 			$content['isDeletable'] = 
-				($this->memberId == $content[$fieldNameForMemberId])							//can remove your own content
-				|| ($this->session->userdata('privilege') == 1)									//can remove content if admin
-				|| ($this->memberId == $content['memberId']);									//can remove content on your wall
+				($this->memberId == $content[$fieldNameForMemberId])		//can remove your own content
+				|| ($this->session->userdata('privilege') == 1)				//can remove content if admin
+				|| ($this->memberId == $content['memberId']);				//can remove content on your wall
 
 			$content['profileId'] = $content['memberId'];		//memberId copied because it gets overwritten by member's table memberId
 			$member = $this->get_user($content[$fieldNameForMemberId]);

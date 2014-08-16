@@ -54,44 +54,66 @@ class groups_model extends flubber_model {
 		
 		#Extends each post with its member details
 		foreach($arrayToExtend as $content):
-			$content['isEditable'] = $this->memberId == $content['currentPosterId'];		//can only edit content originally created by the member connected
+			$content['isEditable'] = 
+				($this->memberId == $content[$fieldNameForMemberId]);		//can only edit content originally created by the member connected
+
+			$content['isDeletable'] = 
+				($this->memberId == $content[$fieldNameForMemberId])		//can remove your own content
+				|| ($this->session->userdata('privilege') == 1)				//can remove content if admin
+				|| ($this->memberId == $content['memberId']);				//can remove content on your wall
+
 			$member = $this->get_user($content[$fieldNameForMemberId]);
 			$contentTemp = $content;
-			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
+			$extendedContent = (object) array_merge((array) $contentTemp, (array) $this->member);		#extends the post information with full member details
 			array_push($extendedArray, (array)$extendedContent);
 		endforeach;
 		return $extendedArray;
 	}
 	
-	public function get_Post($posterId, $groupContentNumber)
+	public function add_groupPost($groupId, $permissionId, $contentType, $content)
 	{
-		return $this->db2->getGroupContentInfo($posterId, $groupContentNumber);
+		$currentPosterId = $this->memberId;
+		$previousPosterId = null;
+		$originalPosterId = $this->memberId;
+		$this->db2->postGroupContent($groupId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
-	
-	public function update_Post($posterId, $groupContentNumber, $permissionId, $contentType, $content)
+
+	public function delete_groupPost($groupId, $posterId, $groupContentNumber)
 	{
-		$previousPost = $this->get_Post($posterId, $groupContentNumber);
-		if ($previousPost['currentPosterId'] == $this->memberId)
+		$previousPost = $this->get_groupPost($groupId, $groupContentNumber);
+		
+		//TO KEEP IN SYNC WITH EXTENDWITHMEMBERDETAILS!!
+		$isDeletable = ($this->memberId == $previousPost['currentPosterId'])
+				|| ($this->session->userdata('privilege') == 1)
+				|| ($this->memberId == $content['currentPosterId']);
+		if ($isDeletable)
 		{
-			$this->delete_post($posterId, $groupContentNumber);
-			$this->add_status($permissionId, $contentType, $content, $previousPost['memberId']);
+			$this->db2->deleteGroupContent($profileId, $groupContentNumber);
 		}
 	}
 
-	public function update_PostPrivacy($groupContentNumber, $permissionId)
+	public function get_groupPost($groupId, $groupContentNumber)
 	{
-		$post = $this->get_Post($this->memberId, $groupContentNumber);
-		$this->update_Post($groupContentNumber, $permissionId, $post['contentType'], $post['content']);
-	}	
-
-	public function delete_Post($posterId, $groupContentNumber)
+		return $this->db2->getGroupContentInfo($groupId, $groupContentNumber);
+	}
+	
+	public function update_groupPost($groupId, $groupContentNumber, $permissionId, $contentType, $content)
 	{
-
-		$previousPost = $this->get_Post($posterId, $groupContentNumber);
-
+		$previousPost = $this->get_groupPost($groupId, $groupContentNumber);
 		if ($previousPost['currentPosterId'] == $this->memberId)
 		{
-			$this->db2->deleteWallContent($posterId, $groupContentNumber);
+			$this->delete_groupPost($groupId, $posterId, $groupContentNumber);
+			$this->add_groupPost($groupId, $permissionId, $contentType, $content);
+		}
+	}
+
+	public function update_groupPostPrivacy($groupId, $groupContentNumber, $permissionId)
+	{
+		$isEditable = $this->memberId == $previousPost['currentPosterId'];
+		if ($isEditable)
+		{
+			$post = $this->get_groupPost($groupId, $groupContentNumber);
+			$this->update_groupPost($groupId, $groupContentNumber, $permissionId, $post['contentType'], $post['content']);	
 		}
 	}
 }
