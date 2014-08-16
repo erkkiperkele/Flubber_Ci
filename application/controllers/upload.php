@@ -26,6 +26,10 @@ class upload extends FL_Controller {
 					else if($ContentType === "profile-name")
 						$ContentType = "coverPicture";
 					$response = $this->upload_model->updateProfileURLinDB($id, $fileURL, $ContentType);
+					if($response == true && $ContentType === "photograph" && $id == $this->session->userdata('memberId')){
+						$thumbURL = $this->upload_model->createThumbnail($fileURL);
+						$response = $this->upload_model->updateThumbnailURLinDB($id, $thumbURL);
+					}
 				} else if ($ContentType === "group-pic" || $ContentType === "group-name"){
 					if($ContentType === "group-pic" && ($ext == "jpg" || $ext == "gif" || $ext == "png"))
 						$ContentType = "photograph";
@@ -37,8 +41,10 @@ class upload extends FL_Controller {
 			if($response === true)
 			{
 				$user = $this->session->all_userdata();
-				if($ContentType == "photograph")
+				if($ContentType == "photograph"){
 					$user['photographURL'] = $fileURL;
+					$user['thumbnailURL'] = $fileURL;
+				}
 				else if($ContentType == "coverPicture")
 					$user['coverPictureURL'] = $fileURL;
 				$this->session->set_userdata( $user );
