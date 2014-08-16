@@ -360,10 +360,18 @@ if ( ! function_exists('CommentContent'))
 	    		echo "
 					<a href='" .CreateURL("/index.php/profile/index/".$comment['memberId']) ."'>
 						<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
-					</a>
-				 	<button class='comment-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-						<span class='glyphicon glyphicon-remove'></span>
-				 	</button>
+					</a>";
+
+				// print_r($comment);
+				if ($comment['isDeletable'])
+				{
+					echo "
+					 	<button class='comment-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+							<span class='glyphicon glyphicon-remove'></span>
+					 	</button>";
+				 }
+
+				 echo "
 					<h4 class='text-left'>".$comment['firstName'] ." <small>" .$comment['lastName']." </small></h4>
 					<h4 class='pull-right text-right small'>
 				";
