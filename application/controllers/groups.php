@@ -1,12 +1,13 @@
 <?php
 class groups extends FL_Controller {
 
-	private $groupId;
+	public $groupId;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('groups_model');
+		$this->load->helper('form');
 	}
 
 	public function index($id=0, $id2=0)
@@ -31,19 +32,31 @@ class groups extends FL_Controller {
 		$this->render('pages/groups', $data);
 	}
 	
+	public function addGroupPost()
+	{
+		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
+		$contentType = $this->input->post('contentType');
+		$content = $this->input->post('updatedPost');
+		$groupId = $this->input->post('groupId');
+		$this->groups_model->add_groupPost($groupId, $permissionId, $contentType, $content);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+	
 	public function updateGroupPost()
 	{
 		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$content = $this->input->post('updatedPost');
 		$postId = $this->input->post('id');
-		$this->groups_model->update_groupPost($this->groupId, $postId, $permissionId, $contentType, $content);
+		$groupId = $this->input->post('groupId');
+		$this->groups_model->update_groupPost($groupId, $postId, $permissionId, $contentType, $content);
 	}
 
 	public function updateGroupPostPrivacy()
 	{
 		$postId = $this->input->post('postId');
 		$privacy = $this->input->post('privacy');
+		$groupId = $this->input->post('groupId');
 		$permissionId = 1;		//default is private
 		switch ($privacy) {
 			case 'public':
@@ -53,12 +66,13 @@ class groups extends FL_Controller {
 				$permissionId=3;	//Should never happen. If permissionId not in db, update won't work
 			//TO COMPLETE once we have the drop down.
 		}
-		$this->groups_model->update_groupPostPrivacy($this->groupId, $postId, $permissionId);
+		$this->groups_model->update_groupPostPrivacy($groupId, $postId, $permissionId);
 	}
 
 	public function deleteGroupPost($postId)
 	{
 		$profileId = $this->input->post('memberId');
-		$this->groups_model->delete_groupPost($this->groupId, $profileId, $postId);
+		$groupId = $this->input->post('groupId');
+		$this->groups_model->delete_groupPost($groupId, $profileId, $postId);
 	}
 }

@@ -346,23 +346,24 @@ toEdit.each(function(){
 
 var toGroupEdit = $('.groupeditable');
 toGroupEdit.each(function(){
+	var groupId = $(this).attr('id');
     var editContent = $(this).parent().find('.editText');
     var postId = $(this).parent().find('.panel-title').attr('id');
     var editbox = $(this).parent().find('.editbar-input');
     var profileId = $(this).parent().find('.profilePic').attr('id');
     $(this).parent().find('.editbar-del-btn').click(function()      //delete function
     {
+		var me = $(this);
         $.ajax(
         {
             type: "post",
             url: baseURL + "index.php/groups/deleteGroupPost/"+postId,
-            data: "profileId="+profileId,
+            data: "profileId="+profileId
+                    +"&groupId="+groupId,
             success: function(data)
             {
-               
-                    window.location.reload();     
-
-            }  
+                me.parent().parent().hide(animateRight);
+            }
         });
     })
     $(this).parent().find('.editbar-btn').click(function()          //edit function
@@ -380,8 +381,9 @@ toGroupEdit.each(function(){
         {
             type: "post",
             url: baseURL + "index.php/groups/updateGroupPost/",
-            data: "id="+postId
-                    +"&updatedPost="+editbox.val(),
+            data: "id="+postIds
+                    +"&groupId="+groupId
+					+"&updatedPost="+editbox.val(),
         });
         editbox.addClass('hide');
       }

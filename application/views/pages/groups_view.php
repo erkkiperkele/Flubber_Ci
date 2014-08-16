@@ -19,9 +19,12 @@
 			</div>
 			<div class="row">
 			<?php
+				AddGroupContentBox($this->groupId, $this->profileId);
+			?>
+			<?php
 				if(is_array($groupPosts) && count($groupPosts) > 0)
 				foreach ($groupPosts as $postInfo): 
-					GroupContentBox($postInfo);
+					GroupContentBox($this->groupId, $postInfo);
 				endforeach;
 			?>
 			</div>

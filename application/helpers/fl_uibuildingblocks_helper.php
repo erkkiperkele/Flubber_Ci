@@ -397,17 +397,54 @@ if ( ! function_exists('CommentContent'))
  * Random Element - Takes an array as input and returns a random element
  *
  * @access	public
+ * @param	User 			contains	FirstName, LastName and photographURL
+ * @param   PostContent		contains	content, TimeStamp
+ * @return	nothing
+ */
+if ( ! function_exists('AddGroupContentBox'))
+{
+	function AddGroupContentBox($groupId, $profileId)
+	{
+		echo form_open('groups/addGroupPost');
+		echo "
+		<div id='addGroupContentBox' class='panel panel-default'>
+			<div class='input-group'>
+				<input type='textarea' class='form-control' id='updatedPost' name='updatedPost'>
+				<input type='hidden' class='form-control' id='contentType' name='contentType' value='text'>
+				<input type='hidden' class='form-control' id='profileId' name='profileId' value='" .$profileId ."'>
+				<input type='hidden' class='form-control' id='groupId' name='groupId' value='" .$groupId ."'>
+				<span class='input-group-btn'>
+					<button class='btn btn-default' type='submit'>Post</button>
+				</span>
+			</div>
+			<div class='panel-heading privacy'>
+				<h3 class='panel-title pull-left'>Comment</h3>
+				</p>
+			</div>
+
+		</div>
+		";
+		echo form_close();
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
  * @param	User 			contains	firstName, lastName and photographURL
  * @param   PostContent		contains	content, TimeStamp
  * @return	nothing
  */
 if ( ! function_exists('GroupContentBox'))
 {
-	function GroupContentBox($PostInfo = "")
+	function GroupContentBox($groupId, $PostInfo = "")
 	{
 	echo "
 		<div class='content panel panel-default'>
-			<div class='panel-heading groupeditable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+			<div class='panel-heading groupeditable' id='".$groupId."' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
 				if($PostInfo['isEditable'])
 				{
 					echo
