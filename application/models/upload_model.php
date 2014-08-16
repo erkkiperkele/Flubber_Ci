@@ -1,15 +1,13 @@
 <?php
 require_once APPPATH.'models/core_model.php';
 class upload_model extends core_model {
-	
-	private $db2;
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function do_upload($memberId, $fileContentType)
+	public function do_upload($id, $fileContentType)
 	{
 		$output_dir = "D:\\xampp\\htdocs\\Flubber_Ci\\assets\\content\\";
 		if(isset($_FILES["file"]))
@@ -20,9 +18,9 @@ class upload_model extends core_model {
 				$ext = explode(".", $_FILES["file"]["name"]);
 				$extSize = count($ext);
 				$ext = $ext[$extSize-1];
-				$fileName = uniqid($memberId .'-') .'.' .$ext; 
-				if(move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$memberId.'-'.$fileContentType.'-'.$fileName))
-					$fileURL = base_url() ."assets/content/".$memberId.'-'.$fileContentType.'-'.$fileName;
+				$fileName = uniqid($id .'-') .'.' .$ext; 
+				if(move_uploaded_file($_FILES["file"]["tmp_name"], $output_dir.$id.'-'.$fileContentType.'-'.$fileName))
+					$fileURL = base_url() ."assets/content/".$id.'-'.$fileContentType.'-'.$fileName;
 				else
 					$fileURL = $error;
 			}
@@ -30,7 +28,7 @@ class upload_model extends core_model {
 		}
 	}
 
-    public function updateURLinDB($memberId, $fileURL, $fileContentType)
+    public function updateProfileURLinDB($memberId, $fileURL, $fileContentType)
     {
         if($fileContentType === 'photograph')
         {
@@ -43,6 +41,22 @@ class upload_model extends core_model {
         if($fileContentType === 'coverPicture')
         {
         	return $this->db2->setCoverPictureURLOfMember($memberId, $fileURL);
+        }
+        return false;
+    }
+
+    public function updateGroupURLinDB($groupId, $fileURL, $fileContentType)
+    {
+        if($fileContentType === 'photograph')
+        {
+        	$photoUpdate = $this->db2->setPhotographURLOfGroup($groupId, $fileURL);
+
+			return ($photoUpdate);
+        	
+        }
+        if($fileContentType === 'coverPicture')
+        {
+        	return $this->db2->setCoverPictureURLOfGroup($groupId, $fileURL);
         }
         return false;
     }

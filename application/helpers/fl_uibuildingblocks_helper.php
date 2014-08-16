@@ -116,11 +116,11 @@ if ( ! function_exists('ProfileHeader'))
 	function ProfileHeader($member)
 	{
 		echo "
-		<div id='profile-name' class='jumbotron col-md-9' style='background-image:url(".$member['coverPictureURL']."); background-size: cover'>
+		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-image:url(".$member['coverPictureURL']."); background-size: cover'>
 		<h1>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 		</div>
 		<div class='col-md-3'>
-		<img id='profile-pic' class='img-responsive pull-right' src='" .$member['photographURL'] ."' style='width:190px; height:190px'/>
+		<img id='profile-pic' index='" .$member['memberId'] ."' class='img-responsive pull-right' src='" .$member['photographURL'] ."' style='width:190px; height:190px'/>
 		</div>
 		";
 	}

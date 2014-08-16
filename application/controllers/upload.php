@@ -9,19 +9,31 @@ class upload extends core {
 		$this->load->helper('url');
 	}
 
-	public function file($ContentType)
+	public function file($ContentType, $id)
 	{
 		$response = false;
-		$fileURL = $this->upload_model->do_upload($this->session->userdata('memberId'), $ContentType);
+		if($id != $this->session->userdata('memberId') && $ContentType != 'addContentBox' )
+			die();
+		$fileURL = $this->upload_model->do_upload($id, $ContentType);
 		$ext = explode(".", $fileURL);
 		$sizeOfExt = count($ext);
 		$ext = strtolower($ext[$sizeOfExt-1]);
 		if(isset($fileURL)){
-			if($ContentType === "profile-pic" && ($ext == "jpg" || $ext == "gif" || $ext == "png"))
-				$ContentType = "photograph";
-			else if($ContentType === "profile-name" && ($ext == "jpg" || $ext == "gif" || $ext == "png"))
-				$ContentType = "coverPicture";
-			$response = $this->upload_model->updateURLinDB($this->session->userdata('memberId'), $fileURL, $ContentType);
+			if($ext == "jpg" || $ext == "gif" || $ext == "png"){
+				if($ContentType === "profile-pic" || $ContentType === "profile-name"){
+					if($ContentType === "profile-pic")
+						$ContentType = "photograph";
+					else if($ContentType === "profile-name")
+						$ContentType = "coverPicture";
+					$response = $this->upload_model->updateProfileURLinDB($id, $fileURL, $ContentType);
+				} else if ($ContentType === "group-pic" || $ContentType === "group-name"){
+					if($ContentType === "group-pic" && ($ext == "jpg" || $ext == "gif" || $ext == "png"))
+						$ContentType = "photograph";
+					else if($ContentType === "group-name" && ($ext == "jpg" || $ext == "gif" || $ext == "png"))
+						$ContentType = "coverPicture";
+					$response = $this->upload_model->updateGroupURLinDB($id, $fileURL, $ContentType);
+				}
+			}
 			if($response === true)
 			{
 				$user = $this->session->all_userdata();
@@ -30,7 +42,8 @@ class upload extends core {
 				else if($ContentType == "coverPicture")
 					$user['coverPictureURL'] = $fileURL;
 				$this->session->set_userdata( $user );
-				echo $fileURL;
+				$result = array($id, $fileURL);
+				echo json_encode($result);
 				die();
 			}
 			if($ContentType === "addContentBox")
@@ -41,7 +54,7 @@ class upload extends core {
 					//unlink($fileURL); //Delete the file! It's not what we like to keep on our server!
 					die(); 
 				}
-				echo $fileURL;
+				echo json_encode(array($id, $fileURL));
 				die();
 
 			}

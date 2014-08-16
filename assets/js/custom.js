@@ -60,7 +60,7 @@ $(window).scroll(function() {
 
 //jQuery Drag'n drop feature for uploading images
 //1. Handling the drag'n drop
-var obj = $('#profile-pic, #profile-name, #addContentBox');
+var obj = $('#profile-pic, #profile-name, #group-pic, #group-name, #addContentBox');
 function stopPickingTextInContentBox(){$('#addContentBox').find('textarea').prop('disabled', true);}
 function startPickingTextInContentBox(){$('#addContentBox').find('textarea').prop('disabled', false);}
 var borderStyle = $(obj[2]).css('border');
@@ -123,9 +123,10 @@ function handleFileUpload(file,obj, elem)
 function sendFileToServer(formData, elem/*,status*/)
 {
     var uploadURL = baseURL + "index.php/upload/file/" + elem; //Upload URL
-    var extraData ={}; //Extra Data.
     if(elem === 'addContentBox')
-        formData.append('profileId', $('#'+elem).find('#profileId').val());
+        uploadURL = uploadURL + '/' + $('#'+elem).find('#profileId').val();
+    else
+        uploadURL = uploadURL + '/' + $('#'+elem).attr('index');
     var jqXHR=$.ajax({
             url: uploadURL,
             type: "POST",
@@ -134,26 +135,30 @@ function sendFileToServer(formData, elem/*,status*/)
             cache: false,
             data: formData,
             success: function(data){
-                if(elem === 'profile-pic')          //profilePicture
-                {
-                    $('#'+elem).attr('src', data)
-                    $('#menu-profile').children().first().attr('src', data);
-                }
-                else if(elem == 'profile-name')     //coverPicture
-                {
-                    $('#'+elem).css('background', 'url("' + data + '") no-repeat center');
-                }
-                else if(elem == 'addContentBox')
-                {
-                    if(data !="")
+                data = eval (data);
+                if(typeof data != 'undefined' && typeof data[0] != 'undefined' && 
+                    ($('#'+elem).attr('index') === data[0] || elem === 'addContentBox')){
+                    if(elem === 'profile-pic' || elem == 'group-pic')          //profilePicture or groupProfilePicture
                     {
-                        var addContentBox = $('#addContentBox');
-                        addContentBox.find('#updatedStatus').val(data);
-                        if(data.match(/mp4$/) == "mp4")
-                            addContentBox.find('#contentType').val('video');
-                        else
-                            addContentBox.find('#contentType').val('image');
-                        addContentBox.find('button').click();
+                        $('#'+elem).attr('src', data[1])
+                        $('#menu-profile').children().first().attr('src', data[1]);
+                    }
+                    else if(elem == 'profile-name' || elem == 'group-name')     //coverPicture or groupCoverPicture
+                    {
+                        $('#'+elem).css('background', 'url("' + data[1] + '") no-repeat center');
+                    }
+                    else if(elem == 'addContentBox')
+                    {
+                        if(data[1] !="")
+                        {
+                            var addContentBox = $('#addContentBox');
+                            addContentBox.find('#updatedStatus').val(data[1]);
+                            if(data[1].match(/mp4$/) == "mp4")
+                                addContentBox.find('#contentType').val('video');
+                            else
+                                addContentBox.find('#contentType').val('image');
+                            addContentBox.find('button').click();
+                        }
                     }
                 }
 
