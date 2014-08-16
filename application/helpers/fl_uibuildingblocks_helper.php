@@ -295,9 +295,6 @@ if ( ! function_exists('ContentBox'))
 							";
 
 							echo form_close();
-
-
-							print_r($PostInfo);
 					    		CommentContent($PostInfo['comments']);
 							echo
 							"
@@ -311,34 +308,19 @@ if ( ! function_exists('CommentContent'))
 {
 	function CommentContent($PostComments = "")
 	{
-		// echo "
-		
-		// 	<ul class='list-group'>
-		// 		<li class='list-group-item'>
-		// 		"
-		// 		.$PostComments['content']."
-		// 		</p>
-		// 		"
-		// 		.$PostComments['content']."
-		// 		</li>
-		// 	</ul>
-		// ";
 		echo "
-		
 			<ul class='list-group'>
 				";
 		if (isset($PostComments))
 		{
-
-		foreach ($PostComments as $comment): 
-    		// echo "foreach";
-    		echo "
-    			<li class='list-group-item'>
-    			".$comment."
-    			</li>";
-    	endforeach;
+			foreach ($PostComments as $comment): 
+	    		// echo "foreach";
+	    		echo "
+	    			<li class='list-group-item'>
+	    			".$comment['content']."
+	    			</li>";
+	    	endforeach;
 		}
-				
 		echo "
 			</ul>
 		";

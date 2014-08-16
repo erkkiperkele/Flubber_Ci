@@ -1534,13 +1534,8 @@
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':wallContentNumber', $wallContentNumber, PDO::PARAM_INT);
 					$statement->execute();
-
-					print_r('</br>count: ');
-					print_r($statement->rowCount());
-					
 					if ($statement->rowCount() > 0){
-						$result = $statement->fetchAll(PDO::FETCH_ASSOC);
-						return $result;
+						return $statement->fetchAll(PDO::FETCH_ASSOC);
 					}
 					else{
 						return false;
