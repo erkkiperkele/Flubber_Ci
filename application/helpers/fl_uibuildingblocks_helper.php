@@ -279,7 +279,6 @@ if ( ! function_exists('ContentBox'))
 								echo "
 								</div>
 							</div>";
-							print_r($PostInfo);
 							AddComment($PostInfo['profileId'], $PostInfo['wallContentNumber']);
 					    	CommentContent($PostInfo['comments']);
 							echo
