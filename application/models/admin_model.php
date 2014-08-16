@@ -20,6 +20,7 @@ class admin_model extends core_model {
 	//admin member functions
 	public function getMemberID ($targetEmail)
 	{
+		//Not a real change
 		$memberID = $this->db2->getMemberId ($targetEmail);
 		return $memberID;
 	}
