@@ -1,7 +1,7 @@
 <?php
 
 require_once APPPATH.'core/FL_Controller.php';
-class adminList extends FL_Controller {
+class adminReport extends FL_Controller {
 	
 	private $admin;
 
@@ -12,17 +12,17 @@ class adminList extends FL_Controller {
 		$this->load->helper('form');
 	}
 
-	//todo
-	//search member by name->populate entries. Group as well
-	//search with list result?
-
 	public function index()
 	{
 		
 		$admin = $this->session->userdata('memberId');
 		$data['currentPage'] = 'admin';
-		$data['memberList'] = $this->admin_model->getMemberList();
-		$data['allGroupsList'] = $this->admin_model->getGroupList();
+		//Report Lists as (Type => String , Count => int)
+		$data['interestList'] = $this->admin_model->getInterests(); 
+		$data['ageList'] = $this->admin_model->getAges();
+		$data['cityList'] = $this->admin_model->getCities();
+		$data['countryList'] = $this->admin_model->getCountries();
+		$data['professionList'] = $this->admin_model->getProfessions();
 		
 		//Needed for header?
 		$data['member'] = $this->member;
@@ -31,7 +31,7 @@ class adminList extends FL_Controller {
 		$data['newMessageNb'] = 0;
 		//end need
 		
-		$this->render('pages/adminList', $data);
+		$this->render('pages/adminReport', $data);
 	}
 
 	//member functions

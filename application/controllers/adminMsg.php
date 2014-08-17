@@ -3,7 +3,6 @@
 require_once APPPATH.'core/FL_Controller.php';
 class adminMsg extends FL_Controller {
 	
-	private $targetId;	#current ID under scrutiny
 	private $admin;
 
 	public function __construct()
@@ -17,8 +16,8 @@ class adminMsg extends FL_Controller {
 	{
 		$admin = $this->session->userdata('memberId');
 		$data['currentPage'] = 'admin';
-		$data['messagePOSN'] = $this->admin_model->getPublicContent();
-		$data['messageALL'] = $this->admin_model->getMessagesPOSN($admin);
+		$data['messageALL'] = $this->admin_model->getPublicContent();
+		$data['messagePOSN'] = $this->admin_model->getMessagesPOSN($admin);
 		
 		//Needed for header?
 		$data['member'] = $this->member;

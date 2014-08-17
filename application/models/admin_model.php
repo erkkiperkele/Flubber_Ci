@@ -86,12 +86,17 @@ class admin_model extends flubber_model {
 	
 	//admin POSN public content (as a send message to all)
 	
-	public function getMessagesPOSN ($adminId);
+	public function getMessagesPOSN ($adminId)
 	{
-		//TODO get messages from all admins
 		
+		$posts = array ( '1');
+		return $posts;
+	}
+	
+	//TODO get messages from all admins
+		/*
 		#Get every public post information
-		$messagesPOSN = $this->db2->getPublicContents();
+		$messagesPOSN = $this->db2-> ???
 		
 		$posts = array();
 		
@@ -102,9 +107,7 @@ class admin_model extends flubber_model {
 			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
 			array_push($posts, (array)$postDetails);
 		endforeach;
-
-		return $posts;
-	}
+		*/
 	
 	public function messagePOSN ($subject , $content , $admin) 
 	{
@@ -146,4 +149,72 @@ class admin_model extends flubber_model {
 	}
 	
 	///////////////////////////////
+	
+	//AdminReport functions
+	
+	//helper function. Returns key attribute => attribute count array sorted in ascendin order of keys. 
+	//For attributes in MemberList only
+	private function getItemList($itemKey)
+	{
+		$memberList = $this->getMemberList();
+		$itemList = array();
+		
+		foreach( $memberList as $member)
+		{
+			//we already have this category, increment its count
+			if(array_key_exists( $member[$itemKey] , $itemList ))
+			{
+				$itemList[ $member[$itemKey] ]= $itemList[ $member[$itemKey] ] + 1;
+			}
+			//add key-value to array
+			else
+			{
+				$itemList[ $member[$itemKey] ] = 1;
+			}
+		}
+		
+		ksort($itemList);
+		return $itemList;
+	}
+	
+	public function getInterests()
+	{
+		$interestList = $this->db2->getInterestTypes();
+		
+		$idList = $this->db2->retrieveAllMembers();
+		
+		foreach ($idList as $id)
+		{
+			$tempInterest = array();
+			$tempInterest = 0;
+			$interestList[$id['memberId']] = 0;
+		
+		}
+		
+		return $interestList;
+	}
+	
+	public function getCities()
+	{
+		$cityList = $this->getItemList('city');
+		return $cityList;
+	}
+	
+	public function getCountries()
+	{
+		$countryList = $this->getItemList('country');
+		return $countryList;
+	}
+	
+	public function getProfessions()
+	{
+		$professionList = $this->getItemList('profession');
+		return $professionList;
+	}
+	
+	public function getAges()
+	{
+		return 0;
+	}
+	
 }
