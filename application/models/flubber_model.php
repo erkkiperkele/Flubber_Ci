@@ -39,8 +39,22 @@ class flubber_model extends CI_Model {
 		$this->load->database();
 		$this->memberId = $this->session->userdata('memberId');
 		
-		#REFACTOR: Call the variables from the config file instead of hardcoded
-		$this->db2 = new DatabaseAccessObject('127.0.0.1', 'flubber.database', 'root', '');
+		$CI =& get_instance();
+        $CI->load->database();
+		$hostName = $CI->db->hostname;
+		$databaseName = $CI->db->database;
+		$userName = $CI->db->username;
+		$password = $CI->db->password;
+
+		$this->db2 = new DatabaseAccessObject($hostName, $databaseName, $userName, $password);
+	}
+
+	public function test()
+	{
+		$CI =& get_instance();
+        $CI->load->database();
+        echo $CI->db->hostname;
+        echo $CI->db->database;
 	}
 	
 	public function get_user($memberId)
