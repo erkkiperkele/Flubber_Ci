@@ -245,6 +245,21 @@ $(document).ready(function(){
     $(".message").first().show(animateDown);
 });
 
+//Coloring the top borders of the Request boxes:
+$(document).ready(function(){
+    $(".request").each(function(){
+        $(this).children().first().css("border-top", "2px solid #E67E22").css("border-color", "none");
+        $(this).hide();
+         });
+    var delaytime = 50;
+    for(var item = $(".request").first(); item.length > 0; item = item.next()){
+        item.delay(delaytime).show(animateDown);
+         if(delaytime < 100);
+            delaytime += 50;
+    }
+    $(".request").first().show(animateDown);
+});
+
 //Code to add privacy:
 /*
     Usage:  Simply add a class called 'privacy' to each element that must have a privacy option:

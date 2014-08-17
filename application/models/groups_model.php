@@ -107,7 +107,7 @@ class groups_model extends flubber_model {
 		$previousPost = $this->get_groupPost($groupId, $groupContentNumber);
 		if ($previousPost['currentPosterId'] == $this->memberId)
 		{
-			$this->delete_groupPost($groupId, $posterId, $groupContentNumber);
+            $this->delete_groupPost($groupId, $groupContentNumber);
 			$this->add_groupPost($groupId, $permissionId, $contentType, $content);
 		}
 	}
