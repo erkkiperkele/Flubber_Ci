@@ -58,6 +58,7 @@ class groups_model extends flubber_model {
 		$extendedArray = array();
 		
 		#Extends each post with its member details
+        if (!empty($arrayToExtend))
 		foreach($arrayToExtend as $content):
 			$content['isEditable'] = 
 				($this->memberId == $content[$fieldNameForMemberId]);		//can only edit content originally created by the member connected

@@ -20,6 +20,7 @@ class requests_model extends flubber_model {
 		$extendedArray = array();
 		
 		#Extends each message with its member details
+        if (!empty($arrayToExtend))
 		foreach($arrayToExtend as $content):
 			$content['memberId'] = $fieldNameForMemberId;
 			$member = $this->get_user($content[$fieldNameForMemberId]);

@@ -149,6 +149,7 @@ class profile_model extends flubber_model {
 		$extendedArray = array();
 		
 		#Extends each post with its member details
+        if (!empty($arrayToExtend))
 		foreach($arrayToExtend as $content):
 
 			$comments = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
@@ -173,6 +174,7 @@ class profile_model extends flubber_model {
 	private function ExtendWitComments($posts, $fieldNameForMemberId = 'currentPosterId')
 	{
 		$extendedArray = array();
+        if (!empty($arrayToExtend))
 		foreach($posts as $content):
 			$comments = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
 
@@ -194,6 +196,7 @@ class profile_model extends flubber_model {
 		$extendedArray = array();
 		
 		#Extends each post with its member details
+        if (!empty($interests))
 		foreach($interests as $content):
 			$type = $this->get_InterestTypeDetails($content['interestTypeId']);
 			  if (isset($extendedArray[$type['description']])) {
