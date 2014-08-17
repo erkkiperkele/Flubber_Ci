@@ -38,8 +38,24 @@ Class search_model extends flubber_model
  	$searchResults[0] = $results;
  	return $searchResults;
  }
+ function join_with_blocked($me, $searchResults)
+ {
+ 	$results = array();
+ 	$i = 0;
+ 	foreach ($searchResults[0] as $searchMember) {
+ 		$resultingMember = $searchMember;
+ 		$resultingMember['isBlocked'] = $this->db2->checkBlocked($me, $searchMember['memberId']);
+ 		$results[$i++] = $resultingMember;
+ 	}
+ 	$searchResults[0] = $results;
+ 	return $searchResults;
+ }
  function doBlock($me, $personToBlock)
  {
  	return $this->db2->blockMember($me, $personToBlock);
+ }
+ function doUnblock($me, $personToUnBlock)
+ {
+ 	return $this->db2->unblockMember($me, $personToUnBlock);
  }
 }

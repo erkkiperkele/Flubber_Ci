@@ -31,6 +31,8 @@ class search extends FL_Controller {
 			if(!empty($colleagues))
 				$result = $this->search_model->join_relations_with_search_members($colleagues, "colleague", $result);
 		}
+		if(!empty($result))
+			$result = $this->search_model->join_with_blocked($this->session->userdata('memberId'), $result);
 		$data['result'] = $result;
 
 		$this->render('search', $data);
@@ -41,5 +43,11 @@ class search extends FL_Controller {
 		$this->load->model('search_model');
 		$this->search_model->doBlock($this->session->userdata('memberId'), $blockId);
 		redirect('/');
+	}
+	function unblock($blockId)
+	{
+		$this->load->model('search_model');
+		$this->search_model->doUnblock($this->session->userdata('memberId'), $blockId);
+		redirect('/');	
 	}
 }
