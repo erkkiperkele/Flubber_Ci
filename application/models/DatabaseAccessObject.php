@@ -1785,6 +1785,8 @@
 			public function removeMemberOfGroup($memberId, $groupId){
 				try{
 					$statement = $this->db->prepare('DELETE FROM MemberOfGroup WHERE memberId = :memberId AND groupId = :groupId;');
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
+					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
 						return true;
