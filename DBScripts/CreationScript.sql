@@ -211,6 +211,8 @@ CREATE TABLE Message(
 	sentTo INT,
 	sentFrom INT,
 	messageNumber INT,
+	hideFromReceiver BOOL NOT NULL DEFAULT FALSE,
+	hideFromSender BOOL NOT NULL DEFAULT FALSE,
 	isRead BOOL NOT NULL DEFAULT FALSE,
 	title VARCHAR(55),
 	content VARCHAR(255),

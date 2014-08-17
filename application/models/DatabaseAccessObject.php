@@ -11,7 +11,7 @@
 	* documentation.                                                *
 	****************************************************************/
 
-	// session_start();
+	session_start();
 	
 	class DatabaseAccessObject{
 		private $db;
@@ -700,7 +700,7 @@
 			
 			public function removeRelation($memberId, $relatedId){
 				try{
-					$statement = $this->db->prepare('DELETE FROM Related WHERE memberId = :memberId AND relatedId = :relatedId;');
+					$statement = $this->db->prepare('DELETE FROM Related WHERE memberId = :memberID AND relatedId = :relatedId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':relatedId', $relatedId, PDO::PARAM_INT);
 					$statement->execute();
@@ -921,7 +921,7 @@
 			
 			public function getMessageInfo($sentTo, $sentFrom, $messageNumber){
 				try{
-					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, isRead, title, content, timeStamp FROM Message WHERE sentTo = :sentTo AND sentFrom = :sentFrom AND messageNumber = :messageNumber;');
+					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, hideFromReceiver, hideFromSender, isRead, title, content, timeStamp FROM Message WHERE sentTo = :sentTo AND sentFrom = :sentFrom AND messageNumber = :messageNumber;');
 					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
 					$statement->bindValue(':sentFrom', $sentFrom, PDO::PARAM_INT);
 					$statement->bindValue(':messageNumber', $messageNumber, PDO::PARAM_INT);
@@ -941,7 +941,7 @@
 			
 			public function getMessagesSentToMember($memberId){
 				try{
-					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, isRead, title, content, timeStamp FROM Message WHERE sentTo = :sentTo ORDER BY timeStamp DESC;');
+					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, hideFromReceiver, hideFromSender, isRead, title, content, timeStamp FROM Message WHERE sentTo = :sentTo AND hideFromReceiver = FALSE ORDER BY timeStamp DESC;');
 					$statement->bindValue(':sentTo', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
@@ -959,11 +959,51 @@
 			
 			public function getMessagesSentFromMember($memberId){
 				try{
-					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, isRead, title, content, timeStamp FROM Message WHERE sentFrom = :sentFrom ORDER BY timeStamp DESC;');
+					$statement = $this->db->prepare('SELECT sentTo, sentFrom, messageNumber, hideFromReceiver, hideFromSender, isRead, title, content, timeStamp FROM Message WHERE sentFrom = :sentFrom AND hideFromSender = FALSE ORDER BY timeStamp DESC;');
 					$statement->bindValue(':sentFrom', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
 						return $statement->fetchAll(PDO::FETCH_ASSOC);
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+			
+			public function hideMessageFromReceiver($sentTo, $sentFrom, $messageNumber){
+				try{
+					$statement = $this->db->prepare('UPDATE Message SET hideFromReceiver = TRUE WHERE sentTo = :sentTo AND sentFrom = :sentFrom AND messageNumber = :messageNumber;');
+					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
+					$statement->bindValue(':sentFrom', $sentFrom, PDO::PARAM_INT);
+					$statement->bindValue(':messageNumber', $messageNumber, PDO::PARAM_INT);
+					$statement->execute();					
+					if ($statement->rowCount() > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+			
+			public function hideMessageFromSender($sentTo, $sentFrom, $messageNumber){
+				try{
+					$statement = $this->db->prepare('UPDATE Message SET hideFromSender = TRUE WHERE sentTo = :sentTo AND sentFrom = :sentFrom AND messageNumber = :messageNumber;');
+					$statement->bindValue(':sentTo', $sentTo, PDO::PARAM_INT);
+					$statement->bindValue(':sentFrom', $sentFrom, PDO::PARAM_INT);
+					$statement->bindValue(':messageNumber', $messageNumber, PDO::PARAM_INT);
+					$statement->execute();					
+					if ($statement->rowCount() > 0){
+						return true;
 					}
 					else{
 						return false;
@@ -1644,6 +1684,23 @@
 		
 		// GROUPS Table
 		
+			public function retrieveAllGroups(){
+				try{
+					$statement = $this->db->prepare('SELECT groupId FROM Groups;');
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return $statement->fetchAll();
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+		
 			public function createGroup($groupName, $ownerId, $description, $photographURL, $coverPictureURL, $thumbnailURL){
 				try{
 					$statement = $this->db->prepare('INSERT INTO Groups(groupName, ownerId, description, photographURL, coverPictureURL, thumbnailURL)
@@ -1744,10 +1801,48 @@
 				}
 			}
 			
-			public function setDescriptionOfGroup($groupId, $newDescription){
+			public function setPhotographURLOfGroup($groupId, $newPhotographURL){
 				try{
-					$statement = $this->db->prepare('UPDATE Groups SET description = :newDescription WHERE groupId = :groupId;');
-					$statement->bindValue(':newDescription', $newDescription, PDO::PARAM_STR);
+					$statement = $this->db->prepare('UPDATE Groups SET photographURL = :newPhotographURL WHERE groupId = :groupId;');
+					$statement->bindValue(':newPhotographURL', $newPhotographURL, PDO::PARAM_STR);
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+			
+			public function setCoverPictureURLOfGroup($groupId, $newCoverPictureURL){
+				try{
+					$statement = $this->db->prepare('UPDATE Groups SET coverPictureURL = :newCoverPictureURL WHERE groupId = :groupId;');
+					$statement->bindValue(':newCoverPictureURL', $newCoverPictureURL, PDO::PARAM_STR);
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+			
+			public function setThumbnailURLOfGroup($groupId, $newThumbnailURL){
+				try{
+					$statement = $this->db->prepare('UPDATE Groups SET thumbnailURL = :newThumbnailURL WHERE groupId = :groupId;');
+					$statement->bindValue(':newThumbnailURL', $newThumbnailURL, PDO::PARAM_STR);
 					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
@@ -1785,8 +1880,6 @@
 			public function removeMemberOfGroup($memberId, $groupId){
 				try{
 					$statement = $this->db->prepare('DELETE FROM MemberOfGroup WHERE memberId = :memberId AND groupId = :groupId;');
-					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
-					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
 						return true;
@@ -1887,10 +1980,10 @@
 				}
 			}
 			
-			public function deleteGroupContent($groupId, $groupContentNumber){
+			public function deleteGroupContent($memberId, $groupContentNumber){
 				try{
-					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE groupId = :groupId AND groupContentNumber = :groupContentNumber;');
-					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
+					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE memberId = :memberId AND groupContentNumber = :groupContentNumber;');
+					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':groupContentNumber', $groupContentNumber, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){

@@ -150,6 +150,37 @@ echo "Read messages sent by first user:";
 	
 	echo '<br>';
 	
+echo "Now, the receiver of the message (user " . $secondId . ") will 'delete' the first message sent from user " . $_SESSION['login'] . ".";
+	echo '<br>';
+	print_r($db->hideMessageFromReceiver($secondId, $_SESSION['login'], 1));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Now, we will check both the receiver and sender to verify this has worked correctly.";
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Read messages of second user:";
+	echo '<br>';
+	print_r($db->getMessagesSentToMember($secondId));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Read messages sent by first user:";
+	echo '<br>';
+	print_r($db->getMessagesSentFromMember($_SESSION['login']));
+	echo '<br>';
+	
+	echo '<br>';
+	
+echo "Note that the mesage has been 'deleted' from the receiver's perspective, but not from the sender's perspective.";
+	echo '<br>';
+	
+	echo '<br>';
+	
 echo "Create a group owned by first member:";
 	echo '<br>';
 	print_r($db->createGroup("First Group", $_SESSION['login'], "This group is for testing purposes only", NULL, NULL, NULL));
