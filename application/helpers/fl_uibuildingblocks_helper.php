@@ -213,10 +213,10 @@ if ( ! function_exists('PublicContentBox'))
 		echo "
 		<div class='publicContent panel panel-default'>
 			<div class='panel-heading' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
-				echo "<div class='panel-body'>";
+				echo "<div class='panel-body'><strong>";
 				PostBody($PostInfo);
 				echo "
-				</div>
+				</strong></div>
 			</div>
 		</div>
 		";
