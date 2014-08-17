@@ -44,7 +44,14 @@
 <?php
 	if(count($posts) > 0)
 	foreach ($posts as $postInfo): 
-		ContentBox($postInfo);
+		if (array_key_exists('wallContentNumber',$postInfo))
+		{
+			ContentBox($postInfo);
+		}
+		if (array_key_exists('publicContentNumber',$postInfo))
+		{
+			PublicContentBox($postInfo);
+		}
 	endforeach 
 ?>
 </section>

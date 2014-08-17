@@ -206,6 +206,24 @@ if ( ! function_exists('memberInfoBox'))
 }
 
 // --------------------------------------------------------------------
+if ( ! function_exists('PublicContentBox'))
+{
+	function PublicContentBox($PostInfo = "")
+	{
+		echo "
+		<div class='publicContent panel panel-default'>
+			<div class='panel-heading' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+				echo "<div class='panel-body'>";
+				PostBody($PostInfo);
+				echo "
+				</div>
+			</div>
+		</div>
+		";
+	}
+}
+
+// --------------------------------------------------------------------
 
 /**
  * Random Element - Takes an array as input and returns a random element
@@ -266,6 +284,7 @@ if ( ! function_exists('ContentBox'))
 }
 
 
+// --------------------------------------------------------------------
 if ( ! function_exists('PostHeader'))
 {
 	function PostHeader($PostInfo, $memberId = 'profileId')

@@ -8,20 +8,8 @@ class profile_model extends flubber_model {
 	
 	public function get_publicContent()
 	{
-		#Get every public post information
 		$publicContents = $this->db2->getPublicContents();
-		
-		$posts = array();
-		
-		#Extends each post with its member details
-		foreach($publicContents as $content):
-			$member = $this->get_user($content['memberId']);
-			$contentTemp = $content;
-			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
-			array_push($posts, (array)$postDetails);
-		endforeach;
-
-		return $posts;
+		return $publicContents;
 	}
 	
 	public function get_WallContent($memberId)
@@ -32,15 +20,27 @@ class profile_model extends flubber_model {
 		    return strcmp($a["timeStamp"], $b["timeStamp"]) * (-1);	#UGLY hack to reverse order (* (-1)
 		}
 		
-		#Get every public post information
+		$publicContent = $this->get_publicContent();
 		$wallContents = $this->db2->getWallContents($memberId);
 		if (!empty($wallContents))
 		{
 			$postsTemp = $this->ExtendWithMemberDetails($wallContents, 'currentPosterId');
 			$posts = $this->ExtendWitComments($postsTemp, 'profileId');
-			usort($posts, 'cmp');
-			return $posts;
 		}
+			
+		$bothContents = array();
+
+		//Put both types of contents together, then sorts it by date.
+		foreach($publicContent as $content):
+			array_push($bothContents, $content);
+		endforeach;
+		foreach($posts as $content):
+			array_push($bothContents, $content);
+		endforeach;
+
+		usort($bothContents, 'cmp');
+		return $bothContents;
+
 	}
 	
 	public function get_Interests($memberId)
