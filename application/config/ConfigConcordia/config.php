@@ -15,7 +15,7 @@
 |
 */
 #$config['base_url']	= 'http://flubber.com/';
-$config['base_url']	= 'https://clipper.encs.concordia.ca/~occ55311/Flubber_Ci/';
+$config['base_url']	= 'https://clipper.encs.concordia.ca/cgi-bin/cgiwrap/occ55311/Flubber_Ci/';
 
 /*
 |--------------------------------------------------------------------------
