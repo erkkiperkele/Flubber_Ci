@@ -700,7 +700,7 @@
 			
 			public function removeRelation($memberId, $relatedId){
 				try{
-					$statement = $this->db->prepare('DELETE FROM Related WHERE memberId = :memberID AND relatedId = :relatedId;');
+					$statement = $this->db->prepare('DELETE FROM Related WHERE memberId = :memberId AND relatedId = :relatedId;');
 					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
 					$statement->bindValue(':relatedId', $relatedId, PDO::PARAM_INT);
 					$statement->execute();
