@@ -12,7 +12,7 @@ class upload extends FL_Controller {
 	public function file($ContentType, $id)
 	{
 		$response = false;
-		if($id != $this->session->userdata('memberId') && $ContentType != 'addContentBox' )
+		if($id != $this->session->userdata('memberId') && ($ContentType == 'profile-name' || $ContentType == 'profile-pic'))
 			die();
 		$fileURL = $this->upload_model->do_upload($id, $ContentType);
 		$ext = explode(".", $fileURL);

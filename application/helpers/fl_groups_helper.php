@@ -16,9 +16,9 @@ if ( ! function_exists('GroupHeader'))
     {
         echo "
             <div class='col-md-3'>
-            <img id='group-pic' class='img-responsive pull-right' src='" .$owner['photographURL'] ."' style='width:190px; height:190px'/>
+            <img id='group-pic' index='" .$group['groupId'] ."' class='img-responsive pull-right' src='" .$group['photographURL'] ."' style='width:190px; height:190px'/>
             </div>
-            <div id='group-name' class='jumbotron col-md-9' style='background-image:url(".$owner['coverPictureURL']."); background-size: cover; padding:17px 10px'>
+            <div id='group-name' index='" .$group['groupId'] ."' class='jumbotron col-md-9' style='background-image:url(".$group['coverPictureURL']."); background-size: cover; padding:17px 10px'>
             <h1>" .$group['groupName'] ."<br/><small> " .$owner['firstName'].' '.$owner['lastName'] ."</small></h1>
             </div>
             ";
