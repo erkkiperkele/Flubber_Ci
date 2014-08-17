@@ -54,6 +54,11 @@ class profile_model extends flubber_model {
 			return $interestTypes;
 		}
 	}
+
+	public function get_InterestTypes()
+	{
+       	return $this->db2->getInterestTypes();
+	}
 	
 	private function get_InterestTypeDetails($interestTypeId)
 	{
@@ -204,14 +209,16 @@ class profile_model extends flubber_model {
 		
 		#Extends each post with its member details
         if (!empty($interests))
-		foreach($interests as $content):
-			$type = $this->get_InterestTypeDetails($content['interestTypeId']);
-			  if (isset($extendedArray[$type['description']])) {
-			     $extendedArray[$type['description']][] = $content;
-			  } else {
-			     $extendedArray[$type['description']] = array($content);
-			  }
+        {
+			foreach($interests as $content):
+				$type = $this->get_InterestTypeDetails($content['interestTypeId']);
+				  if (isset($extendedArray[$type['description']])) {
+				     $extendedArray[$type['description']][] = $content;
+				  } else {
+				     $extendedArray[$type['description']] = array($content);
+				  }
 		endforeach;
+        }
 		return $extendedArray;
 	}
 	

@@ -39,37 +39,7 @@ if ( ! function_exists('ProfileHeader'))
  * @param	array
  * @return	mixed	depends on what the array contains
  */
-if ( ! function_exists('InterestsBox'))
-{
-	function InterestBox($interestInfo = "")
-	{
-		echo "
-		<div id='". $interestInfo['memberId'] ."'>
-		<li class='list-group-item interest-editable' id='". $interestInfo['interestNumber'] ."'>"
-		.$interestInfo['title']
-		."
-		<button class='interest-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-			 	<span class='glyphicon glyphicon-remove'></span>
-		</button>
-		"
-		."</p>"
-		.$interestInfo['artist'];
 
-		// if ($PostInfo['isDeletable'])
-		// {
-			// echo "
-			// <button class='interest-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-			// 	<span class='glyphicon glyphicon-remove'></span>
-			// </button>
-			// ";
-		// }
-
-		echo "
-		</li>
-		</div>
-		";
-	}
-}
 
 if ( ! function_exists('AddInterest'))
 {
@@ -91,6 +61,36 @@ if ( ! function_exists('AddInterest'))
 
 		echo form_close();
 		echo "</div>";
+	}
+}
+
+if ( ! function_exists('InterestsBox'))
+{
+	function InterestBox($interestInfo = "", $canDelete)
+	{
+		echo "
+		<ul class='list-group'>
+			<div id='". $interestInfo['memberId'] ."'>
+				<li class='list-group-item interest-editable' id='". $interestInfo['interestNumber'] ."'>"
+				.$interestInfo['title'];
+
+		if ($canDelete)
+		{
+		echo "
+				<button class='interest-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+					 	<span class='glyphicon glyphicon-remove'></span>
+				</button>
+		";
+		}
+
+		echo "
+				</p>"
+				.$interestInfo['artist'];
+				echo "
+				</li>
+			</div>
+		</ul>
+		";
 	}
 }
 

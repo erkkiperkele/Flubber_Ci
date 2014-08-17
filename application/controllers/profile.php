@@ -21,9 +21,11 @@ class profile extends FL_Controller {
 		$data['newMessageNb'] = 0;
 		$data['currentPage'] = 'profile';
 		$data['posts'] = $this->profile_model->get_WallContent($this->profileId);
-		$data['interestTypes'] = $this->profile_model->get_Interests($this->profileId);
+		$data['interests'] = $this->profile_model->get_Interests($this->profileId);
+		$data['interestTypes'] = $this->profile_model->get_InterestTypes($this->profileId);
 		$data['title'] = $data['member']['firstName'];
 		$data['profileId'] = $this->profileId;
+		$data['canAddInterests'] = $this->profileId == $this->session->userdata('memberId');
 		$this->render('pages/profile', $data);
 	}
 
@@ -143,7 +145,6 @@ class profile extends FL_Controller {
 			//TODO!!
 				break;
 		}
-
 		$this->profile_model->add_interest($memberId, $interestTypeId, $title, $artist);
 		redirect($_SERVER['HTTP_REFERER']);
 	}

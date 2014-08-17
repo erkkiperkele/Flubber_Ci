@@ -2,36 +2,50 @@
 	<?php
 
 	memberInfoBox($member);
-
-	if(count($interestTypes) > 0)
-	foreach ($interestTypes as $key => $interests): 
+	
+	foreach ($interestTypes as $type): 
 		echo"
 		<div class='interests panel panel-default'>
 	  		<div class='panel-heading'>"
-	  		.$key
-	  		."	<button class='add-interests-btn btn pull-right clearfix' style='margin:0px 0px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+	  		.$type['description'];
+
+	  	if ($canAddInterests)
+		{
+  			echo "
+	  		<button class='add-interests-btn btn pull-right clearfix' style='margin:0px 0px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 					<span class='glyphicon glyphicon-chevron-down'></span>
-				</button>
+				</button>";
+
+		}
+		echo "
 			</div>
-	  		 <ul class='list-group'>
   		";
 
-  		//TO VERIFY
-  		if($member['memberId'] == $profileId)
-  		{
-			AddInterest($key);
-  		}
+		if ($canAddInterests)
+		{
+			AddInterest($type['description']);
+		}
 
-    	if(count($interests) > 0)
-    	foreach ($interests as $interest): 
-    		InterestBox($interest);
-    	endforeach;
+		if(count($interests) > 0)
+		{
+
+			foreach ($interests as $singleType): 
+				foreach ($singleType as $typeInterest): 
+					$value1 = $typeInterest['interestTypeId'];
+					$value2 = $type['interestTypeId'];
+					if($value1 == $value2)
+					{
+		    			InterestBox($typeInterest, $canAddInterests);
+					}
+				endforeach;
+			endforeach;
+		}
 
 		echo"
-			</ul>
-		</div>
-		";
+	</div>
+	";
 	endforeach;
+
 	?>
 	
 </section>

@@ -477,7 +477,7 @@ $(document).ready(function(){
     var addInterestBox = $('.addInterest');
     addInterestBox.hide();
     addInterestBox.each(function(){
-        $(this).parent().parent().find('.add-interests-btn').click(function(){
+        $(this).parent().find('.add-interests-btn').click(function(){
             var icon = $(this).children().first();
             if(icon.hasClass('glyphicon-chevron-down')){
                 icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
