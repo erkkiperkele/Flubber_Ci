@@ -108,7 +108,7 @@ if ( ! function_exists('LoadCSSBundle'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar($memberInMenu, $groupList, $newRequestNb, $newMessageNb, $privilege)
+	function MenuBar($memberInMenu, $groupList, $newRequestNb, $newMessageNb, $privilege, $gifts)
 	{
 		if(!isset($memberInMenu))
 		{
@@ -171,6 +171,7 @@ if ( ! function_exists('MenuBar'))
 							<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>
 							<li><a href='" .CreateURL('index.php/requests') ."'>Requests"; if ($newRequestNb > 0) { echo " (".$newRequestNb.")"; } echo "</a></li>
 							<li><a href='" .CreateURL('index.php/messages') ."'>Messages"; if ($newMessageNb > 0) { echo " (".$newMessageNb.")"; } echo "</a></li>
+							<li><a href='" .CreateURL('index.php/gifts') ."'>Give Gifts</a></li>
 							";
 						if($privilege==1){
 							echo "<li>
