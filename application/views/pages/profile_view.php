@@ -48,4 +48,3 @@
 	endforeach 
 ?>
 </section>
-</div>

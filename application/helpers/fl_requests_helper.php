@@ -18,7 +18,7 @@ if ( ! function_exists('UserRequestBox'))
             <div class='request panel panel-default'>
             <div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
         echo 
-            "<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['requestNumber']."'>
+            "<div class='panel-title row' style='margin-right:10px;' id='".$PostInfo['requestNumber']."'>
 			<a href='" .CreateURL("/index.php/profile/index/".$PostInfo['memberId']) ."'>
 				<img class='profilePic col-md-1 col-md-offset-1' id='".$PostInfo['memberId'] ."' src='" .$PostInfo['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 			</a>

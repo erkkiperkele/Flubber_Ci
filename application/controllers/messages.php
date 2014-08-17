@@ -5,6 +5,7 @@ class messages extends FL_Controller {
 	{
 		parent::__construct();
 		$this->load->model('messages_model');
+		$this->load->helper('form');
 	}
 
 	public function index($id=0)
