@@ -143,6 +143,11 @@ class profile_model extends flubber_model {
 		$this->db2->addInterest($memberId, $interestTypeId, $title, $artist);
 	}
 
+	public function delete_interest($memberId, $interestNumber)
+	{
+		$this->db2->deleteInterest($memberId, $interestNumber);
+	}
+
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
 	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')
 	{

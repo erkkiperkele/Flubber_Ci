@@ -293,6 +293,25 @@ function updatePrivacy(postId, privacy){
  */
 
 
+var toEdit = $('.interest-editable');
+toEdit.each(function(){
+    var profileId = $(this).parent().attr('id');
+    var interestId = $(this).attr('id');
+    $(this).parent().find('.interest-del-btn').click(function()      //delete function
+    {
+        var me = $(this);
+        $.ajax(
+        {
+            type: "delete",
+            url: baseURL + "index.php/profile/deleteInterest/"+profileId+"/"+interestId,
+            success: function(data)
+            {
+                me.parent().parent().hide(animateUp);
+            }  
+        });
+    })
+});
+
 var toEdit = $('.comment-editable');
 toEdit.each(function(){
     var postId = $(this).parent().parent().parent().find('.panel-title').attr('id');

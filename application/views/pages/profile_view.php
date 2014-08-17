@@ -16,7 +16,11 @@
 	  		 <ul class='list-group'>
   		";
 
-		AddInterest($key);
+  		//TO VERIFY
+  		if($member['memberId'] == $profileId)
+  		{
+			AddInterest($key);
+  		}
 
     	if(count($interests) > 0)
     	foreach ($interests as $interest): 

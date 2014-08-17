@@ -147,4 +147,10 @@ class profile extends FL_Controller {
 		$this->profile_model->add_interest($memberId, $interestTypeId, $title, $artist);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function deleteInterest($memberId, $interestTypeId)
+	{
+		$this->profile_model->delete_interest($memberId, $interestTypeId);
+	}
+
 }
