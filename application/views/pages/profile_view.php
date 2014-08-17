@@ -9,7 +9,10 @@
 		<div class='interests panel panel-default'>
 	  		<div class='panel-heading'>"
 	  		.$key
-	  		."</div>
+	  		."	<button class='add-interests-btn btn pull-right clearfix' style='margin:0px 0px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+					<span class='glyphicon glyphicon-pencil'></span>
+				</button>
+			</div>
 	  		 <ul class='list-group'>
   		";
 

@@ -153,20 +153,22 @@ if ( ! function_exists('AddInterest'))
 {
 	function AddInterest($InterestType = 'Movies')
 	{
-		echo form_open('profile/addInterest/');
+		echo "<div class='addInterest'>";
+		echo 	form_open('profile/addInterest/');
 						
 		echo "
-		<div class='input-group'>
-			<input type='textarea' class='form-control' id='interestTitle' name='interestTitle'>
-			<input type='textarea' class='form-control' id='interestArtist' name='interestArtist'>
-			<input type='hidden' class='form-control' id='interestType' name='interestType' value='" .$InterestType ."'>
-			<span class='input-group-btn'>
-				<button class='btn btn-default' type='submit'>Post</button>
-			</span>
-		</div>
+				<div class='input-group'>
+					<input type='textarea' class='form-control' id='interestTitle' name='interestTitle'>
+					<input type='textarea' class='form-control' id='interestArtist' name='interestArtist'>
+					<input type='hidden' class='form-control' id='interestType' name='interestType' value='" .$InterestType ."'>
+					<span class='input-group-btn'>
+						<button class='btn btn-default' type='submit'>Post</button>
+					</span>
+				</div>
 		";
 
 		echo form_close();
+		echo "</div>";
 	}
 }
 

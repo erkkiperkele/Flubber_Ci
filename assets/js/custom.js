@@ -439,3 +439,12 @@ $('.groupEdit').bind('click', function() {
         });
 
 });
+$(document).ready(function(){
+    var addInterestBox = $('.addInterest');
+    addInterestBox.hide();
+    addInterestBox.each(function(){
+        $(this).parent().parent().find('.add-interests-btn').click(function(){
+            $(this).parent().parent().find('.addInterest').toggle(animateDown);
+        });
+    });
+});
