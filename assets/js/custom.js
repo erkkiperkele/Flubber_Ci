@@ -368,7 +368,7 @@ toGroupEdit.each(function(){
             data: "groupId="+groupId,
             success: function(data)
             {
-                me.parent().parent().hide(animateRight);
+                me.parent().parent().hide(animateLeft);
             }
         });
     })

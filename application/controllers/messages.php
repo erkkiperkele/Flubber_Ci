@@ -12,7 +12,7 @@ class messages extends FL_Controller {
 		if($id > 0)
 			$this->profileId = $id;
 		
-		$data['currentPage'] = 'friends';
+		$data['currentPage'] = 'messages';
 		$data['member'] = $this->member;
 		$data['groupList'] = $this->groupList;
 		$data['newRequestNb'] = 0;
