@@ -5,3 +5,14 @@
 .memberEdit {
 	height: 20px;
 }
+
+h4{
+	color: #da532c;
+}
+h4>span{
+	color :black;
+}
+h5, h5>small{
+	color: #da532c;
+	font-weight: bold;
+}
