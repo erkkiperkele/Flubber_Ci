@@ -7,6 +7,11 @@ class groups_model extends flubber_model {
 		parent::__construct();
 	}
 	
+	public function update_groupDescription($newDescription)
+	{
+		$this->db2->setDescriptionOfGroup($this->groupId, $newDescription);
+	}
+	
 	public function get_owner($groupId)
 	{
 		$groupInfo = $this->get_group($groupId);
@@ -78,17 +83,16 @@ class groups_model extends flubber_model {
 		$this->db2->postGroupContent($groupId, $permissionId, $currentPosterId, $previousPosterId, $originalPosterId, $contentType, $content);
 	}
 
-	public function delete_groupPost($groupId, $posterId, $groupContentNumber)
+	public function delete_groupPost($groupId, $groupContentNumber)
 	{
 		$previousPost = $this->get_groupPost($groupId, $groupContentNumber);
 		
 		//TO KEEP IN SYNC WITH EXTENDWITHMEMBERDETAILS!!
 		$isDeletable = ($this->memberId == $previousPost['currentPosterId'])
-				|| ($this->session->userdata('privilege') == 1)
-				|| ($this->memberId == $content['currentPosterId']);
+				|| ($this->session->userdata('privilege') == 1);
 		if ($isDeletable)
 		{
-			$this->db2->deleteGroupContent($profileId, $groupContentNumber);
+			$this->db2->deleteGroupContent($groupId, $groupContentNumber);
 		}
 	}
 

@@ -451,7 +451,7 @@ if ( ! function_exists('GroupContentBox'))
 				}
 
 				echo 
-						"<div class='panel-title row' style='margin-right:10px;'id='".$PostInfo['groupContentNumber']."'>";
+						"<div class='panel-title row' style='margin-right:10px;' id='".$PostInfo['groupContentNumber']."'>";
 				PostHeader($PostInfo, 'currentPosterId');
 						
 				echo "</div>";

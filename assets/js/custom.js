@@ -350,7 +350,6 @@ toGroupEdit.each(function(){
     var editContent = $(this).parent().find('.editText');
     var postId = $(this).parent().find('.panel-title').attr('id');
     var editbox = $(this).parent().find('.editbar-input');
-    var profileId = $(this).parent().find('.profilePic').attr('id');
     $(this).parent().find('.editbar-del-btn').click(function()      //delete function
     {
 		var me = $(this);
@@ -358,8 +357,7 @@ toGroupEdit.each(function(){
         {
             type: "post",
             url: baseURL + "index.php/groups/deleteGroupPost/"+postId,
-            data: "profileId="+profileId
-                    +"&groupId="+groupId,
+            data: "groupId="+groupId,
             success: function(data)
             {
                 me.parent().parent().hide(animateRight);
@@ -381,7 +379,7 @@ toGroupEdit.each(function(){
         {
             type: "post",
             url: baseURL + "index.php/groups/updateGroupPost/",
-            data: "id="+postIds
+            data: "id="+postId
                     +"&groupId="+groupId
 					+"&updatedPost="+editbox.val(),
         });
@@ -414,6 +412,20 @@ $('.memberEdit').bind('click', function() {
     $.ajax({
         type: "post",
         url: baseURL + "index.php/profile/updateMemberInfo/",
+        data: "field="+field+"&changedInfo="+changedInfo,
+        });
+
+});
+
+$('.groupEdit').bind('click', function() {
+    $(this).attr('contentEditable', true);
+}).blur(function() {
+    $(this).attr('contentEditable', false);
+    var changedInfo = $(this).text();
+    var field = $(this).attr('id');
+    $.ajax({
+        type: "post",
+        url: baseURL + "index.php/groups/updateGroupInfo/",
         data: "field="+field+"&changedInfo="+changedInfo,
         });
 

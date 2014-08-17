@@ -71,8 +71,23 @@ class groups extends FL_Controller {
 
 	public function deleteGroupPost($postId)
 	{
-		$profileId = $this->input->post('memberId');
 		$groupId = $this->input->post('groupId');
-		$this->groups_model->delete_groupPost($groupId, $profileId, $postId);
+		$this->groups_model->delete_groupPost($groupId, $postId);
+	}
+	
+	public function updateGroupInfo()
+	{
+		$field = $this->input->post('field');
+		$content = $this->input->post('changedInfo');
+		$group = $this->groups_model->get_group($groupId);
+		switch ($field) {
+			case 'description':
+				$group['description'] = $content;
+				$this->groups_model->update_groupDescription($group['description']);
+				break;
+			default:
+				#TODO!!!!!!!
+				break;
+		}
 	}
 }

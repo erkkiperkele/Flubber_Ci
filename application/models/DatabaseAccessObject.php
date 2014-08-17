@@ -1744,6 +1744,25 @@
 				}
 			}
 			
+			public function setDescriptionOfGroup($groupId, $newDescription){
+				try{
+					$statement = $this->db->prepare('UPDATE Groups SET description = :newDescription WHERE groupId = :groupId;');
+					$statement->bindValue(':newDescription', $newDescription, PDO::PARAM_STR);
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
+					$statement->execute();
+					if ($statement->rowCount() > 0){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+				catch (PDOException $ex){
+					echo 'MySQL has generated an error: ' . $ex->getMessage() . '<br>';
+					return null;
+				}
+			}
+			
 		// MEMBEROFGROUP Table
 		
 			public function addMemberOfGroup($memberId, $groupId){
@@ -1866,10 +1885,10 @@
 				}
 			}
 			
-			public function deleteGroupContent($memberId, $groupContentNumber){
+			public function deleteGroupContent($groupId, $groupContentNumber){
 				try{
-					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE memberId = :memberId AND groupContentNumber = :groupContentNumber;');
-					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE groupId = :groupId AND groupContentNumber = :groupContentNumber;');
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
 					$statement->bindValue(':groupContentNumber', $groupContentNumber, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){

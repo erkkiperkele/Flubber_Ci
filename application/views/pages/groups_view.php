@@ -6,12 +6,11 @@
 					"<div class='description panel panel-default'>
 					<div class='panel-heading'>Description</div>
 					<ul class='list-group'>
-					<li class='list-group-item'>"
+					<li class='list-group-item'>
+					<div id='description' class='groupEdit'>"
 					.$group['description']
-					."</li>
+					."</div></li>
 					</ul>
-					</div>
-					</div>
 					</div>
 					";
 				
