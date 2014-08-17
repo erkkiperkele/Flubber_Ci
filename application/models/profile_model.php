@@ -31,9 +31,11 @@ class profile_model extends flubber_model {
 		$bothContents = array();
 
 		//Put both types of contents together, then sorts it by date.
+        if (!empty($publicContent))
 		foreach($publicContent as $content):
 			array_push($bothContents, $content);
 		endforeach;
+        if (!empty($posts))
 		foreach($posts as $content):
 			array_push($bothContents, $content);
 		endforeach;

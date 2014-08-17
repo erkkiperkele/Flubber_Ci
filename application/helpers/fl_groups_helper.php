@@ -138,9 +138,9 @@ if ( ! function_exists('GroupsCarousel'))
 					}
 				}
 				if ($member['memberId'] == $ownerId)
-					echo PersonBox($member, true);
+					echo PersonBox($member, true, $member['thumbnailURL']);
 				else
-					echo PersonBox($member);
+					echo PersonBox($member, false, $member['thumbnailURL']);
 			}
 			
 			echo "

@@ -306,7 +306,7 @@ if ( ! function_exists('SearchResultGroup'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/group/') .$group['groupId'] ."'
+			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/groups/index/') .$group['groupId'] ."'
 				<h1 style='font-size:large'>" .$group['groupName'] ."</h1>
 			</a>
 			<div class='text-left col-md-offset-3 btn-group btn-group-sm'>

@@ -22,10 +22,12 @@ if ( ! function_exists('PersonBox'))
 			<li>
 				<ul class='list-unstyled'>
 					<li><small class='nopadding'>" .$member['firstName'] ."</small></li>
-					<li><small class='nopadding'>" .$member['lastName'] ."</small></li>";
+					<li><small class='nopadding'>" .$member['lastName'];
         if ($isOwner)
-            echo "<li><small class='nopadding'>(owner)</small></li>";
+            echo " (owner)";
+        
         echo "
+            </small></li>
 				</ul>
 			</li>
 		</ul>
@@ -107,7 +109,7 @@ if ( ! function_exists('FriendsCarousel'))
 				";
                     }
                 }
-                echo PersonBox($friend);
+                echo PersonBox($friend, false, $friend['thumbnailURL']);
             }
                    
             echo "
