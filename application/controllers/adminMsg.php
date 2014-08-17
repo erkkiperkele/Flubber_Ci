@@ -15,11 +15,12 @@ class adminMsg extends FL_Controller {
 	public function index()
 	{
 		$admin = $this->session->userdata('memberId');
-		$data['currentPage'] = 'admin';
+		$data['currentPage'] = 'Messages';
 		$data['messageALL'] = $this->admin_model->getPublicContent();
 		$data['messagePOSN'] = $this->admin_model->getMessagesPOSN($admin);
 		
 		//Needed for header?
+		$data['title'] = "Admin" . "Messages";
 		$data['member'] = $this->member;
 		$data['groupList'] = $this->groupList;
 		$data['newRequestNb'] = 0;

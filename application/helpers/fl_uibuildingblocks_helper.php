@@ -1080,6 +1080,33 @@ if ( ! function_exists('SearchResultGroup'))
 //Admin building blocks
 
 /**
+ * Elements
+ *
+ * Returns only the array items specified.  Will return a default value if
+ * it is not set.
+ *
+ * @access	public
+ * @param	array
+ * @param	array
+ * @param	mixed
+ * @return	mixed	depends on what the array contains
+ */
+if ( ! function_exists('AdminHeader'))
+{
+	function AdminHeader($member, $adminSectionTitle)
+	{
+		echo "
+		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-image:url(".$member['coverPictureURL']."); background-size: cover'>
+		<h1>" . $adminSectionTitle ."<small> " ."Admin"."</small></h1>
+		</div>
+		<div class='col-md-3'>
+		<img id='profile-pic' index='" .$member['memberId'] ."' class='img-responsive pull-right' src='" .$member['photographURL'] ."' style='width:190px; height:190px'/>
+		</div>
+		";
+	}
+}
+
+/**
  * Random Element - Takes an array as input and returns a random element
  *
  * @access	public

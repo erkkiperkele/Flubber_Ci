@@ -14,44 +14,56 @@ class adminReport extends FL_Controller {
 
 	public function index()
 	{
+		//initialize
 		
 		$admin = $this->session->userdata('memberId');
-		$data['currentPage'] = 'admin';
+		$data['currentPage'] = 'Reports';
 		//Report Lists as (Type => String , Count => int)
 		$data['interestList'] = $this->admin_model->getInterests(); 
 		$data['ageList'] = $this->admin_model->getAges();
+		//$array = $data['ageList'];
+		//$data['ageGroups'] = $this->groupByAge( 10 , 90 , $data['ageList'];
+		
 		$data['cityList'] = $this->admin_model->getCities();
 		$data['countryList'] = $this->admin_model->getCountries();
 		$data['professionList'] = $this->admin_model->getProfessions();
 		
 		//Needed for header?
+		$data['title'] = "Admin" . "Reports";
 		$data['member'] = $this->member;
 		$data['groupList'] = $this->groupList;
 		$data['newRequestNb'] = 0;
 		$data['newMessageNb'] = 0;
 		//end need
 		
+		//Age grouping
+		
 		$this->render('pages/adminReport', $data);
 	}
+	
+	public function groupByAge($interval, $max, $ageList)
+	{
+		$groupedAges = array();
+		/*
+		for( $i = 0 ; $i < $max + $interval; $i + $interval)
+		{
+			foreach ($ageList as $age => $count)
+			{
+				if($age >= $i && $age < $i + $interval)
+				{
+					$groupedAges[$i] += $count;
+				}
+			}
+		}
+		*/
+		return $ageList;
+	}
 
-	//member functions
-	
-	public function deleteMember()
+	public function produceReport()
 	{
-		$email = $this->input->post('targetid');
-		
-		$this->admin_model->deleteMember($email);
-		redirect($_SERVER['HTTP_REFERER']);
+	
 	}
 	
 	
-	//group functions
-	
-	public function removeGroup()
-	{
-		$name = $this->input->post('targetgroup');
-		
-		$this->admin_model->deleteGroup($name);
-	}
 	
 }

@@ -177,19 +177,13 @@ class admin_model extends flubber_model {
 		return $itemList;
 	}
 	
+	//TODO
 	public function getInterests()
 	{
-		$interestList = $this->db2->getInterestTypes();
-		
+		//Need access to description of interests for non integer classification
 		$idList = $this->db2->retrieveAllMembers();
-		
-		foreach ($idList as $id)
-		{
-			$tempInterest = array();
-			$tempInterest = 0;
-			$interestList[$id['memberId']] = 0;
-		
-		}
+		$interestList = array();
+		$interestList = $this->db2->getInterestsOfMember('1');
 		
 		return $interestList;
 	}
@@ -214,7 +208,31 @@ class admin_model extends flubber_model {
 	
 	public function getAges()
 	{
-		return 0;
+		$memberList = $this->getMemberList();
+		$ageList = array();
+		
+		foreach( $memberList as $member)
+		{
+			//prep age difference
+			$now = new DateTime();
+			$birthdate = DateTime::createFromFormat('Y-m-d' ,$member['dateOfBirth']);
+			$age = $now->diff($birthdate);
+			$age = $age->y;
+			
+			//we already have this category, increment its count
+			if(array_key_exists( $age , $ageList ))
+			{
+				$ageList[ $age ]= $ageList[ $age ] + 1;
+			}
+			//add key-value to array
+			else
+			{
+				$ageList[ $age ] = 1;
+			}
+		}
+		
+		ksort($ageList);
+		return $ageList;
 	}
 	
 }
