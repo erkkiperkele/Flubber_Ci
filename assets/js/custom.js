@@ -444,7 +444,14 @@ $(document).ready(function(){
     addInterestBox.hide();
     addInterestBox.each(function(){
         $(this).parent().parent().find('.add-interests-btn').click(function(){
-            $(this).parent().parent().find('.addInterest').toggle(animateDown);
+            var icon = $(this).children().first();
+            if(icon.hasClass('glyphicon-chevron-down')){
+                icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                $(this).parent().parent().find('.addInterest').show(animateUp);
+            } else {
+                icon.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                $(this).parent().parent().find('.addInterest').hide(animateDown);
+            }
         });
     });
 });
