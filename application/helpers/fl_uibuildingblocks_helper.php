@@ -362,7 +362,6 @@ if ( ! function_exists('CommentContent'))
 						<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 					</a>";
 
-				// print_r($comment);
 				if ($comment['isDeletable'])
 				{
 					echo "
@@ -379,11 +378,9 @@ if ( ! function_exists('CommentContent'))
 				echo "<small>" .$comment['timeStamp'] ."</small>";
 				
  				echo "</div>";
- 				// echo "<div>";
 	    		echo "
 	    			".$comment['content']."
 	    			</li>";
- 				// echo "</div>";
 
 	    	endforeach;
 		}
