@@ -38,4 +38,8 @@ Class search_model extends flubber_model
  	$searchResults[0] = $results;
  	return $searchResults;
  }
+ function doBlock($me, $personToBlock)
+ {
+ 	return $this->db2->blockMember($me, $personToBlock);
+ }
 }

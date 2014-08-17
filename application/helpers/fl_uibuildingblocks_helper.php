@@ -1004,7 +1004,7 @@ if ( ! function_exists('SearchResultMember'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a href='" .CreateURL('index.php/friends/') ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>
+			<a href='" .CreateURL('index.php/search/block/' .$member['memberId']) ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>
 			<a class='col-md-offset-4' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>";

@@ -35,4 +35,11 @@ class search extends FL_Controller {
 
 		$this->render('search', $data);
 	}
+
+	function block($blockId)
+	{
+		$this->load->model('search_model');
+		$this->search_model->doBlock($this->session->userdata('memberId'), $blockId);
+		redirect('/');
+	}
 }
