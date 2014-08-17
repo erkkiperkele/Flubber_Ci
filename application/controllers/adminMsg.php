@@ -49,7 +49,12 @@ class adminMsg extends FL_Controller {
 	{
 		$subject = $this->input->post('subjectAll');
 		$content = $this->input->post('contentAll');
+		$adminId = $this->input->post('profileId');
 		
-		$this->admin_model->messagePOSN ($subject , $content , $admin);
+		echo '<pre>'; print_r($subject); echo '</pre>';
+		echo '<pre>'; print_r($content); echo '</pre>';
+		echo '<pre>'; print_r($adminId); echo '</pre>';
+		
+		$this->admin_model->messagePOSN ($subject , $content , $adminId);
 	}
 }

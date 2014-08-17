@@ -1,7 +1,8 @@
 <section class="container content-section col-md-4 col-xs-4 col-md-offset-1 col-xs-offset-1">
 <?php
 	//options
-
+	echo '<pre>'; print_r($test); echo '</pre>';
+	
 	//echo '<pre>'; print_r($ageGroups); echo '</pre>';
 
 	echo '<pre>'; print_r($interestList); echo '</pre>';

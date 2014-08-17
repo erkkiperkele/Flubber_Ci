@@ -36,6 +36,9 @@ class adminReport extends FL_Controller {
 		$data['newMessageNb'] = 0;
 		//end need
 		
+		//TESTING
+		$data['test'] = $this->admin_model->test($admin);
+		
 		//Age grouping
 		
 		$this->render('pages/adminReport', $data);

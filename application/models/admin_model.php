@@ -1,9 +1,6 @@
 <?php
-//<<<<<<< HEAD
 require_once APPPATH.'models/flubber_model.php';
-//=======
 class admin_model extends flubber_model {
-//>>>>>>> origin/master
 
 	// private $db2;
 
@@ -83,39 +80,71 @@ class admin_model extends flubber_model {
 		 return $userInfo;
 	}
 	///////////////////////////////
-	
+	/*
+	public function test($adminId)
+	{
+		$messageList = $this->db2->getMessagesSentFromMember($adminId);
+		
+		$finalMessageList = array();
+		
+		foreach($messageList as $message)
+		{
+			if($message['sentTo'] == $message['sentFrom'])
+			{
+				$finalMessageList[] = $message;
+			}
+		}
+		
+		$finalMessageList = $this->ExtendWithMemberDetails($messageList, 'sentFrom');
+		
+		return $finalMessageList;
+	}
+	*/
 	//admin POSN public content (as a send message to all)
 	
 	public function getMessagesPOSN ($adminId)
 	{
+		//Only shows messages of yourself as admin
+		$messageList = $this->db2->getMessagesSentFromMember($adminId);
 		
-		$posts = array ( '1');
-		return $posts;
+		$finalMessageList = array();
+		
+		foreach($messageList as $message)
+		{
+			if($message['sentTo'] == $message['sentFrom'])
+			{
+				$finalMessageList[] = $message;
+			}
+		}
+		
+		$finalMessageList = $this->ExtendWithMemberDetails($messageList, 'sentFrom');
+		
+		return $finalMessageList;
 	}
-	
-	//TODO get messages from all admins
-		/*
-		#Get every public post information
-		$messagesPOSN = $this->db2-> ???
-		
-		$posts = array();
-		
-		#Extends each post with its member details
-		foreach($publicContents as $content):
-			$member = $this->get_user($content['memberId']);
-			$contentTemp = $content;
-			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
-			array_push($posts, (array)$postDetails);
-		endforeach;
-		*/
 	
 	public function messagePOSN ($subject , $content , $admin) 
 	{
 		$members = $this->db2->retrieveAllMembers();
-		foreach ($members as $key => $member)
+		foreach ($members as $member)
 		{
 			$this->db2->sendMessage($member , $admin , $subject , $content);
 		}
+	}
+	
+	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
+	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'sentFrom')
+	{
+		$extendedArray = array();
+		
+		#Extends each message with its member details
+		foreach($arrayToExtend as $content):
+			$content['memberId'] = $fieldNameForMemberId;
+			$member = $this->get_user($content[$fieldNameForMemberId]);
+			$contentTemp = $content;
+			$extendedContent = (object) array_merge((array) $contentTemp, (array) $member);		#extends the message information with full member details
+			array_push($extendedArray, (array)$extendedContent);
+		endforeach;
+		return $extendedArray;
 	}
 	
 	///////////////////////////////
@@ -147,6 +176,8 @@ class admin_model extends flubber_model {
 		$groupId = $this->getGroupID ($groupName);
 		$this->db2->deleteGroup($groupId);
 	}
+	
+	
 	
 	///////////////////////////////
 	
