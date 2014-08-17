@@ -73,4 +73,10 @@ INSERT into MemberOfGroup
 INSERT into GroupContent
 	(groupId, groupContentNumber, permissionId, currentPosterId, previousPosterId, originalPosterId, contentType, content, timeStamp)
 	VALUES
-	(3,1,1,1,1,1,1,'First poster!',CURRENT_TIMESTAMP);
+	(1,1,1,1,NULL,1,'text','First poster!',CURRENT_TIMESTAMP);
+
+INSERT into Message
+	(sentTo, sentFrom, messageNumber, hideFromReceiver, hideFromSender, isRead, title, content, timeStamp)
+	VALUES
+	(1, 2, 1, 0, 0, 1, 'hey', 'the assignment is due tonight', '2014-08-16 11:52:25.177'),
+	(2, 1, 1, 0, 0, 0, 'RE: hey', 'ok', '2014-08-16 10:35:42.530'),
