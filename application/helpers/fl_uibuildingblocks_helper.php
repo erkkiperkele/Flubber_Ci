@@ -108,7 +108,7 @@ if ( ! function_exists('LoadCSSBundle'))
  */
 if ( ! function_exists('MenuBar'))
 {
-	function MenuBar($memberInMenu, $groupList, $newRequestNb, $newMessageNb, $privilege, $gifts)
+	function MenuBar($memberInMenu, $groupList, $newRequestNb, $newMessageNb, $privilege)
 	{
 		if(!isset($memberInMenu))
 		{
