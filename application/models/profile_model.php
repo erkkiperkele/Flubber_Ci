@@ -138,6 +138,11 @@ class profile_model extends flubber_model {
 		$this->db2->setProfessionOfMember($this->memberId, $newProfession);
 	}
 
+	public function add_interest($memberId, $interestTypeId, $title, $artist)
+	{
+		$this->db2->addInterest($memberId, $interestTypeId, $title, $artist);
+	}
+
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
 	private function ExtendWithMemberDetails($arrayToExtend, $fieldNameForMemberId = 'currentPosterId')
 	{

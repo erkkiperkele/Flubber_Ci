@@ -88,7 +88,8 @@ class profile extends FL_Controller {
 		$field = $this->input->post('field');
 		$content = $this->input->post('changedInfo');
 		$member = $this->profile_model->get_user($this->session->userdata('memberId'));
-		switch ($field) {
+		switch ($field) 
+		{
 			case 'email':
 				$member['email'] = $content;
 				$this->profile_model->update_MemberEmail($member['email']);
@@ -113,5 +114,37 @@ class profile extends FL_Controller {
 				#TODO!!!!!!!
 				break;
 		}
+	}
+
+	public function addInterest()
+	{
+		$interestType = $this->input->post('interestType');
+		$title = $this->input->post('interestTitle');
+		$artist = $this->input->post('interestArtist');
+		$memberId = $this->session->userdata('memberId');
+
+		//REFACTOR: Should get the key from form directly!
+		$interestTypeId = 0;
+		switch ($interestType) 
+		{
+			case 'Music':
+				$interestTypeId = 1;
+				break;
+			case 'Movies':
+				$interestTypeId = 2;
+				break;
+			case 'Books':
+				$interestTypeId = 3;
+				break;
+			case 'Paintings':
+				$interestTypeId = 4;
+				break;
+			default:
+			//TODO!!
+				break;
+		}
+
+		$this->profile_model->add_interest($memberId, $interestTypeId, $title, $artist);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
