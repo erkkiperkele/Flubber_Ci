@@ -174,7 +174,7 @@ class profile_model extends flubber_model {
 	private function ExtendWitComments($posts, $fieldNameForMemberId = 'currentPosterId')
 	{
 		$extendedArray = array();
-        if (!empty($arrayToExtend))
+        if (!empty($posts))
 		foreach($posts as $content):
 			$comments = $this->get_Comments($content[$fieldNameForMemberId], $content['wallContentNumber']);
 
