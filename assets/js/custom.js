@@ -423,10 +423,11 @@ $('.groupEdit').bind('click', function() {
     $(this).attr('contentEditable', false);
     var changedInfo = $(this).text();
     var field = $(this).attr('id');
+	var groupId = $(this).parent().attr('id');
     $.ajax({
         type: "post",
         url: baseURL + "index.php/groups/updateGroupInfo/",
-        data: "field="+field+"&changedInfo="+changedInfo,
+        data: "field="+field+"&changedInfo="+changedInfo+"&groupId="+groupId,
         });
 
 });

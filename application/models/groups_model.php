@@ -7,9 +7,9 @@ class groups_model extends flubber_model {
 		parent::__construct();
 	}
 	
-	public function update_groupDescription($newDescription)
+	public function update_groupDescription($groupId, $newDescription)
 	{
-		$this->db2->setDescriptionOfGroup($this->groupId, $newDescription);
+		$this->db2->setDescriptionOfGroup($groupId, $newDescription);
 	}
 	
 	public function get_owner($groupId)

@@ -79,11 +79,10 @@ class groups extends FL_Controller {
 	{
 		$field = $this->input->post('field');
 		$content = $this->input->post('changedInfo');
-		$group = $this->groups_model->get_group($groupId);
+		$groupId = $this->input->post('groupId');
 		switch ($field) {
 			case 'description':
-				$group['description'] = $content;
-				$this->groups_model->update_groupDescription($group['description']);
+				$this->groups_model->update_groupDescription($groupId, $content);
 				break;
 			default:
 				#TODO!!!!!!!
