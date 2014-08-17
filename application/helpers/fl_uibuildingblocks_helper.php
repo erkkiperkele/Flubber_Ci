@@ -1017,7 +1017,7 @@ if ( ! function_exists('SearchResultMember'))
 		if(isset($member['related']))
 		{
 			echo "<div class='pull-right text-left btn-group btn-group-sm'>";
-			echo	"<a href='" .CreateURL('index.php/friends/') ."' class='btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;'id='remove'>Remove ";
+			echo	"<a href='" .CreateURL('index.php/search/remove/'.$member['memberId']) ."' class='btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;'id='remove'>Remove ";
 					switch($member['related']){
 						case 'family': 		echo "Family";	break;
 						case 'friend': 		echo "Friend"; break;
@@ -1034,9 +1034,9 @@ if ( ! function_exists('SearchResultMember'))
 					Add as..<span class='caret'></span>
 					</button>
 					<ul class='dropdown-menu' role='menu'>
-						<li><a href='" .CreateURL('index.php/friends/') ."'>Friend</a></li>
-		 				<li><a href='" .CreateURL('index.php/friends/') ."'>Family</a></li>
-		 				<li><a href='" .CreateURL('index.php/friends/') ."'>Colleague</a></li>
+						<li><a href='" .CreateURL('index.php/search/add/friend/' .$member['memberId']) ."'>Friend</a></li>
+		 				<li><a href='" .CreateURL('index.php/search/add/family/' .$member['memberId']) ."'>Family</a></li>
+		 				<li><a href='" .CreateURL('index.php/search/add/colleague/' .$member['memberId']) ."'>Colleague</a></li>
 		    		</ul>
 	    		</div>";
 		}
@@ -1062,8 +1062,13 @@ if ( ! function_exists('SearchResultGroup'))
 			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/group/') .$group['groupId'] ."'
 				<h1 style='font-size:large'>" .$group['groupName'] ."</h1>
 			</a>
-			<div class='col-md-offset-4 btn-group btn-group-sm'>
-				<button type='button' class='btn' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;' href='".CreateURL('index.php/group/') ."'>Join!</button>
+			<div class='text-left col-md-offset-3 btn-group btn-group-sm'>
+				<a type='button' class='btn' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;'";
+				if($group['isJoined'])
+					echo "href='".CreateURL('index.php/search/unjoin/'.$group['groupId']) ."'>UnJoin";
+				else
+					echo "href='".CreateURL('index.php/search/join/'.$group['groupId']) ."'>Join!";
+		echo"	</a>
 			</div>
 		</div>";
 	}

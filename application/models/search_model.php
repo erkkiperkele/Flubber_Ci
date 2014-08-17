@@ -50,12 +50,57 @@ Class search_model extends flubber_model
  	$searchResults[0] = $results;
  	return $searchResults;
  }
+
+ function join_with_groups($me, $searchResults)
+ {
+ 	$results = array();
+ 	$myGroups = $this->db2->getGroupsOfMember($me);
+ 	$i = 0;
+ 	foreach ($searchResults[1] as $searchGroup) {
+ 		$resultingGroup = $searchGroup;
+ 		$resultingGroup['isJoined'] = false;
+ 		if(!empty($myGroups)){
+	 		foreach ($myGroups as $group) {
+	 			if($group['groupId'] === $resultingGroup['groupId'])
+	 			{
+	 				$resultingGroup['isJoined'] = true;
+	 				break;
+	 			}
+	 		}
+ 		}
+ 		$results[$i++] = $resultingGroup;
+ 	}
+ 	$searchResults[1] = $results;
+ 	return $searchResults;
+ }
+
  function doBlock($me, $personToBlock)
  {
  	return $this->db2->blockMember($me, $personToBlock);
  }
+ 
  function doUnblock($me, $personToUnBlock)
  {
  	return $this->db2->unblockMember($me, $personToUnBlock);
+ }
+ 
+ function doAddRelation($me, $personToAdd, $relationshipType)
+ {
+ 	return $this->db2->addRelation($me, $personToAdd, $relationshipType);
+ }
+ 
+ function doRemoveRelation($me, $personToRemove)
+ {
+ 	return $this->db2->removeRelation($me, $personToRemove);
+ }
+ 
+ function doJoinGroup($me, $groupId)
+ {
+ 	return $this->db2->addMemberOfGroup($me, $groupId);
+ }
+
+ function doUnjoinGroup($me, $groupId)
+ {
+ 	return $this->db2->removeMemberOfGroup($me, $groupId);
  }
 }
