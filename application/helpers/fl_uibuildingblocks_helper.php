@@ -984,13 +984,14 @@ if ( ! function_exists('SearchResultMember'))
 	{
 		echo "
 		<div class='well well-sm'>
-			<a class='col-md-offset-5 col-md-2' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
+			<a href='" .CreateURL('index.php/friends/') ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>
+			<a class='col-md-offset-4' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>";
 		if(isset($member['related']))
 		{
-			echo "<div class='col-md-offset-3 text-left btn-group btn-group-sm'>";
-			echo	"<a href='" .CreateURL('index.php/friends/') ."' class='btn btn-default btn-info pull' id='remove'>Remove ";
+			echo "<div class='pull-right text-left btn-group btn-group-sm'>";
+			echo	"<a href='" .CreateURL('index.php/friends/') ."' class='btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;'id='remove'>Remove ";
 					switch($member['related']){
 						case 'family': 		echo "Family";	break;
 						case 'friend': 		echo "Friend"; break;
@@ -1002,8 +1003,8 @@ if ( ! function_exists('SearchResultMember'))
 		else if(!isset($member['related']) || $member['related'] == 0)
 		{
 			echo "
-				<div class='col-md-offset-3 text-left btn-group btn-group-sm'>
-					<button type='button' class='btn btn-default btn-info dropdown-toggle' data-toggle='dropdown'>
+				<div class='pull-right text-left btn-group btn-group-sm'>
+					<button type='button' class='btn pull-right clearfix dropdown-toggle' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;' data-toggle='dropdown'>
 					Add as..<span class='caret'></span>
 					</button>
 					<ul class='dropdown-menu' role='menu'>
@@ -1013,13 +1014,7 @@ if ( ! function_exists('SearchResultMember'))
 		    		</ul>
 	    		</div>";
 		}
-		echo
-		"</div>
-		<script type='text/javascript'>
-		$('#remove').onclick(function(){CreateURL('index.php/friends/')
-		</script>
-		";
-
+		echo "</div>";
 	}
 }
 
@@ -1042,7 +1037,7 @@ if ( ! function_exists('SearchResultGroup'))
 				<h1 style='font-size:large'>" .$group['groupName'] ."</h1>
 			</a>
 			<div class='col-md-offset-4 btn-group btn-group-sm'>
-				<button type='button' class='btn btn-default btn-info' href='".CreateURL('index.php/group/') ."'>Join!</button>
+				<button type='button' class='btn' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;' href='".CreateURL('index.php/group/') ."'>Join!</button>
 			</div>
 		</div>";
 	}

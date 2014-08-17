@@ -188,12 +188,20 @@ $(document).ready(function(){
     var interests = $(".interests");
     for(var iter = interests.first(); iter.next().length > 0; iter = iter.next()){
         iter.css("border-top", "2px solid #e74c3c").css("border-color", "none");
+        if(!iter.next())
+            break;
         iter = iter.next();
         iter.css("border-top", "2px solid #2ecc71").css("border-color", "none");
+        if(!iter.next())
+            break;
         iter = iter.next();
         iter.css("border-top", "2px solid #3498db").css("border-color", "none");
+        if(!iter.next())
+            break;
         iter = iter.next();
         iter.css("border-top", "2px solid #1abc9c").css("border-color", "none");
+        if(!iter.next())
+            break;
         iter = iter.next();
         iter.css("border-top", "2px solid #34495e").css("border-color", "none");
     }

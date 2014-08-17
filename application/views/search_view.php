@@ -1,5 +1,5 @@
-<section class="container content-section text-center col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1">
-	<div class="panel interests panel-default">
+<section class="container content-section col-md-5 col-xs-5 col-md-offset-1 col-xs-offset-1">
+	<div class="panel interests panel-default" style='border-top:2px solid #e74c3c; border-color:none;'>
 	  <div class="panel-heading text-center"><h1>Member Results</h1></div>
   		<div class="panel-body">
   			<?php if(is_array($result) && !empty($result[0]))
@@ -11,8 +11,9 @@
 			?>
 		</div>
 	</div>
-	
-	<div class="panel interests panel-default">
+</section>
+<section class="container content-section col-md-5 col-xs-5">
+	<div class="panel content panel-default">
 	  <div class="panel-heading text-center"><h1>Group Results</h1></div>
   		<div class="panel-body">
 		  	<?php if(is_array($result) && !empty($result[1]))
