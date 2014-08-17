@@ -31,7 +31,7 @@ class profile extends FL_Controller {
 
 	public function addStatus()
 	{
-			$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
+			$permissionId = 2; #HARD CODED TEST!!! DO NOT CHECKIN!
 			$contentType = $this->input->post('contentType');
 			$content = $this->input->post('updatedStatus');
 			$profileId = $this->input->post('profileId');
@@ -50,7 +50,7 @@ class profile extends FL_Controller {
 
 	public function updatePost()
 	{
-		$permissionId = 1; #HARD CODED TEST!!! DO NOT CHECKIN!
+		$permissionId = 2; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$contentType = 'text'; #HARD CODED TEST!!! DO NOT CHECKIN!
 		$content = $this->input->post('updatedPost');
 		$postId = $this->input->post('id');
@@ -63,7 +63,11 @@ class profile extends FL_Controller {
 		$postId = $this->input->post('postId');
 		$privacy = $this->input->post('privacy');
 		$permissionId = 1;		//default is private
+
 		switch ($privacy) {
+			case 'private':
+				$permissionId=1;
+				break;
 			case 'public':
 				$permissionId=2;
 				break;

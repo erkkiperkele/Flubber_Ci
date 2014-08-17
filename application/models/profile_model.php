@@ -102,11 +102,13 @@ class profile_model extends flubber_model {
 
 	public function update_PostPrivacy($wallContentNumber, $permissionId)
 	{
+		$profileId = $this->memberId;
+		$previousPost = $this->get_Post($profileId, $wallContentNumber);
 		$isEditable = $this->memberId == $previousPost['currentPosterId'];
 		if ($isEditable)
 		{
 			$post = $this->get_Post($this->memberId, $wallContentNumber);
-			$this->update_Post($wallContentNumber, $permissionId, $post['contentType'], $post['content']);	
+			$this->update_Post($profileId, $wallContentNumber, $permissionId, $post['contentType'], $post['content']);	
 		}
 	}	
 
