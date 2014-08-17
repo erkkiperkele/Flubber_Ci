@@ -15,7 +15,7 @@ class adminMsg extends FL_Controller {
 	public function index()
 	{
 		$admin = $this->session->userdata('memberId');
-		$data['currentPage'] = 'adminMessages';
+		$data['currentPage'] = 'Messages';
 		$data['messageALL'] = $this->admin_model->getPublicContent();
 		$data['messagePOSN'] = $this->admin_model->getMessagesPOSN($admin);
 		

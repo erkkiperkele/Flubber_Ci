@@ -1,3 +1,5 @@
+
+
 <section class="container content-section col-md-5 col-xs-5 col-md-offset-1 col-xs-offset-1">
 <?php
 	//adminMessageBox($this->profileId);
@@ -21,5 +23,6 @@
 	else
 		echo 'No public content posted yet.';
 ?>
+
 </section>
 </div>

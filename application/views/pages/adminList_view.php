@@ -1,19 +1,27 @@
-<section class="container content-section col-md-4 col-xs-4 col-md-offset-1 col-xs-offset-1">
+<section class="container content-section col-md-5 col-xs-5 col-md-offset-1 col-xs-offset-1">
+	<div class="panel content panel-default">
+		<div class="panel-heading text-center"> <h2> Groups </h2> </div>
+		</div>
+	</div>
 <?php
-
-	//TODO
-	//foreach ($allGroupsList as $group)
-	//{
-		//GroupBox($group);
-	//}
+	//echo '<pre>'; print_r($allGroupsList); echo '</pre>';
+	foreach ($allGroupsList as $group)
+	{
+		SimpleGroupBox($group);
+	}
 	
 ?>
 </section>
-<section class="container content-section col-md-6 col-xs-6">
+<section class="container content-section col-md-5 col-xs-5">
+	<div class="panel content panel-default">
+		<div class="panel-heading text-center"> <h2> Members </h2> </div>
+		</div>
+	</div>
+
 <?php
 	foreach ($memberList as $member)
 	{
-		MemberBox($member);
+		SimpleMemberBox($member);
 	}
 	
 ?>

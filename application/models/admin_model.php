@@ -153,22 +153,32 @@ class admin_model extends flubber_model {
 	//Returns groups with their info
 	public function getGroupList ()
 	{
-		$list = array();
-		/* Disabled pending approval of Dao modification, returns empty list
-		$idList = $this->db2->retrieveAllGroups();
+		$groupList = $this->db2->retrieveAllGroups();
+		$finalGroupList = $this->ExtendWithGroupDetails($groupList , 'groupId');
 		
-		foreach ($idList as $groupid)
-		{
-			$list[$memberid['groupId']] = $this->db2->getMemberInfo($memberid['groupId']);
-		}
-		*/
-		return $list;
+		return $finalGroupList;
 	}
 	
-	public function getGroupID ($groupName)
+	#adds full group information to every object of the array. allows to specify the array's fieldName for the groupId
+	private function ExtendWithGroupDetails($arrayToExtend, $fieldNameForGroupId = 'groupId')
 	{
-		$groupID = $this->db2->getGroupId ($groupName);
-		return $groupID;
+		$extendedArray = array();
+		
+		#Extends each message with its member details
+		foreach($arrayToExtend as $content):
+			$content['GroupId'] = $fieldNameForGroupId;
+			$group = $this->getGroupInfo($content[$fieldNameForGroupId]);
+			$contentTemp = $content;
+			$extendedContent = (object) array_merge((array) $contentTemp, (array) $group);		#extends the message information with full member details
+			array_push($extendedArray, (array)$extendedContent);
+		endforeach;
+		return $extendedArray;
+	}
+	
+	public function getGroupInfo ($groupId)
+	{
+		$groupInfo = $this->db2->getGroupInfo ($groupId);
+		return $groupInfo;
 	}
 	
 	public function deleteGroup($groupName)
