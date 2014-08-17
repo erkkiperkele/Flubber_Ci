@@ -301,7 +301,7 @@ if ( ! function_exists('CommentContent'))
 			foreach ($PostComments as $comment): 
 
  				echo "<li class='list-group-item' style='background-color: rgb(253, 253, 253); margin:0px 0px 0px 0px;padding:5px 5px 5px 5px;'>";
- 				echo 	"<row class='comment-editable'id='". $comment['commentNumber'] .">
+ 				echo 	"<row class='comment-editable'id='". $comment['commentNumber'] ."'>
 	    			 		<a href='" .CreateURL("/index.php/profile/index/".$comment['memberId']) ."'>
 								<img class='profilePic col-md-1 col-md-offset-1' id='".$comment['profileId'] ."' src='" .$comment['thumbnailURL'] ."' width='26px' height='26px' style='margin:10px 10px'/>
 							</a>
