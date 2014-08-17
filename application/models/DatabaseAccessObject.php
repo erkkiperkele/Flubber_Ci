@@ -10,8 +10,8 @@
 	* is consistent with the use cases described in the project     *
 	* documentation.                                                *
 	****************************************************************/
-
 	
+    
 	class DatabaseAccessObject{
 		private $db;
 		
@@ -1979,10 +1979,10 @@
 				}
 			}
 			
-			public function deleteGroupContent($memberId, $groupContentNumber){
+			public function deleteGroupContent($groupId, $groupContentNumber){
 				try{
-					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE memberId = :memberId AND groupContentNumber = :groupContentNumber;');
-					$statement->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+					$statement = $this->db->prepare('DELETE FROM GroupContent WHERE groupId = :groupId AND groupContentNumber = :groupContentNumber;');
+					$statement->bindValue(':groupId', $groupId, PDO::PARAM_INT);
 					$statement->bindValue(':groupContentNumber', $groupContentNumber, PDO::PARAM_INT);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
