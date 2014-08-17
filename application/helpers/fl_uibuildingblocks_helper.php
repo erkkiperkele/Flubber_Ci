@@ -191,7 +191,11 @@ if ( ! function_exists('MenuBar'))
 								<li class='divider'></li>
 								<li><a href='" .CreateURL('index.php/flubber/logout') ."'>Logout</a></li>
 							</ul>
-						</li>
+							</li>
+
+							<li class='hearts'>
+							<a href='#'><span class='glyphicon glyphicon-heart'>" .$memberInMenu['hearts'] ."</a></span>
+							</li>
 					</ul>
 					<form action='" .CreateURL('index.php/search') ."' class='navbar-form navbar-left' method='POST' role='search'>
 						<div class='form-group'>
@@ -247,7 +251,7 @@ if ( ! function_exists('InputBox'))
  */
 if ( ! function_exists('SearchResultMember'))
 {
-	function SearchResultMember($member)
+	function SearchResultMember($member, $hearts=0)
 	{
 		echo "
 		<div class='well well-sm'>";
@@ -257,8 +261,14 @@ if ( ! function_exists('SearchResultMember'))
 		else{
 			echo "<a href='" .CreateURL('index.php/search/block/' .$member['memberId']) ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>";
 		}
-
-		echo"<a class='col-md-offset-4' href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
+		echo 	"<div class='col-md-offset-4'>";
+		if($hearts > 0)
+		echo 	"<a href='".CreateURL('index.php/search/giveAHeart/' .$member['memberId']) ."' class ='btn clearfix' 
+				 style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:red; font-size:1.2em;' id='giveAHeart'>
+					<span class='glyphicon glyphicon-heart-empty'></span>
+				</a>" ;
+			
+		echo"<a href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>";
 		if(isset($member['related']))
@@ -287,6 +297,7 @@ if ( ! function_exists('SearchResultMember'))
 		    		</ul>
 	    		</div>";
 		}
+		echo "</div>";
 		echo "</div>";
 	}
 }

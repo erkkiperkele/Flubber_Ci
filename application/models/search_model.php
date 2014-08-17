@@ -103,4 +103,9 @@ Class search_model extends flubber_model
  {
  	return $this->db2->removeMemberOfGroup($me, $groupId);
  }
+ function giveHeart($me, $to)
+ {
+ 	$this->db2->updateHearts($me, 1);
+ 	$this->db2->updateHearts($to, -1);
+ }
 }

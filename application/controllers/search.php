@@ -40,6 +40,7 @@ class search extends FL_Controller {
 		if(!empty($result))
 			$result = $this->search_model->join_with_groups($this->session->userdata('memberId'), $result);
 		$data['result'] = $result;
+		$data['hearts'] = $this->session->userdata('hearts');
 
 		$this->render('search', $data);
 	}
@@ -77,6 +78,14 @@ class search extends FL_Controller {
 	function unjoin($groupId)
 	{
 		$this->search_model->doUnjoinGroup($this->session->userdata('memberId'), $groupId);
+		redirect('/');
+	}
+	function giveAHeart($to)
+	{
+		$this->search_model->giveHeart($this->session->userdata('memberId'), $to);
+		$user = $this->session->all_userdata();
+		$user['hearts'] = $user['hearts']-1;
+		$this->session->set_userdata( $user );
 		redirect('/');
 	}
 }
