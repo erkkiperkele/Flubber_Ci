@@ -11,7 +11,7 @@
 	* documentation.                                                *
 	****************************************************************/
 
-	session_start();
+	// session_start();
 	
 	class DatabaseAccessObject{
 		private $db;
