@@ -6,19 +6,32 @@ class messages_model extends flubber_model {
 		parent::__construct();
 	}
 	
-	public function get_messages($memberId, $targetId = -1)
+	public function get_messages($memberId)
 	{
-		#REFACTOR: TO MOVE SOMEWHERE MORE GENERIC
-		function cmp($a, $b)
-		{
-		    return strcmp($a["timeStamp"], $b["timeStamp"]);	#UGLY hack to reverse order (* (-1)
-		}
-		
-        $messageTo = $this->db2->getMessagesSentToMember($memberId);
-        $messageTo = $this->ExtendWithMemberDetails($messageTo, 'sentFrom', 'sender');
+        $userMessageList = array();
+        $messageTo = array();
+        $messageFrom = array();
         
-        $messageFrom = $this->db2->getMessagesSentFromMember($memberId);
-        $messageFrom = $this->ExtendWithMemberDetails($messageFrom, 'sentFrom', 'receiver');
+        $messageList= $this->db2->getMessagesSentToMember($memberId);
+        if (!empty($messageList))
+            foreach ($messageList as $msg):
+            if ($msg['hideFromReceiver'] == 0)
+            {
+                array_push($messageTo, $msg);
+            }
+            endforeach;
+        
+        $messageList = $this->db2->getMessagesSentFromMember($memberId);
+        if (!empty($messageList))
+            foreach ($messageList as $msg):
+                if ($msg['hideFromSender'] == 0)
+                {
+                    array_push($messageFrom, $msg);
+                }
+            endforeach;
+            
+        $messageTo = $this->ExtendWithMemberDetails($messageTo, 'sentFrom', 'receiver');
+        $messageFrom = $this->ExtendWithMemberDetails($messageFrom, 'sentFrom', 'sender');
         
         if (!empty($messageTo))
             $messageList = array_merge($messageTo, $messageFrom);
@@ -26,9 +39,12 @@ class messages_model extends flubber_model {
             $messageList = $messageFrom;
         
         if (!empty($messageList))
-			usort($messageList, 'cmp');
-		
-		return $messageList;
+        {
+            $userMessageList = $this->sortMessage($messageList);
+            
+        }
+        
+		return $userMessageList;
 	}
 	
 	#adds full member information to every object of the array. allows to specify the array's fieldName for the memberId
@@ -48,5 +64,97 @@ class messages_model extends flubber_model {
 		endforeach;
 		return $extendedArray;
 	}
-	
+    
+    private function sortMessage($messageList)
+    {
+        #REFACTOR: TO MOVE SOMEWHERE MORE GENERIC
+		function cmp($a, $b)
+		{
+		    return strcmp($a["timeStamp"], $b["timeStamp"]);
+		}
+        function revcmp($a, $b)
+		{
+		    return strcmp($a["timeStamp"], $b["timeStamp"]) * (-1);	#UGLY hack to reverse order (* (-1)
+		}
+        
+        $userMessageList = array();
+        $userKey = array();
+        
+        if (!empty($messageList))
+        {
+            usort($messageList, 'revcmp');
+            foreach($messageList as $message)
+            {
+                $targetId = 0;
+                if($message['msgType'] == 'sender')
+                    $targetId = $message['sentTo'];
+                else if($message['msgType'] == 'receiver')
+                    $targetId = $message['sentFrom'];
+                $targetId = 'id'.$targetId;
+                
+                if(empty($userKey) || !in_array($targetId, $userKey)) 
+                {
+                    array_push($userKey, $targetId);
+                }
+            }
+            
+            foreach ($userKey as $key)
+            {
+            	$userMessageList[$key] = array();
+            }
+            
+            usort($messageList, 'revcmp');
+            foreach($messageList as $message)
+            {
+                $targetId = 0;
+                if($message['msgType'] == 'sender')
+                    $targetId = $message['sentTo'];
+                else if($message['msgType'] == 'receiver')
+                    $targetId = $message['sentFrom'];
+                
+                $target = $this->get_user($targetId);
+                if (!empty($target))
+                {
+                    $message['targetId'] = $target['memberId'];
+                    $message['targetFirstName'] = $target['firstName'];
+                    $message['targetLastName'] = $target['lastName'];
+                    $message['targetThumbnailURL'] = $target['thumbnailURL'];
+                }
+                
+                $targetId = 'id'.$targetId;
+                array_push($userMessageList[$targetId], $message);
+            }
+        }
+        
+		return $userMessageList;
+    }
+    
+    public function add_message($toMemberId, $fromMemberId, $messageTitle, $messageContent)
+    {
+        if ($toMemberId > 0 && $fromMemberId > 0)
+            $this->db2->sendMessage($toMemberId, $fromMemberId, $messageTitle, $messageContent);
+    }
+    
+    public function delete_message($msgType, $targetId, $messageNumber)
+    {
+        $profileId = $this->session->userdata('memberId');
+        $sendToId = 0;
+        $sendFromId = 0;
+        if ($msgType == 'sender')
+        {
+            $sendToId = $targetId;
+            $sendFromId = $profileId;
+            $this->db2->hideMessageFromSender($sendToId, $sendFromId, $messageNumber);
+        }
+        else if ($msgType == 'receiver')
+        {
+            $sendToId = $profileId;
+            $sendFromId = $targetId;
+            $this->db2->hideMessageFromReceiver($sendToId, $sendFromId, $messageNumber);
+        }
+        
+        $msgInfo = $this->db2->getMessageInfo($sendToId, $sendFromId, $messageNumber);
+        if(!empty($msgInfo) && $msgInfo['hideFromSender'] == 1 && $msgInfo['hideFromReceiver'] == 1)
+            $this->db2->deleteMessage($sendToId, $sendFromId, $messageNumber);
+    }
 }

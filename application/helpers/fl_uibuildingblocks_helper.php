@@ -284,7 +284,7 @@ if ( ! function_exists('SearchResultMember'))
 		echo"<a href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>";
-		echo 	"<a href='".CreateURL('index.php/messages/' .$member['memberId']) ."' class ='btn clearfix' 
+		echo 	"<a href='".CreateURL('index.php/messages/newConversation/' .$member['memberId']) ."' class ='btn clearfix' 
 				 style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:red; font-size:1.2em;' id='sendMessage'>
 					<span class='glyphicon glyphicon-envelope'></span>
 				</a>" ;

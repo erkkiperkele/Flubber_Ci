@@ -5,7 +5,6 @@
             GroupCreationForm($this->profileId);
         else
 		    GroupDescriptionBox($this->groupId, $group);
-			
 	?>
 	</div>
 	<div class="row">

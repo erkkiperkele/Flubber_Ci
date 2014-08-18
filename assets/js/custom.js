@@ -215,13 +215,14 @@ $(document).ready(function(){
             delaytime += 50;
     }
 });
+
 //Coloring the top borders of the Description boxes:
 $(document).ready(function(){
     $(".description").each(function(){
         $(this).children().first().css("border-top", "2px solid #FFCC00").css("border-color", "none");
         $(this).hide();
          });
-    var delaytime = 50;
+    var delaytime = 10;
     for(var item = $(".description").first(); item.length > 0; item = item.next()){
         item.delay(delaytime).show(animateDown);
          if(delaytime < 100);
@@ -230,6 +231,20 @@ $(document).ready(function(){
     $(".description").first().show(animateDown);
 });
 
+//Coloring the top borders of the Conversation boxes:
+$(document).ready(function(){
+    $(".conversation").each(function(){
+        $(this).children().first().css("border-top", "2px solid #FFCC00").css("border-color", "none");
+        $(this).hide();
+         });
+    var delaytime = 10;
+    for(var item = $(".conversation").first(); item.length > 0; item = item.next()){
+        item.delay(delaytime).show(animateDown);
+         if(delaytime < 100);
+            delaytime += 50;
+    }
+    $(".conversation").first().show(animateDown);
+});
 //Coloring the top borders of the Message boxes:
 $(document).ready(function(){
     $(".message").each(function(){
@@ -439,6 +454,26 @@ toGroupEdit.each(function(){
   })
 });
 
+var toMsgEdit = $('.messageeditable');
+toMsgEdit.each(function(){
+    var messageNumber = $(this).parent().find('.panel-title').attr('id');
+    var targetId = $(this).parent().find('.panel-body').attr('id');
+    var msgType = $(this).attr('id');
+    $(this).parent().find('.message-del-btn').click(function()      //delete function
+    {
+        var me = $(this);
+        $.ajax(
+        {
+            type: "delete",
+            url: baseURL + "index.php/messages/deleteMessage/"+msgType+"/"+targetId+"/"+messageNumber,
+            success: function(data)
+            {
+                me.parent().parent().hide(animateLeft);
+            }  
+        });
+    })
+});
+
 // $('.list-group-item').bind('dblclick', function() {
 //     $(this).attr('contentEditable', true);
 // }).blur(function() {
@@ -473,11 +508,12 @@ $('.groupEdit').bind('click', function() {
         });
 
 });
+
 $(document).ready(function(){
     var addInterestBox = $('.addInterest');
     addInterestBox.hide();
     addInterestBox.each(function(){
-        $(this).parent().find('.add-interests-btn').click(function(){
+        $(this).parent().parent().find('.add-interests-btn').click(function(){
             var icon = $(this).children().first();
             if(icon.hasClass('glyphicon-chevron-down')){
                 icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
