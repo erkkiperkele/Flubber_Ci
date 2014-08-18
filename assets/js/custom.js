@@ -347,6 +347,45 @@ toEdit.each(function(){
     })
 });
 
+//Delete member button
+var toEdit = $('.membereditable');
+toEdit.each(function(){
+    var memberId = $(this).attr('id');
+    $(this).parent().find('.member-del-btn').click(function()      //delete function
+    {
+        var me = $(this);
+        $.ajax(
+        {
+            type: "delete",
+            url: baseURL + "index.php/adminList/deleteMember/"+memberId,
+	    data:"memberId="+memberId,
+            success: function(data)
+            {
+                me.parent().parent().hide(animateUp);
+            }  
+        });
+    })
+});
+//Delete group button
+var toEdit = $('.groupiseditable');
+toEdit.each(function(){
+    var memberId = $(this).attr('id');
+    $(this).parent().find('.group-del-btn').click(function()      //delete function
+    {
+        var me = $(this);
+        $.ajax(
+        {
+            type: "delete",
+            url: baseURL + "index.php/adminList/deleteGroup/"+groupId,
+	    data:"groupId="+groupId,
+            success: function(data)
+            {
+                me.parent().parent().hide(animateUp);
+            }  
+        });
+    })
+});
+
 
 var toEdit = $('.editable');
 toEdit.each(function(){
