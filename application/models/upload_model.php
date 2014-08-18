@@ -7,7 +7,7 @@ class upload_model extends flubber_model {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output_dir = "D:\\xampp\\htdocs\\Flubber_Ci\\assets\\content\\";
+		$this->output_dir = "/Users/Aymeric/Sites/Flubber_Ci/assets/content/";
 	}
 
 	public function do_upload($id, $fileContentType)

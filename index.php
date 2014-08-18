@@ -17,7 +17,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', 'production');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -32,9 +32,9 @@ if (defined('ENVIRONMENT'))
 	switch (ENVIRONMENT)
 	{
 		case 'development':
-			error_reporting(E_ALL);
+			error_reporting(0);
 			// Display errors in output
-            ini_set('display_errors', 1);
+            // ini_set('display_errors', 1);
 		break;
 	
 		case 'testing':

@@ -172,7 +172,7 @@ if ( ! function_exists('MenuBar'))
 							<li><a href='" .CreateURL('index.php/requests') ."'>Requests"; if ($newRequestNb > 0) { echo " (".$newRequestNb.")"; } echo "</a></li>
 							<li><a href='" .CreateURL('index.php/messages') ."'>Messages"; if ($newMessageNb > 0) { echo " (".$newMessageNb.")"; } echo "</a></li>
 							";
-						if($privilege=='Administrator'){
+						if($privilege=='1'){
 							echo "<li>
 									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
 									<ul class='dropdown-menu' role='menu'>

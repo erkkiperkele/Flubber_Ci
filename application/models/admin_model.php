@@ -106,13 +106,13 @@ class admin_model extends flubber_model {
 		
 		$finalMessageList = array();
 		
-		foreach($messageList as $message)
-		{
-			if($message['sentTo'] == $message['sentFrom'])
-			{
-				$finalMessageList[] = $message;
-			}
-		}
+		// foreach($messageList as $message)
+		// {
+		// 	if($message['sentTo'] == $message['sentFrom'])
+		// 	{
+		// 		$finalMessageList[] = $message;
+		// 	}
+		// }
 		
 		$finalMessageList = $this->ExtendWithMemberDetails($finalMessageList, 'sentFrom');
 		
@@ -253,6 +253,7 @@ class admin_model extends flubber_model {
 		foreach( $memberList as $member)
 		{
 			//prep age difference
+			date_default_timezone_set("UTC");
 			$now = new DateTime();
 			$birthdate = DateTime::createFromFormat('Y-m-d' ,$member['dateOfBirth']);
 			$age = $now->diff($birthdate);
