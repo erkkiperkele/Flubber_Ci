@@ -171,7 +171,6 @@ if ( ! function_exists('MenuBar'))
 							<li><a href='" .CreateURL('index.php/friends') ."'>Friends</a></li>
 							<li><a href='" .CreateURL('index.php/requests') ."'>Requests"; if ($newRequestNb > 0) { echo " (".$newRequestNb.")"; } echo "</a></li>
 							<li><a href='" .CreateURL('index.php/messages') ."'>Messages"; if ($newMessageNb > 0) { echo " (".$newMessageNb.")"; } echo "</a></li>
-							<li><a href='" .CreateURL('index.php/gifts') ."'>Give Gifts</a></li>
 							";
 						if($privilege=='Administrator'){
 							echo "<li>
@@ -251,7 +250,7 @@ if ( ! function_exists('InputBox'))
  */
 if ( ! function_exists('SearchResultMember'))
 {
-	function SearchResultMember($member, $hearts=0)
+	function SearchResultMember($member, $gifts, $hearts=0)
 	{
 		echo "
 		<div class='well well-sm'>";
@@ -262,12 +261,26 @@ if ( ! function_exists('SearchResultMember'))
 			echo "<a href='" .CreateURL('index.php/search/block/' .$member['memberId']) ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>";
 		}
 		echo 	"<div class='col-md-offset-4'>";
-		if($hearts > 0)
+		if($hearts > 0){
 		echo 	"<a href='".CreateURL('index.php/search/giveAHeart/' .$member['memberId']) ."' class ='btn clearfix' 
 				 style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:red; font-size:1.2em;' id='giveAHeart'>
 					<span class='glyphicon glyphicon-heart-empty'></span>
 				</a>" ;
-			
+		echo "	<div class='text-left btn-group btn-group-sm'>
+					<button type='button' class='btn pull-right clearfix dropdown-toggle' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:#2ecc71;' data-toggle='dropdown'>
+						<span class='glyphicon glyphicon-gift'></span><span class='caret'></span>
+					</button>
+					<ul class='dropdown-menu' role='menu'>";
+					foreach ($gifts as $gift) {
+						echo "<li>
+								<a href='" .CreateURL('index.php/search/giveAGift/' .$gift['giftTypeId'] .'/' .$member['memberId']) ."'>" .$gift['description'] ."
+									<span class='badge'>" .$gift['cost'] ."</span>
+								</a>
+							</li>";
+					}
+		echo   		"</ul>
+	    		</div>";
+		}
 		echo"<a href='" .CreateURL('index.php/profile/index/') .$member['memberId'] ."'
 				<h1 style='font-size:large'>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 			</a>";

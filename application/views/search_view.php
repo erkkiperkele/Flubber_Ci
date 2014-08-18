@@ -5,7 +5,7 @@
   			<?php if(is_array($result) && !empty($result[0]))
   			{
   				foreach ($result[0] as $member)
-					echo SearchResultMember($member, $hearts);
+					echo SearchResultMember($member, $gifts, $hearts);
   			} else
   				echo "<p>No results found!</p>";
 			?>

@@ -108,4 +108,23 @@ Class search_model extends flubber_model
  	$this->db2->updateHearts($me, 1);
  	$this->db2->updateHearts($to, -1);
  }
+ function getGifts()
+ {
+ 	return $this->db2->getGiftTypes();
+ }
+ function getGiftInfo($giftId)
+ {
+ 	return $this->db2->getGiftTypeInfo($giftId);
+ }
+ function checkIfGiftAffordable($me, $giftCost)
+ {
+ 	return $this->db2->checkHearts($me, $giftCost);
+ }
+
+ function giveAGift($me, $to, $gift)
+ {
+	$this->db2->updateHearts($me, $gift['cost']);
+	$content = "<b>You recieved a gift: </b>" .$gift['description'];
+	$this->db2->postWallContent($to, 2, $me, null, $me, "text", $content);
+ }
 }

@@ -41,6 +41,7 @@ class search extends FL_Controller {
 			$result = $this->search_model->join_with_groups($this->session->userdata('memberId'), $result);
 		$data['result'] = $result;
 		$data['hearts'] = $this->session->userdata('hearts');
+		$data['gifts'] = $this->search_model->getGifts();
 
 		$this->render('search', $data);
 	}
@@ -87,5 +88,18 @@ class search extends FL_Controller {
 		$user['hearts'] = $user['hearts']-1;
 		$this->session->set_userdata( $user );
 		redirect('/');
+	}
+	function giveAGift($giftId, $to)
+	{
+		$gift = $this->search_model->getGiftInfo($giftId);
+		$result = $this->search_model->checkIfGiftAffordable($this->session->userdata('memberId'), $gift['cost']);
+		if($result){
+			$this->search_model->giveAGift($this->session->userdata('memberId'), $to, $gift);
+			redirect('/profile/index/' .$to .'/');
+		}
+		else
+			echo '<script type="text/javascript">alert("You dont have any more hearts! Sorry!");</script>';
+
+
 	}
 }
