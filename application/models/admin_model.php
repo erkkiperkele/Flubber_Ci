@@ -60,9 +60,8 @@ class admin_model extends flubber_model {
 	{
 		#Get every public post information
 		$publicContents = $this->db2->getPublicContents();
-		
 		$posts = array();
-		
+			
 		#Extends each post with its member details
 		foreach($publicContents as $content):
 			$member = $this->get_user($content['memberId']);
@@ -70,7 +69,7 @@ class admin_model extends flubber_model {
 			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
 			array_push($posts, (array)$postDetails);
 		endforeach;
-
+		
 		return $posts;
 	}
 	
@@ -117,7 +116,7 @@ class admin_model extends flubber_model {
 			}
 		}
 		
-		$finalMessageList = $this->ExtendWithMemberDetails($messageList, 'sentFrom');
+		$finalMessageList = $this->ExtendWithMemberDetails($finalMessageList, 'sentFrom');
 		
 		return $finalMessageList;
 	}
@@ -127,7 +126,9 @@ class admin_model extends flubber_model {
 		$members = $this->db2->retrieveAllMembers();
 		foreach ($members as $member)
 		{
-			$this->db2->sendMessage($member , $admin , $subject , $content);
+			$this->db2->sendMessage($member['memberId'] , $admin , $subject , $content);
+			//Perk: add hiding for admin conversations so it doesn't appear in messages to others
+			//if($member['memberId'] == $admin)
 		}
 	}
 	

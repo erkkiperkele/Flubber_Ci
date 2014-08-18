@@ -12,10 +12,6 @@ class adminList extends FL_Controller {
 		$this->load->helper('form');
 	}
 
-	//todo
-	//search member by name->populate entries. Group as well
-	//search with list result?
-
 	public function index()
 	{
 		

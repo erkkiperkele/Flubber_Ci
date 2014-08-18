@@ -34,8 +34,10 @@ class adminMsg extends FL_Controller {
 	public function postPublic()
 	{
 		$contentType = $this->input->post('contentType');
-		$content = $this->input->post('content');
-		$this->admin_model->postPublicContent( $admin , $contentType, $content);
+		$content = $this->input->post('updatedStatus');
+		$adminId = $this->input->post('profileId');
+		
+		$this->admin_model->postPublicContent( $adminId , $contentType, $content);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 	
@@ -47,14 +49,12 @@ class adminMsg extends FL_Controller {
 	//POSN message function
 	public function messageAllMembers() 
 	{
-		$subject = $this->input->post('subjectAll');
-		$content = $this->input->post('contentAll');
-		$adminId = $this->input->post('profileId');
-		
-		echo '<pre>'; print_r($subject); echo '</pre>';
-		echo '<pre>'; print_r($content); echo '</pre>';
-		echo '<pre>'; print_r($adminId); echo '</pre>';
+		$subject = $this->input->post('title');
+		$content = $this->input->post('messageContent');
+		$adminId = $this->input->post('fromMemberId');
 		
 		$this->admin_model->messagePOSN ($subject , $content , $adminId);
+		
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
