@@ -95,6 +95,9 @@ class search extends FL_Controller {
 		$result = $this->search_model->checkIfGiftAffordable($this->session->userdata('memberId'), $gift['cost']);
 		if($result){
 			$this->search_model->giveAGift($this->session->userdata('memberId'), $to, $gift);
+			$user = $this->session->all_userdata();
+			$user['hearts'] = $user['hearts']-$gift['cost'];
+			$this->session->set_userdata( $user );
 			redirect('/profile/index/' .$to .'/');
 		}
 		else
