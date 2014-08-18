@@ -24,15 +24,15 @@ if ( ! function_exists('AddUserMessageBox'))
                         value='".$previousTitle."' placeholder='Your title here' />
 		            <textarea id='messageContent' class='form-control' name='messageContent' 
                         placeholder='Your message here' rows='3'></textarea> 
-		            <input type='hidden' class='form-control' id='fromMemberId' name='profileId' value='" .$fromMemberId ."'>
-		            <input type='hidden' class='form-control' id='toMemberId' name='groupId' value='" .$toMemberId ."'>
+		            <input type='hidden' class='form-control' id='fromMemberId' name='fromMemberId' value='" .$fromMemberId ."'>
+		            <input type='hidden' class='form-control' id='toMemberId' name='toMemberId' value='" .$toMemberId ."'>
 		            <span class='input-group-btn' style='vertical-align:bottom;'>
 			            <button class='btn btn-default' type='submit'>Send</button>
 		            </span>
 	            </div>
 	            <div class='panel-heading privacy'>
 		            <h3 class='panel-title pull-left'>Message</h3>
-		            </p>
+				    <p/>
 	            </div>
 
             </div>

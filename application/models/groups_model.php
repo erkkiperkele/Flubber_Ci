@@ -7,6 +7,18 @@ class groups_model extends flubber_model {
 		parent::__construct();
 	}
 	
+    public function get_blankGroup($ownerId){
+        $group = array();
+        $group['groupId'] = -1;
+        $group['groupName'] = 'Create a group';
+        $group['description'] = '';
+        $group['ownerId'] = $ownerId;
+        $group['photographURL'] = '';
+        $group['coverPictureURL'] = '';
+        $group['thumbnailURL'] = '';
+        return $group;
+    }
+    
 	public function update_groupDescription($groupId, $newDescription)
 	{
 		$this->db2->setDescriptionOfGroup($groupId, $newDescription);
@@ -32,7 +44,25 @@ class groups_model extends flubber_model {
 		
 		return $memberInfoList;
 	}
-	
+    
+	public function add_group($privilegeId, $name, $ownerId, $description)
+	{
+        if($privilegeId < 3)
+        {
+            $success = $this->db2->createGroup($name, $ownerId, $description, null, null, null);
+            $groupList = $this->db2->searchString($ownerId, $name, true);
+            $groupInfo = array();
+            if(!empty($groupList) && !empty($groupList[1]))
+            foreach($groupList[1] as $group)
+            {
+                if($group['ownerId'] = $ownerId)
+                    $groupInfo = $group;
+            }
+            return $groupInfo['groupId'];
+        }
+        return -1;
+	}
+    
 	public function get_groupPosts($groupId)
 	{
 		#REFACTOR: TO MOVE SOMEWHERE MORE GENERIC

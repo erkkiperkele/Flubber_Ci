@@ -123,7 +123,7 @@
 			public function addMember($firstName,$lastName,$email,$password,$profession,$address,$city,$country,$photographURL,$coverPictureURL,$thumbnailURL,$dateOfBirth,$privacy){
 				try{
 					$hashedPassword = crypt($password, '$5$abcdefghijkl1234');
-					$defaultPrivilege = "junior";
+					$defaultPrivilege = 3; //1=admin, 2=senior, 3=junior
 					$defaultStatus = "active";
 					$statement = $this->db->prepare('INSERT INTO Member(firstName,lastName,email,hashedPassword,profession,address,city,country,photographURL,coverPictureURL,thumbnailURL,hearts,
 					dateOfBirth,privacy,privilege,status)
@@ -143,8 +143,8 @@
 					$statement->bindValue(':hearts', 100, PDO::PARAM_INT);
 					$statement->bindValue(':dateOfBirth', $dateOfBirth, PDO::PARAM_STR);
 					$statement->bindValue(':privacy', $privacy, PDO::PARAM_STR);
-					$statement->bindValue(':defaultPrivilege', "junior", PDO::PARAM_STR);
-					$statement->bindValue(':defaultStatus', "active", PDO::PARAM_STR);
+					$statement->bindValue(':defaultPrivilege', $defaultPrivilege, PDO::PARAM_STR);
+					$statement->bindValue(':defaultStatus', $defaultStatus, PDO::PARAM_STR);
 					$statement->execute();
 					if ($statement->rowCount() > 0){
 						return true;
@@ -2276,11 +2276,20 @@
 			
 		//OTHER FEATURES
 		
-			public function searchString($searchingMember/*The member doing the searching*/, $input){
+			public function searchString($searchingMember/*The member doing the searching*/, $input, $exact = false){
 				try{
-					$input1 = "%" . $input . "%";
-					$input2 = "%" . $input . "%";
-					$input3 = "%" . $input . "%";
+                    if ($exact)
+                    {
+                        $input1 = $input;
+					    $input2 = $input;
+					    $input3 = $input;
+                    }
+                    else
+                    {
+					    $input1 = "%" . $input . "%";
+					    $input2 = "%" . $input . "%";
+					    $input3 = "%" . $input . "%";
+                    }
 					$statement1 = $this->db->prepare('SELECT memberId, firstName, lastName FROM Member WHERE (firstName LIKE :input1 OR lastName LIKE :input2)
 					AND memberId != :searchingMember AND NOT EXISTS (SELECT * FROM Blocked WHERE blockerId = memberId AND blockedId = :searchingMember)
 					AND memberId NOT IN (SELECT memberId FROM Member WHERE status = "inactive" OR status = "suspended");');

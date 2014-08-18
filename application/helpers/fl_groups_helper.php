@@ -25,6 +25,32 @@ if ( ! function_exists('GroupHeader'))
     }
 }
 
+// --------------------------------------------------------------------
+
+/**
+* Random Element - Takes an array as input and returns a random element
+*
+* @access	public
+* @param	array
+* @return	mixed	depends on what the array contains
+*/
+if ( ! function_exists('GroupDescriptionBox'))
+{
+    function GroupDescriptionBox($groupId, $group)
+    {
+        echo
+        "<div class='description panel panel-default'>
+			<div class='panel-heading'>Description</div>
+			<ul class='list-group'>
+			<li class='list-group-item' id='".$groupId."'>
+			<div id='description' class='groupEdit'>"
+            .$group['description']
+            ."</div></li>
+			    </ul>
+			    </div>
+			    ";
+    }
+}
        
 /**
  * Random Element - Takes an array as input and returns a random element
@@ -253,5 +279,42 @@ if ( ! function_exists('GroupContentBox'))
         echo "</div>
 			</div>
 			";
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+ * Random Element - Takes an array as input and returns a random element
+ *
+ * @access	public
+ * @param	User 			contains	firstName, lastName and photographURL
+ * @param   PostContent		contains	content, TimeStamp
+ * @return	nothing
+ */
+if ( ! function_exists('GroupCreationForm'))
+{
+	function GroupCreationForm($profileId)
+	{
+        echo form_open('groups/createGroup');
+        echo "
+		    <div id='GroupCreationForm' class='panel panel-default'>
+	            <div class='input-group'>
+                    <input type='text' class='form-control' name='groupName' id='groupName' style='border:0px; width: 100%;'
+                        maxlength='35' placeholder='Your group name here' />
+		            <input type='text' class='form-control' name='groupDescription' id='groupDescription' style='border:0px; width: 100%;'
+                        maxlength='255' placeholder='Your group description here' />
+		            <input type='hidden' class='form-control' id='groupOwnerId' name='groupownerId' value='" .$profileId ."'/>
+		            <span class='input-group-btn' style='vertical-align:top;'>
+			            <button class='btn btn-default' type='submit'>Create</button>
+		            </span>
+	            </div>
+	            <div class='panel-heading'>
+		            <h3 class='panel-title pull-left'>Group information</h3>                    
+				    <p/>
+	            </div>
+            </div>
+			";
+		echo form_close();
 	}
 }

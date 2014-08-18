@@ -159,7 +159,7 @@ if ( ! function_exists('MenuBar'))
 							}
 							if($privilege < 3){
 								echo "
-								<li><a href='#'>New group</a></li>
+								<li><a href='" .CreateURL('index.php/groups/newgroup') ."'>New group</a></li>
 								";
 							}
 							echo "

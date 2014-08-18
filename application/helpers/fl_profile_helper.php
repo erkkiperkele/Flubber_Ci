@@ -370,7 +370,7 @@ if ( ! function_exists('AddContentBox'))
 			</div>
 			<div class='panel-heading privacy'>
 				<h3 class='panel-title pull-left'>Status</h3>
-				</p>
+				<p/>
 			</div>
 
 		</div>
