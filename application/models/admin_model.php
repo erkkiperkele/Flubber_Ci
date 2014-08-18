@@ -31,15 +31,13 @@ class admin_model extends flubber_model {
 	
 	public function getMemberID ($targetEmail)
 	{
-		//Not a real change
 		$memberID = $this->db2->getMemberId ($targetEmail);
 		return $memberID;
 	}
 	
-	public function deleteMember($targetEmail)
+	public function deleteMember($targetid)
 	{
-		$id = $this->getMemberID ($targetEmail);
-		$this->db2->removeMember($id);
+		$this->db2->removeMember($targetid);
 	}
 	
 	///////////////////////////////
@@ -182,9 +180,8 @@ class admin_model extends flubber_model {
 		return $groupInfo;
 	}
 	
-	public function deleteGroup($groupName)
+	public function deleteGroup($groupId)
 	{
-		$groupId = $this->getGroupID ($groupName);
 		$this->db2->deleteGroup($groupId);
 	}
 	

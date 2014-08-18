@@ -33,6 +33,7 @@ if ( ! function_exists('AdminMessageBox'))
         echo form_close();
     }
 }
+//-------------------------
 
 if ( ! function_exists('SimpleMemberBox'))
 {
@@ -40,12 +41,13 @@ if ( ! function_exists('SimpleMemberBox'))
 	{
 		echo "
 		<div class='panel panel-default'>
-			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
-						echo
-						"<button class='editbar-del-btnMember btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
-							<span class='glyphicon glyphicon-remove'></span>
-						</button>
-						";
+			<div class='panel-heading membereditable' id='".$MemberInfo['memberId']."' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+				
+						echo "
+							<button class='member-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+								<span class='glyphicon glyphicon-remove'></span>
+							</button>
+							";
 
 						echo 
 								"<div class='panel-title row' style='margin-right:10px;'id='".$MemberInfo['memberId']."'>
@@ -69,9 +71,9 @@ if ( ! function_exists('SimpleGroupBox'))
 	{
 		echo "
 		<div class='panel panel-default'>
-			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
+			<div class='panel-heading groupiseditable' id='".$GroupInfo['groupId']."'style='margin: 0 0 0 0; padding: 0 0 0 0'>";
 						echo
-						"<button class='editbar-del-btnMember btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
+						"<button class='group-del-btn btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
 							<span class='glyphicon glyphicon-remove'></span>
 						</button>
 						";
@@ -159,5 +161,38 @@ if ( ! function_exists('AdminPublicContentBox'))
 		</div>
 		";
 		echo form_close();
+	}
+}
+//------------------------------------
+
+if ( ! function_exists('AdminReportRequest'))
+{
+    function AdminReportRequest()
+    {
+	echo form_open('adminReport/reportRequest');
+	/*echo "
+	<div id='requestForm' class='panel panel-default'>
+		<div class='input-group'>
+			<input type='textarea' class='form-control' id='category' name='category' placeholder='Type a category'>
+			
+			<input type='text' class='form-control' name='title' id='title' style='border:0px; width: 100%;'
+                        value='".$previousTitle."' placeholder='Your title here' />
+	*/
+	echo form_close();
+    }
+}
+
+if( ! function_exists('ResultBox') )
+{
+	function ResultBox($key , $count)
+	{
+		echo "
+		<div class='panel panel-default'>
+			<div class='panel-title row'>
+				<h4 class='col-md-2 text-left'>".$key." </h4>
+				<h4 class='cold-md-3 text-right'>".$count."</h4>
+			</div>
+		</div>
+	";
 	}
 }

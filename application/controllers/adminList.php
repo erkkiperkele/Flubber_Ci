@@ -33,22 +33,19 @@ class adminList extends FL_Controller {
 
 	//member functions
 	
-	public function deleteMember()
+	public function deleteMember($memberId)
 	{
-		$email = $this->input->post('targetid');
-		
-		$this->admin_model->deleteMember($email);
+		$this->admin_model->deleteMember($$memberId);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 	
 	
 	//group functions
 	
-	public function removeGroup()
+	public function removeGroup($groupId)
 	{
-		$name = $this->input->post('targetgroup');
-		
-		$this->admin_model->deleteGroup($name);
+		$this->admin_model->deleteGroup($groupId);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 	
 }

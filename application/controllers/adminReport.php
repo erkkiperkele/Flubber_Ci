@@ -20,9 +20,10 @@ class adminReport extends FL_Controller {
 		$data['currentPage'] = 'Reports';
 		//Report Lists as (Type => String , Count => int)
 		$data['interestList'] = $this->admin_model->getInterests(); 
+		
 		$data['ageList'] = $this->admin_model->getAges();
-		//$array = $data['ageList'];
-		//$data['ageGroups'] = $this->groupByAge( 10 , 90 , $data['ageList'];
+		$data['ageGroups'] = $this->groupByAge( 10 , 90 , $data['ageList']);
+		$data['ageGroups'] = $this->modifyArray($data['ageGroups']);
 		
 		$data['cityList'] = $this->admin_model->getCities();
 		$data['countryList'] = $this->admin_model->getCountries();
@@ -37,7 +38,7 @@ class adminReport extends FL_Controller {
 		//end need
 		
 		//TESTING
-		$data['test'] = $this->admin_model->test($admin);
+		$data['test'] = array([ [1 , 1] , [2 , 2] , [3 , 3] ]);
 		
 		//Age grouping
 		
@@ -47,24 +48,42 @@ class adminReport extends FL_Controller {
 	public function groupByAge($interval, $max, $ageList)
 	{
 		$groupedAges = array();
-		/*
-		for( $i = 0 ; $i < $max + $interval; $i + $interval)
+		
+		for( $i = 0 ; $i < $max + $interval; $i += $interval)
 		{
+			$groupedAges[$i] = 0;
 			foreach ($ageList as $age => $count)
 			{
 				if($age >= $i && $age < $i + $interval)
 				{
 					$groupedAges[$i] += $count;
 				}
+				else if($age > $i + $interval)
+				{
+					break;
+				}
 			}
 		}
-		*/
-		return $ageList;
+		return $groupedAges;
 	}
 
-	public function produceReport()
+	//Changes an array from array(key => value) to array( array(key,value))
+	public function modifyArray($targetArray)
 	{
-	
+		$finalArray = array();
+		
+		foreach($targetArray as $key => $value)
+		{
+			$finalArray[] = array($key , $value);
+		}
+		
+		return $finalArray;
+	}
+
+	public function generateReport()
+	{
+		$chosen = $this->input->post('Options');
+		echo $chosen;
 	}
 	
 	

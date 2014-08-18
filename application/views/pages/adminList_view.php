@@ -4,6 +4,7 @@
 	</div>
 	
 <?php
+	
 	foreach ($memberList as $member)
 	{
 		SimpleMemberBox($member);
