@@ -34,7 +34,7 @@ if ( ! function_exists('SimpleMemberBox'))
 	function SimpleMemberBox($MemberInfo = "")
 	{
 		echo "
-		<div class='content panel panel-default'>
+		<div class='panel panel-default'>
 			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
 						echo
 						"<button class='editbar-del-btnMember btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
@@ -63,7 +63,7 @@ if ( ! function_exists('SimpleGroupBox'))
 	function SimpleGroupBox($GroupInfo = "")
 	{
 		echo "
-		<div class='content panel panel-default'>
+		<div class='panel panel-default'>
 			<div class='panel-heading editable' style='margin: 0 0 0 0; padding: 0 0 0 0'>";
 						echo
 						"<button class='editbar-del-btnMember btn pull-right clearfix' style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;'>
