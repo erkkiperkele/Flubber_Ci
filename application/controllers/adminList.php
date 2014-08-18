@@ -20,7 +20,7 @@ class adminList extends FL_Controller {
 	{
 		
 		$admin = $this->session->userdata('memberId');
-		$data['currentPage'] = 'Lists';
+		$data['currentPage'] = 'Repository';
 		$data['memberList'] = $this->admin_model->getMemberList();
 		$data['allGroupsList'] = $this->admin_model->getGroupList();
 		

@@ -10,7 +10,7 @@
 		<?php 
 			if($currentPage == 'groups')
 				GroupHeader($group, $owner);
-			else if($currentPage == 'Messages' || $currentPage == 'Reports' ||$currentPage == 'Lists' )
+			else if($currentPage == 'Messages' || $currentPage == 'Reports' ||$currentPage == 'Repository' )
 				AdminHeader($member, $currentPage);
 			else
 				ProfileHeader($member);

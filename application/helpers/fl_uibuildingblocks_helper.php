@@ -173,14 +173,13 @@ if ( ! function_exists('MenuBar'))
 							<li><a href='" .CreateURL('index.php/messages') ."'>Messages"; if ($newMessageNb > 0) { echo " (".$newMessageNb.")"; } echo "</a></li>
 							<li><a href='" .CreateURL('index.php/gifts') ."'>Give Gifts</a></li>
 							";
-						if($privilege==1){
+						if($privilege=='Administrator'){
 							echo "<li>
 									<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Admin<span class='caret'></span></a>
 									<ul class='dropdown-menu' role='menu'>
-										<li><a href='#'>Add New Member</a></li>
-										<li><a href='#'>Change status of a Member</a></li>
-										<li class='divider'></li>
-										<li><a href='#'>Ran out of things to write</a></li>
+										<li><a href='" .CreateURL('index.php/adminList') ."'>Repository</a></li>
+										<li><a href='" .CreateURL('index.php/adminMsg') ."'>Messages</a></li>
+										<li><a href='" .CreateURL('index.php/adminReport') ."'>Reports</a></li>
 									</ul>
 								  </li>
 							";
