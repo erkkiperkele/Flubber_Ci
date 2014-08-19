@@ -133,7 +133,7 @@ if ( ! function_exists('MenuBar'))
 				<div class='collapse navbar-collapse' id='menu'>
 					<ul class='nav navbar-nav'>
 						<li class=''><a href='" .CreateURL('/') ."'>Home</a></li>
-						<li class='active'><a href='" .CreateURL('index.php/profile') ."'>Profile</a></li>
+						<li class=''><a href='" .CreateURL('index.php/profile') ."'>Profile</a></li>
 						";
 						if ((!is_array($groupList) || count($groupList) == 0) && $privilege > 2){
 							echo "
@@ -250,7 +250,7 @@ if ( ! function_exists('InputBox'))
  */
 if ( ! function_exists('SearchResultMember'))
 {
-	function SearchResultMember($member, $gifts, $hearts=0)
+	function SearchResultMember($member, $gifts, $hearts=0, $IsAdmin=false)
 	{
 		echo "
 		<div class='well well-sm'>";
@@ -260,7 +260,17 @@ if ( ! function_exists('SearchResultMember'))
 		else{
 			echo "<a href='" .CreateURL('index.php/search/block/' .$member['memberId']) ."' class='pull-left btn clearfix' style='margin:0px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit;' id='block'><span class='glyphicon glyphicon-ban-circle' style='font-size:1.5em; color:red;'></span></a>";
 		}
-		echo 	"<div class='col-md-offset-4'>";
+		echo 	"<div class='col-md-offset-3'>";
+		if($IsAdmin)
+		{
+			if($member['privilege'] == "3")
+			{
+				echo 	"<a href='".CreateURL('index.php/search/upgradeToSeniorMember/' .$member['memberId']) ."' class ='btn clearfix' 
+				 style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:blue; font-size:1.2em;' id='upgradeMember'>
+					<small>Upgrade</small>
+				</a>" ;
+			}
+		}
 		if($hearts > 0){
 		echo 	"<a href='".CreateURL('index.php/search/giveAHeart/' .$member['memberId']) ."' class ='btn clearfix' 
 				 style='margin:6px 6px 0px 0px; padding:0px 0px 0px 0px; background:inherit; color:red; font-size:1.2em;' id='giveAHeart'>

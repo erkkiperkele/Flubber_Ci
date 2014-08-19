@@ -73,6 +73,26 @@ Class search_model extends flubber_model
  	$searchResults[1] = $results;
  	return $searchResults;
  }
+ function join_with_member_privileges($myPrivilege, $searchResults)
+ {
+	$results = array();
+ 	$i = 0;
+ 	foreach ($searchResults[0] as $searchMember) {
+ 		$resultingPerson = $searchMember;
+ 		if($myPrivilege == "1")
+ 		{
+			$PersonSearched = $this->db2->getMemberInfo($searchMember['memberId']);
+	 		$resultingPerson['privilege'] = $PersonSearched['privilege'];
+ 		} 
+ 		else
+ 		{
+ 			$resultingPerson['privilege'] = 0;
+ 		}
+ 		$results[$i++] = $resultingPerson;
+ 	}
+ 	$searchResults[0] = $results;
+ 	return $searchResults; 	
+ }
 
  function doBlock($me, $personToBlock)
  {
@@ -126,5 +146,9 @@ Class search_model extends flubber_model
 	$this->db2->updateHearts($me, $gift['cost']);
 	$content = "<b>You recieved a gift: </b>" .$gift['description'];
 	$this->db2->postWallContent($to, 2, $me, null, $me, "text", $content);
+ }
+ function upgradeToSenior($memberToUpgrade)
+ {
+ 	$this->db2->setPrivilegeOfMember($memberToUpgrade, 2);
  }
 }

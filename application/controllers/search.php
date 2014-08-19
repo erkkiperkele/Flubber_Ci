@@ -39,9 +39,15 @@ class search extends FL_Controller {
 			$result = $this->search_model->join_with_blocked($this->session->userdata('memberId'), $result);
 		if(!empty($result))
 			$result = $this->search_model->join_with_groups($this->session->userdata('memberId'), $result);
+		if(!empty($result))
+			$result = $this->search_model->join_with_member_privileges($this->session->userdata('privilege'), $result);
 		$data['result'] = $result;
 		$data['hearts'] = $this->session->userdata('hearts');
 		$data['gifts'] = $this->search_model->getGifts();
+		if($this->session->userdata('privilege') === "1")
+			$data['isAdmin'] = true;
+		else
+			$data['isAdmin'] = false;
 
 		$this->render('search', $data);
 	}
@@ -102,7 +108,13 @@ class search extends FL_Controller {
 		}
 		else
 			echo '<script type="text/javascript">alert("You dont have any more hearts! Sorry!");</script>';
-
-
+	}
+	function upgradeToSeniorMember($memberToUpgrade)
+	{
+		if($this->session->userdata('privilege') === "1")
+		{
+			$this->search_model->upgradeToSenior($memberToUpgrade);
+		}
+		redirect('/');
 	}
 }
