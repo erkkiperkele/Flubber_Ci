@@ -59,15 +59,17 @@ class admin_model extends flubber_model {
 		#Get every public post information
 		$publicContents = $this->db2->getPublicContents();
 		$posts = array();
-			
-		#Extends each post with its member details
-		foreach($publicContents as $content):
-			$member = $this->get_user($content['memberId']);
-			$contentTemp = $content;
-			$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
-			array_push($posts, (array)$postDetails);
-		endforeach;
 		
+		if( !empty($publicContents) )
+		{
+			#Extends each post with its member details
+			foreach($publicContents as $content):
+				$member = $this->get_user($content['memberId']);
+				$contentTemp = $content;
+				$postDetails = (object) array_merge((array) $contentTemp, (array) $member);		#extends the post information with full member details
+				array_push($posts, (array)$postDetails);
+			endforeach;
+		}
 		return $posts;
 	}
 	
@@ -77,26 +79,7 @@ class admin_model extends flubber_model {
 		 return $userInfo;
 	}
 	///////////////////////////////
-	/*
-	public function test($adminId)
-	{
-		$messageList = $this->db2->getMessagesSentFromMember($adminId);
-		
-		$finalMessageList = array();
-		
-		foreach($messageList as $message)
-		{
-			if($message['sentTo'] == $message['sentFrom'])
-			{
-				$finalMessageList[] = $message;
-			}
-		}
-		
-		$finalMessageList = $this->ExtendWithMemberDetails($messageList, 'sentFrom');
-		
-		return $finalMessageList;
-	}
-	*/
+	
 	//admin POSN public content (as a send message to all)
 	
 	public function getMessagesPOSN ($adminId)
@@ -106,14 +89,16 @@ class admin_model extends flubber_model {
 		
 		$finalMessageList = array();
 		
-		// foreach($messageList as $message)
-		// {
-		// 	if($message['sentTo'] == $message['sentFrom'])
-		// 	{
-		// 		$finalMessageList[] = $message;
-		// 	}
-		// }
-		
+		if( !empty($messageList) )
+		{
+		 foreach($messageList as $message)
+		 {
+			if($message['sentTo'] == $message['sentFrom'])
+			{
+				$finalMessageList[] = $message;
+			}
+		 }
+		}
 		$finalMessageList = $this->ExtendWithMemberDetails($finalMessageList, 'sentFrom');
 		
 		return $finalMessageList;
