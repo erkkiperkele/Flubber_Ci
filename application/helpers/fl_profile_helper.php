@@ -20,7 +20,7 @@ if ( ! function_exists('ProfileHeader'))
 	function ProfileHeader($member)
 	{
 		echo "
-		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-image:url(".$member['coverPictureURL']."); background-size: cover'>
+		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-position: center; background-image:url(".$member['coverPictureURL']."); background-size: cover'>
 		<h1>" .$member['firstName'] ."<small> " .$member['lastName'] ."</small></h1>
 		</div>
 		<div class='col-md-3'>

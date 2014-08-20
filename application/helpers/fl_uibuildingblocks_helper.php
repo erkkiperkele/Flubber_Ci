@@ -379,7 +379,7 @@ if ( ! function_exists('AdminHeader'))
 	function AdminHeader($member, $adminSectionTitle)
 	{
 		echo "
-		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-image:url(".$member['coverPictureURL']."); background-size: cover'>
+		<div id='profile-name' index='" .$member['memberId'] ."' class='jumbotron col-md-9' style='background-position: center; background-position: center; background-image:url(".$member['coverPictureURL']."); background-size: cover'>
 		<h1>" . $adminSectionTitle ."<small> " ."Admin"."</small></h1>
 		</div>
 		<div class='col-md-3'>

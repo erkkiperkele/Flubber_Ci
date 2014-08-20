@@ -18,7 +18,7 @@ if ( ! function_exists('PersonBox'))
 <div class='col-md-6 portfolio-item'>
 	<a href='".CreateURL('index.php/profile/index/').$member['memberId'] ."'>
 		<ul class='list-inline'>
-			<li><img class='img-circle' src='" .$picHref ."'></li>
+			<li><img height='26px' width='26px' class='img-circle' src='" .$picHref ."'></li>
 			<li>
 				<ul class='list-unstyled'>
 					<li><small class='nopadding'>" .$member['firstName'] ."</small></li>
