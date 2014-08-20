@@ -186,8 +186,6 @@ if ( ! function_exists('MenuBar'))
 						echo "<li class='Settings'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>Settings<span class='caret'></span></a>
 							<ul class='dropdown-menu' role='menu'>
-								<li><a href='#'>Privacy</a></li>
-								<li class='divider'></li>
 								<li><a href='" .CreateURL('index.php/flubber/logout') ."'>Logout</a></li>
 							</ul>
 							</li>
