@@ -50,17 +50,12 @@ class groups_model extends flubber_model {
         if($privilegeId < 3)
         {
             $success = $this->db2->createGroup($name, $ownerId, $description, null, null, null);
-            $groupList = $this->db2->searchString($ownerId, $name, true);
+            $groupList = $this->db2->getGroupId($name);
             $groupInfo = array();
-            if(!empty($groupList) && !empty($groupList[1]))
-            foreach($groupList[1] as $group)
-            {
-                if($group['ownerId'] = $ownerId)
-                    $groupInfo = $group;
-            }
-            return $groupInfo['groupId'];
+            if(!empty($groupList))
+                return $groupList[count($groupList) - 1];
         }
-        return -1;
+        return 0;
 	}
     
 	public function get_groupPosts($groupId)

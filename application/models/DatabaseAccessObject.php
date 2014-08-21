@@ -2278,20 +2278,13 @@
 			
 		//OTHER FEATURES
 		
-			public function searchString($searchingMember/*The member doing the searching*/, $input, $exact = false){
+			public function searchString($searchingMember/*The member doing the searching*/, $input){
 				try{
-                    if ($exact)
-                    {
-                        $input1 = $input;
-					    $input2 = $input;
-					    $input3 = $input;
-                    }
-                    else
-                    {
-					    $input1 = "%" . $input . "%";
-					    $input2 = "%" . $input . "%";
-					    $input3 = "%" . $input . "%";
-                    }
+                    
+					$input1 = "%" . $input . "%";
+					$input2 = "%" . $input . "%";
+					$input3 = "%" . $input . "%";
+					
 					$statement1 = $this->db->prepare('SELECT memberId, firstName, lastName FROM Member WHERE (firstName LIKE :input1 OR lastName LIKE :input2)
 					AND memberId != :searchingMember AND NOT EXISTS (SELECT * FROM Blocked WHERE blockerId = memberId AND blockedId = :searchingMember)
 					AND memberId NOT IN (SELECT memberId FROM Member WHERE status = "inactive" OR status = "suspended");');

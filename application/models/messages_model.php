@@ -13,22 +13,7 @@ class messages_model extends flubber_model {
         $messageFrom = array();
         
         $messageList= $this->db2->getMessagesSentToMember($memberId);
-        if (!empty($messageList))
-            foreach ($messageList as $msg):
-            if ($msg['hideFromReceiver'] == 0)
-            {
-                array_push($messageTo, $msg);
-            }
-            endforeach;
-        
         $messageList = $this->db2->getMessagesSentFromMember($memberId);
-        if (!empty($messageList))
-            foreach ($messageList as $msg):
-                if ($msg['hideFromSender'] == 0)
-                {
-                    array_push($messageFrom, $msg);
-                }
-            endforeach;
             
         $messageTo = $this->ExtendWithMemberDetails($messageTo, 'sentFrom', 'receiver');
         $messageFrom = $this->ExtendWithMemberDetails($messageFrom, 'sentFrom', 'sender');
